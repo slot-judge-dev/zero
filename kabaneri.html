@@ -56,7 +56,9 @@
         .color-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; border: 1px solid #fff; vertical-align: middle; }
 
         .ad-space { background: #161b22; border: 1px dashed #484f58; padding: 20px; text-align: center; color: #8b949e; font-size: 0.85em; border-radius: 8px; margin-top: 20px; }
-        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; }
+        
+        /* 法的リスク回避用フッター（更新済） */
+        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -78,7 +80,7 @@
             </select>
             <select id="invest_type" onchange="updateUI()">
                 <option value="medal">持ちメダル</option>
-                <option value="cash">現金投資（ギャップペナルティ完全適用）</option>
+                <option value="cash">現金投資（ギャップ適用）</option>
             </select>
         </div>
         <label style="margin-top:8px;">現在時刻 (閉店欠損算出用)</label>
@@ -118,7 +120,7 @@
     </div>
 
     <div class="card" style="border: 1px solid #30363d; background: #0d1117;">
-        <h3 style="color:var(--kabaneri); font-size:1em;">📜 海門 軍師の知恵袋（違和感・確定演出）</h3>
+        <h3 style="color:var(--kabaneri); font-size:1em;">📜 海門 軍師の知恵袋（違和感・設定示唆）</h3>
         <div class="bible-tabs">
             <button class="tab-btn active" onclick="openBible(event, 'tab-zones-k')">周期/天井</button>
             <button class="tab-btn" onclick="openBible(event, 'tab-short-smoke-k')">短縮/黒煙</button>
@@ -265,7 +267,10 @@
     </div>
 
     <input type="hidden" id="hidden_trophy" value="none">
-    <div class="legal-footer">© 2026 Protocol ZERO</div>
+    
+    <div class="legal-footer">
+        ※本アプリは独自解析データに基づく期待値シミュレーターであり、収益を完全に保証するものではありません。<br>© 2026 Protocol ZERO
+    </div>
 
 <script>
     let isVip = false;
@@ -288,7 +293,6 @@
         }
     }
 
-    // --- 確実動作版：バイブル用タブ制御関数 ---
     function openBible(evt, tabName) {
         let i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tab-content");
