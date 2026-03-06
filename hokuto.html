@@ -30,13 +30,12 @@
 
         .live-wage { font-size: 2.4em; font-weight: bold; color: var(--success); text-align: center; margin: 10px 0; text-shadow: 0 0 20px rgba(63, 185, 80, 0.4); }
         .highlight-text { color: #f85149; font-weight: bold; font-size: 1.1em; text-decoration: underline; background: rgba(248, 81, 73, 0.1); padding: 2px 4px; border-radius: 4px; }
-        .navi-rule { font-size: 0.9em; padding: 6px 0; border-bottom: 1px solid #30363d; color: #8b949e; }
-        .navi-rule.active { color: #56d364; font-weight: bold; border-left: 3px solid #56d364; padding-left: 8px; }
+        .navi-rule { font-size: 0.9em; padding: 8px 0; border-bottom: 1px solid #30363d; color: #8b949e; }
+        .navi-rule.active { color: #56d364; font-weight: bold; border-left: 4px solid #56d364; padding-left: 10px; background: rgba(63, 185, 80, 0.05); }
         
         .counter-btn { width:35px; padding:6px 0; background:#21262d; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:1.1em; }
         .counter-btn.plus { background: var(--accent); }
 
-        /* --- バイブル用タブシステム --- */
         .bible-tabs { display: flex; gap: 4px; margin-bottom: 12px; border-bottom: 1px solid #30363d; overflow-x: auto; white-space: nowrap; }
         .tab-btn { padding: 10px 15px; background: #1b2128; color: #8b949e; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: 0.3s; }
         .tab-btn.active { background: #30363d; color: white; border-bottom: 2px solid var(--accent); }
@@ -292,13 +291,14 @@
         const trophy = document.getElementById('trophy_h').value;
         const aiConsult = isVip ? document.getElementById('ai_consult_h').value : "none";
 
-        if (time >= 22) return { isTimeOver: true };
+        if (time >= 22) return { isTimeOver: true, time: time };
 
         const isValidPremium = (lastSt === 'premium' && abe <= 128);
         const t_rot = parseFloat(document.getElementById('total_rot').value) || 0;
         const a_cnt = parseFloat(document.getElementById('at_count').value) || 0;
         let isHighSettingProb = (t_rot >= 2000 && (t_rot/a_cnt) <= 245); 
 
+        // 天井設定 (v7.3.1 聖域)
         let maxCeiling = 1536; 
         if (mode === 'heaven') maxCeiling = 128;
         else if (mode === 'mode_c') maxCeiling = 576;
@@ -306,38 +306,62 @@
         else if (reset) maxCeiling = 1280;
         let remainCeiling = Math.max(0, maxCeiling - abe);
 
+        // 個別定数計算による期待値算出 (マスキング防止)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
-        let wageAbe = (abe >= 1100) ? 5500 : (abe > 700) ? 3100 : (abe > 400) ? 1600 : 800;
         
+        // リセット時ゾーン詳細 (MECE復旧)
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
+        let evResetS = (reset && abe >= 450 && abe <= 576) ? 1400 : EV_NONE;
+        let evResetL = (reset && abe >= 200 && abe <= 256) ? 1200 : EV_NONE;
+        
         let evModeB = (mode === 'shutter' && abe >= 150) ? 1400 : EV_NONE;
         let evModeC = (mode === 'mode_c' && abe >= 350) ? 1200 : EV_NONE;
         let evHeaven = (mode === 'heaven') ? 650 : EV_NONE;
-
         let evPremium = isValidPremium ? 2500 : EV_NONE;
         let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;
 
+        // 時給基礎
+        let wageAbe = (abe >= 1100) ? 5500 : (abe > 700) ? 3100 : (abe > 400) ? 1600 : 800;
+        let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
+        let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
+
+        // ボーナス・デバフ
         let bonusEV = 0; let bonusWage = 0;
         if (aiConsult === 'strong' || aiConsult === 'rare') { bonusEV += 2500; bonusWage += 3000; }
         if (isVip && diff >= 1000 && abe <= 128) { bonusEV += 1000; bonusWage += 1000; }
 
-        let baseEV = Math.max(evAbe, evResetZ, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;
-        let baseWage = Math.max(wageAbe, 800) + bonusWage;
+        let baseEV = Math.max(evAbe, evResetZ, evResetS, evResetL, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;
+        let baseWage = Math.max(wageAbe, wageReset, wageState) + bonusWage;
 
+        // 設定保障
         if (trophy === 'rainbow' || isHighSettingProb) { baseWage = Math.max(baseWage, 8000); baseEV = Math.max(baseEV, 6500); } 
         else if (trophy === 'gold') { baseWage = Math.max(baseWage, 5000); baseEV = Math.max(baseEV, 3000); }
 
+        // 環境ペナルティ重複適用 (数学的整合性)
         let finalEV = baseEV; let finalWage = baseWage;
         if (time >= 18) { let hp = (time - 17); finalWage -= (hp * 700); finalEV -= (hp * 400); }
         if (inv === 'cash' && rate !== '5.0') { finalWage -= 2500; if (finalEV > 0) finalEV = Math.floor(finalEV * 0.60); }
 
+        // 夜間ボーダー補正 (v7.3.1 UI連動保護)
         let baseBorder = 950;
-        if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || aiConsult === 'strong') baseBorder = 0;
-        else if (mode === 'shutter') baseBorder = 150; else if (mode === 'mode_c') baseBorder = 350; else if (reset) baseBorder = 700; 
+        if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || aiConsult === 'strong') {
+            baseBorder = 0; 
+        } else {
+            if (mode === 'shutter') baseBorder = 150; 
+            else if (mode === 'mode_c') baseBorder = 350; 
+            else if (reset) baseBorder = 700;
+            
+            // 夜間・現金加算
+            if (time >= 18) baseBorder += 100;
+            if (time >= 21) baseBorder += 100;
+            if (inv === 'cash' && rate !== '5.0') baseBorder += 150;
+            // VIP差枚優遇
+            if (isVip && diff >= 1000) baseBorder = Math.max(0, baseBorder - 150);
+        }
 
         return { 
-            abe: abe, lastSt: lastSt, diff: diff, isTimeOver: false, remainCeiling: remainCeiling, 
+            abe: abe, lastSt: lastSt, diff: diff, isTimeOver: false, time: time, remainCeiling: remainCeiling, 
             border: Math.max(0, baseBorder + adj), wage: Math.floor(finalWage), ev: Math.floor(finalEV)
         };
     }
@@ -350,15 +374,20 @@
         let displayEV = isVip ? `￥${s.ev}前後` : `<span style="background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;">【🔒VIP限定】</span>`;
         const evDisp = (val) => `<br><span style="font-size:1.1em; font-weight:bold; color:var(--success);">💰期待値: ${displayEV}</span><br><span style="font-size:0.85em; color:#8b949e;">🎯最大天井まで残り: <b>${s.remainCeiling}</b> あべし</span>`;
 
+        // 21時アラートの絶対的UI出力 (View-Logic Binding確保)
+        if (s.time === 21) {
+            res += `<div class="alert alert-warning" style="border-color:var(--danger); color:var(--danger); background:rgba(248,81,73,0.1);">⚠️ 【閉店欠損アラート】21時を過ぎています。取り切れないリスクが急増中。</div>`;
+        }
+
         if (s.ev < 0 && s.abe < 1100) {
             res += `<div class="alert alert-error">❄️ 【判定：撤収】待機目安: <b>${s.border}あべし</b>${evDisp(s.ev)}</div>`;
         } else {
-            if (s.abe >= 1100) res += `<div class="alert alert-ceiling">👊 【天井到達圏内】当選までヤメ厳禁。${evDisp(s.ev)}<br><span style="text-decoration:underline;">🚨 当選までヤメ厳禁。</span></div>`;
+            if (s.abe >= 1100) res += `<div class="alert alert-ceiling">👊 【天井到達圏内】当選までヤメ厳禁。${evDisp(s.ev)}</div>`;
             else if (s.abe >= s.border) res += `<div class="alert alert-success">🔥 【判定：GO】特攻せよ！${evDisp(s.ev)}</div>`;
             else res += `<div class="alert alert-error">❄️ 【判定：撤収】期待値不足。🎯目安: <b>${s.border}あべし</b>${evDisp(s.ev)}</div>`;
         }
         
-        // --- 動的ヤメ時ナビ・アルゴリズム ---
+        // 動的強調ヤメ時ナビ
         let naviHtml = "";
         if (isVip) {
             const isCeiling = (s.abe >= 1100);
@@ -366,13 +395,13 @@
             const isDensho = (s.lastSt === 'densho');
             const isTsuranuki = (s.diff >= 1000);
 
-            naviHtml += `<div class="navi-rule ${isCeiling ? 'active' : ''}">★【天井保護】当選までヤメ厳禁（強制上書き）</div>`;
+            naviHtml += `<div class="navi-rule ${isCeiling ? 'active' : ''}">★【天井保護】当選までヤメ厳禁（最優先ルール）</div>`;
             naviHtml += `<div class="navi-rule ${(isPremium && !isCeiling) ? 'active' : ''}">①上位AT(天撃)後128：天国率大幅UP。ヤメ厳禁。</div>`;
-            naviHtml += `<div class="navi-rule ${(isDensho && !isCeiling && !isPremium) ? 'active' : ''}">②伝承ループ：天破・ATの連鎖。抜け確認まで。</div>`;
-            naviHtml += `<div class="navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}">③VIP差枚128：有利リセット近接。フォロー必須。</div>`;
-            naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④通常1即：高確なし確認。最速で撤収せよ。</div>`;
+            naviHtml += `<div class="navi-rule ${(isDensho && !isCeiling && !isPremium) ? 'active' : ''}">②伝承ループ：天破ループ確認。抜けまで。</div>`;
+            naviHtml += `<div class="navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}">③VIP差枚128：有利リセット。128フォロー。</div>`;
+            naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④通常1即：高確なしを確認して即ヤメ。</div>`;
         } else {
-            naviHtml = "【🔒VIP限定】状況に応じた最適解を提示します。";
+            naviHtml = "【🔒VIP限定】状況に応じた最適解を提示。";
         }
         res += `<div class="alert alert-warning">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;
         document.getElementById('result-area-h').innerHTML = res;
