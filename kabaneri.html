@@ -63,7 +63,7 @@
         .mark-star { color: #d29922; font-weight: bold; font-size: 1.1em; }
         .color-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; border: 1px solid #fff; vertical-align: middle; }
 
-        /* 法的リスク回避用フッター（Ω同期版） */
+        /* 法的リスク回避用フッター */
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
 </head>
@@ -126,37 +126,45 @@
     </div>
 
     <div class="card" style="border: 1px solid #30363d; background: #0d1117;">
-        <h3 style="color:var(--kabaneri); font-size:1em;">📜 海門 軍師の知恵袋（違和感・設定示唆）</h3>
+        <h3 style="color:var(--kabaneri); font-size:1em;">📜 海門 軍師の知恵袋（解析・設定示唆）</h3>
         <div class="bible-tabs">
-            <button class="tab-btn active" onclick="openBible(event, 'tab-zones-k')">周期/天井</button>
+            <button class="tab-btn active" onclick="openBible(event, 'tab-zones-k')">周期/CZ</button>
             <button class="tab-btn" onclick="openBible(event, 'tab-short-smoke-k')">短縮/黒煙</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-omikuji-k')">くじ/終了</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-bonus-k')">ボナ中示唆</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-omikuji-k')">終了画面/声</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-bonus-k')">キャラ/枚数</button>
         </div>
 
         <div id="tab-zones-k" class="tab-content" style="display:block;">
             <label style="color:var(--accent);">▼ ST間 周期・G数ゾーンの期待度</label>
-            <p style="font-size:0.75em; color:#8b949e; margin:4px 0 8px 0;">※駿城ボーナス当選時は周期・G数ともに引き継がれる。</p>
+            <p style="font-size:0.75em; color:#8b949e; margin:4px 0 8px 0;">※1・2周期目は強制到達G数あり。300G以内の合算当選率は約77%！</p>
             <table class="guide-table" style="text-align:left;">
                 <tr><th style="width:35%;">周期 / 目安G数</th><th>恩恵・期待度</th></tr>
-                <tr><td>1周期 (約150G)</td><td>初当たり期待度【中】</td></tr>
-                <tr><td>2周期 (約300G)</td><td>初当たり期待度【中】</td></tr>
-                <tr><td>3周期 (約450G)</td><td>短縮天井直前の強ゾーン</td></tr>
-                <tr><td><span class="mark-star">4周期 (約596G)</span></td><td><span class="mark-go">短縮時の最大天井（ST濃厚）</span></td></tr>
-                <tr><td>5周期 (約750G)</td><td>通常時の強ゾーン</td></tr>
-                <tr><td><span class="mark-star">6周期 (約996G)</span></td><td><span class="mark-go">通常時の最大天井（ST濃厚）</span></td></tr>
+                <tr><td>1周期 (平均100G)</td><td>期待度33%超。<span style="color:#e3b341;">150Gで強制到達</span></td></tr>
+                <tr><td>2周期 (平均250G)</td><td>期待度33%超。<span style="color:#e3b341;">300Gで強制到達</span></td></tr>
+                <tr><td>3周期 (平均450G)</td><td>短縮天井直前の強ゾーン</td></tr>
+                <tr><td><span class="mark-star">4周期 (平均596G)</span></td><td><span class="mark-go">短縮時の最大天井（ST濃厚）</span></td></tr>
+                <tr><td>5周期 (平均750G)</td><td>通常時の強ゾーン</td></tr>
+                <tr><td><span class="mark-star">6周期 (平均996G)</span></td><td><span class="mark-go">通常天井（エピボ濃厚）</span></td></tr>
+            </table>
+            
+            <label style="color:var(--accent); margin-top:15px; display:block;">▼ CZの成功期待度と特徴</label>
+            <table class="guide-table" style="text-align:left;">
+                <tr><th style="width:25%;">CZ種別</th><th>期待度 / ゲーム性</th></tr>
+                <tr><td>無名CZ</td><td>約36%。小役連で複数撃破。5連or10体で成功</td></tr>
+                <tr><td>生駒CZ</td><td>約46%。ライフ3から開始。20G完走で成功</td></tr>
+                <tr><td>銅藍CZ</td><td><span class="mark-go">約78%。</span>無名＆生駒CZ同時当選で突入</td></tr>
             </table>
         </div>
 
         <div id="tab-short-smoke-k" class="tab-content">
-            <label style="color:var(--warning);">▼ 天井が「4周期(約596G)」に短縮される条件</label>
+            <label style="color:var(--warning);">▼ 天井短縮（4周期/平均596G）の条件</label>
             <ul style="font-size:0.8em; color:#c9d1d9; line-height:1.6; padding-left:20px; background:#161b22; padding:8px; border-radius:6px; margin-bottom:15px;">
                 <li><span class="mark-go">設定変更後（朝イチ）</span></li>
                 <li><span class="mark-go">通常STを一度も引けず駆け抜けた後</span></li>
-                <li><span class="mark-star">景之(かげゆき)ST終了後</span><br>　※次回STが景之STになるループ抽選あり！</li>
+                <li><span class="mark-star">景之(かげゆき)ST終了後</span><br>　※次回も景之STになるループ抽選あり！</li>
             </ul>
             <label style="color:var(--danger);">▼ 黒煙ポイント（穢れシステム）</label>
-            <p style="font-size:0.75em; color:#8b949e; margin-top:4px;">CZ失敗等で蓄積。MAX到達で次回STが強化。</p>
+            <p style="font-size:0.75em; color:#8b949e; margin-top:4px;">CZ失敗等の不利な展開で蓄積。解放時はエピボ＋α。</p>
             <table class="guide-table" style="text-align:left;">
                 <tr><th style="width:45%;">蓄積示唆（吸収/溢れ）</th><th>状態と恩恵</th></tr>
                 <tr><td>黒煙(小) 吸収</td><td>ポイント獲得示唆</td></tr>
@@ -166,23 +174,21 @@
         </div>
 
         <div id="tab-omikuji-k" class="tab-content">
-            <label style="color:var(--success);">▼ アイテムくじ（おみくじ）設定示唆</label>
-            <p style="font-size:0.75em; color:#8b949e; margin:4px 0;">※朝イチ5回目まで、または5の倍数回は特殊示唆が出やすい</p>
+            <label style="color:var(--success);">▼ ST終了画面の設定示唆</label>
             <table class="guide-table" style="text-align:left; margin-bottom:15px;">
-                <tr><th style="width:40%;">種類</th><th>示唆内容</th></tr>
-                <tr><td>菖蒲の弓</td><td>高設定示唆</td></tr>
-                <tr><td>ミヤマカラスアゲハ</td><td>高設定示唆「強」</td></tr>
-                <tr><td>小吉</td><td><span class="mark-go">設定2以上確定</span></td></tr>
-                <tr><td>中吉</td><td><span class="mark-warn">設定4以上確定</span></td></tr>
-                <tr><td>大吉</td><td><span class="mark-star">設定6確定!!</span></td></tr>
-            </table>
-            
-            <label style="color:var(--success);">▼ ST終了画面</label>
-            <table class="guide-table" style="text-align:left;">
                 <tr><th style="width:40%;">画面パターン</th><th>示唆内容</th></tr>
                 <tr><td>無名の履き物</td><td>基本パターン</td></tr>
-                <tr><td>仲間勢揃い</td><td>高設定示唆</td></tr>
+                <tr><td>甲鉄城メンバー</td><td>高設定示唆 (早い段階で出れば期待大)</td></tr>
                 <tr><td>無名＆菖蒲</td><td><span class="mark-star">設定6確定!!</span></td></tr>
+                <tr><td>水着</td><td><span class="mark-star">設定6濃厚!!</span> (5000G以降で出現率UP)</td></tr>
+            </table>
+            
+            <label style="color:var(--success);">▼ カバネリボーナス中のサンド目ボイス</label>
+            <p style="font-size:0.75em; color:#8b949e; margin:4px 0;">※逆押し青7狙い成功時に発生</p>
+            <table class="guide-table" style="text-align:left;">
+                <tr><th style="width:40%;">ボイス種類</th><th>示唆内容</th></tr>
+                <tr><td>男性キャラ</td><td>設定3・5を示唆 (※景之除く)</td></tr>
+                <tr><td>女性キャラ</td><td>偶数設定を示唆 (※特定ボイス除く)</td></tr>
             </table>
         </div>
 
@@ -192,16 +198,17 @@
                 <tr><th style="width:35%;">キャラ</th><th>示唆内容</th></tr>
                 <tr><td>女性キャラ</td><td>偶数設定で出やすい</td></tr>
                 <tr><td>男性キャラ</td><td>設定3、5で出やすい</td></tr>
-                <tr><td>美馬</td><td><span class="mark-warn">設定4以上確定!!</span></td></tr>
+                <tr><td>美馬</td><td><span class="mark-warn">設定4以上確定!!</span> (7001G以降で大幅UP)</td></tr>
             </table>
 
-            <label style="color:var(--accent);">▼ 特定枚数・無名上乗せ表示</label>
+            <label style="color:var(--accent);">▼ アイテムくじ・枚数表示の設定示唆</label>
+            <p style="font-size:0.75em; color:#8b949e; margin:4px 0;">※くじは朝イチ5回目までor5の倍数回で特殊示唆UP</p>
             <table class="guide-table" style="text-align:left;">
-                <tr><th style="width:40%;">表示パターン</th><th>示唆内容</th></tr>
-                <tr><td>+44 / 456over</td><td><span class="mark-warn">設定4以上確定</span></td></tr>
-                <tr><td>+55</td><td><span class="mark-go">設定5以上確定</span></td></tr>
-                <tr><td>+66 / 666over</td><td><span class="mark-star">設定6確定!!</span></td></tr>
-                <tr><td>+77</td><td><span class="mark-star">設定6確定!!</span></td></tr>
+                <tr><th style="width:40%;">表示/アイテム</th><th>示唆内容</th></tr>
+                <tr><td>小吉</td><td><span class="mark-go">設定2以上確定</span></td></tr>
+                <tr><td>中吉 / +44枚</td><td><span class="mark-warn">設定4以上確定</span></td></tr>
+                <tr><td>+55枚</td><td><span class="mark-go">設定5以上確定</span></td></tr>
+                <tr><td>大吉 / +66, +77枚</td><td><span class="mark-star">設定6確定!!</span></td></tr>
             </table>
         </div>
     </div>
@@ -299,16 +306,16 @@
         isVip = localStorage.getItem('zero_vip_status') === 'true';
         const vipSec = document.getElementById('vip-section');
         const freeNot = document.getElementById('free-notice');
-        const adContainer = document.getElementById('ad-container'); // Ω広告枠の取得
+        const adContainer = document.getElementById('ad-container'); 
 
         if (isVip) {
             if (vipSec) vipSec.style.display = 'block';
             if (freeNot) freeNot.style.display = 'none';
-            if (adContainer) adContainer.style.display = 'none'; // ΩVIP時は広告非表示
+            if (adContainer) adContainer.style.display = 'none'; 
         } else {
             if (vipSec) vipSec.style.display = 'none';
             if (freeNot) freeNot.style.display = 'block';
-            if (adContainer) adContainer.style.display = 'block'; // Ω未認証時は広告表示
+            if (adContainer) adContainer.style.display = 'block'; 
         }
     }
 
@@ -489,7 +496,6 @@
         let bellProb = (countKBell > 0 && t > 0) ? (t / countKBell) : 999;
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
 
-        // Ω：GA4イベント送信
         if (typeof gtag === 'function') {
             gtag('event', 'execute_guess', {'machine': 'kabaneri_unato', 'is_vip': isVip});
         }
@@ -498,7 +504,6 @@
             m = "【🔒VIP限定】精密AI診断プロトコル。下段ベルと初当たりを独立して多角的に分析します。"; 
             cls = "alert-warning"; 
         } else {
-            // Ω：初当たり確率を第一関門とするMECEロジック（現実の解析値に準拠）
             if (trophy === 'rainbow') { 
                 m = "【設定6確定】究極の挙動です。閉店まで全ツッパ推奨！"; 
                 cls = "alert-success"; 
@@ -506,7 +511,6 @@
                 m = "【設定4以上確定】高設定域です。粘り強く続行せよ。"; 
                 cls = "alert-success"; 
             } else if (t >= 1000) {
-                // 設定6域 (1/237以内)
                 if (atProb <= 237) {
                     if (bellProb <= 105) {
                         m = "【設定6濃厚】初当たり・ベル共に完璧。全ツッパ体制へ！"; 
@@ -515,7 +519,6 @@
                         m = "【高設定濃厚】初当たり(設定6域)は優秀。ベルのブレに注意しつつ続行。"; 
                         cls = "alert-success"; 
                     }
-                // 設定5域 (1/260以内)
                 } else if (atProb <= 260) {
                     if (bellProb <= 107) {
                         m = "【高設定期待】初当たり(設定5域)・ベル共に優秀。粘り強く続行を推奨。"; 
@@ -524,7 +527,6 @@
                         m = "【中間〜高設定】初当たりは優秀だがベルが弱い。展開次第でヤメ時も探れ。"; 
                         cls = "alert-warning"; 
                     }
-                // 設定4域 (1/275以内)
                 } else if (atProb <= 275) {
                     if (bellProb <= 105 && bellProb !== 999) {
                         m = "【判断保留】初当たり(設定4域)は平凡だがベルが優秀。罠に注意しつつ様子見。"; 
@@ -533,7 +535,6 @@
                         m = "【中間設定濃厚】初当たり・ベル共に決め手に欠ける。深追いは危険。"; 
                         cls = "alert-warning"; 
                     }
-                // 低設定域 (1/276以上)
                 } else {
                     if (bellProb <= 105 && bellProb !== 999) {
                         m = "【判断保留】初当たりは絶望的だがベルだけは落ちる。基本は撤収を推奨。"; 
