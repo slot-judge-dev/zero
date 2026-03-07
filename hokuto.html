@@ -58,6 +58,7 @@
         .mark-ng { color: #8b949e; }
         .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 1px solid #fff; vertical-align: middle; }
 
+        /* 法的リスク回避用常駐フッター */
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
 </head>
@@ -200,6 +201,13 @@
     <button onclick="executeAnalysis()">北斗軍師の最終判断 (EXECUTE)</button>
     <div id="result-area-h"></div>
 
+    <div id="ad-container" style="margin: 15px auto; text-align: center; max-width: 300px; display: block;">
+        <p style="font-size: 10px; color: #888; margin-bottom: 5px;">スポンサーリンク</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4AZAW5+CI3Q42+0K+10YDIP" rel="nofollow">
+        <img border="0" width="300" height="250" alt="" src="https://www22.a8.net/svt/bgt?aid=260307941756&wid=001&eno=01&mid=s00000000002006207000&mc=1"></a>
+        <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4AZAW5+CI3Q42+0K+10YDIP" alt="">
+    </div>
+
     <div class="card" style="margin-top:15px;">
         <h3>📋 北斗 期待値カンペ</h3>
         <p style="font-size:0.8em; color:#8b949e;">※環境設定にリアルタイム連動。B以上/C以上示唆時は優先。</p>
@@ -270,12 +278,16 @@
         isVip = localStorage.getItem('zero_vip_status') === 'true';
         const vipSec = document.getElementById('vip-section');
         const freeNot = document.getElementById('free-notice');
+        const adContainer = document.getElementById('ad-container'); // Ω広告枠の取得
+
         if (isVip) {
             vipSec.style.display = 'block';
             freeNot.style.display = 'none';
+            if (adContainer) adContainer.style.display = 'none'; // ΩVIP時は広告非表示
         } else {
             vipSec.style.display = 'none';
             freeNot.style.display = 'block';
+            if (adContainer) adContainer.style.display = 'block'; // Ω未認証時は広告表示
         }
     }
 
@@ -316,7 +328,6 @@
         else if (reset) maxCeiling = 1280;
         let remainCeiling = Math.max(0, maxCeiling - abe);
 
-        // 期待値個別定数計算 (マスキング防止)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
@@ -461,7 +472,6 @@
             m = "【🔒VIP限定】精密AI診断プロトコル。初当たりと小役確率を独立して分析します。"; 
             cls = "alert-warning"; 
         } else {
-            // Ω：初当たり確率を第一関門とするMECEロジック（現実の解析値に準拠）
             if (trophy === 'rainbow') {
                 m = "【設定6確定】究極の挙動です。閉店まで全ツッパを推奨。";
                 cls = "alert-success";
@@ -469,7 +479,6 @@
                 m = "【設定4以上確定】高設定域です。粘り強く続行を推奨。";
                 cls = "alert-success";
             } else if (t >= 1500) {
-                // 設定6域 (1/245以内)
                 if (atProb <= 245) {
                     if (roleProb <= 42) {
                         m = "【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！";
@@ -478,7 +487,6 @@
                         m = "【高設定濃厚】初当たり(設定6域)は極めて優秀。小役のブレに注意しつつ続行。";
                         cls = "alert-success";
                     }
-                // 設定5域 (1/300以内)
                 } else if (atProb <= 300) {
                     if (roleProb <= 45) {
                         m = "【高設定期待】初当たり(設定5域)・小役共に優秀。粘り強く続行を推奨。";
@@ -487,7 +495,6 @@
                         m = "【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。";
                         cls = "alert-warning";
                     }
-                // 設定4域 (1/350以内)
                 } else if (atProb <= 350) {
                     if (roleProb <= 42 && roleProb !== 999) {
                         m = "【判断保留】初当たり(設定4域)は平凡だが小役が優秀。罠に注意しつつ様子見。";
@@ -496,7 +503,6 @@
                         m = "【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。";
                         cls = "alert-warning";
                     }
-                // 低設定域 (1/351以上)
                 } else {
                     if (roleProb <= 42 && roleProb !== 999) {
                         m = "【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。";
