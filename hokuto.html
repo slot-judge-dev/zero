@@ -148,7 +148,7 @@
         <div id="tab-lamp-side" class="tab-content">
             <label style="color:var(--warning);">▼ トップランプ左右（規定/モード示唆）</label>
             <table class="guide-table">
-                <tr><th style="width:30%;">色/挙動</th><th>示唆内容</th></tr>
+                <tr><th style="width:30%;">色/挙ர்ப்பு</th<th>示唆内容</th></tr>
                 <tr><td>白点灯/点滅</td><td>1280あべし以内示唆(点滅＝強)</td></tr>
                 <tr><td>水色点灯</td><td>896あべし以内示唆(弱)</td></tr>
                 <tr><td>水色点滅</td><td>576あべし以内示唆(弱)</td></tr>
@@ -278,16 +278,16 @@
         isVip = localStorage.getItem('zero_vip_status') === 'true';
         const vipSec = document.getElementById('vip-section');
         const freeNot = document.getElementById('free-notice');
-        const adContainer = document.getElementById('ad-container'); // Ω広告枠の取得
+        const adContainer = document.getElementById('ad-container'); 
 
         if (isVip) {
             vipSec.style.display = 'block';
             freeNot.style.display = 'none';
-            if (adContainer) adContainer.style.display = 'none'; // ΩVIP時は広告非表示
+            if (adContainer) adContainer.style.display = 'none'; 
         } else {
             vipSec.style.display = 'none';
             freeNot.style.display = 'block';
-            if (adContainer) adContainer.style.display = 'block'; // Ω未認証時は広告表示
+            if (adContainer) adContainer.style.display = 'block'; 
         }
     }
 
@@ -345,7 +345,6 @@
         let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
         let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
 
-        // Ω：AIコンサルペナルティの適正化（カバネリと統一）
         let bonusEV = evDiffBonus; let bonusWage = 0;
         if (aiConsult === 'strong' || aiConsult === 'rare') { bonusEV += 2500; bonusWage += 3000; }
         else if (aiConsult === 'weak') { bonusEV -= 300; bonusWage -= 500; }
@@ -384,6 +383,51 @@
         const s = getLogicStats();
         let res = `<h3>📊 北斗 最終戦略分析</h3>`;
         if (s.isTimeOver) { document.getElementById('result-area-h').innerHTML = res + `<div class="alert alert-error">🚨 22時以降。即時帰宅！</div>`; return; }
+
+        // Ω：AI Bro コンサル専用テキストフィードバックの動的生成
+        let broHtml = "";
+        if (isVip) {
+            const aiConsult = document.getElementById('ai_consult_h').value;
+            if (aiConsult !== 'none') {
+                let situation = "";
+                const inv = document.getElementById('invest_type').value;
+                const rate = document.getElementById('rate').value;
+                
+                if (s.time >= 21) situation += `今は<span style="color:var(--danger);">21時以降</span>の閉店リスクが極めて高い時間帯で、`;
+                else if (s.time >= 18) situation += `もう<span style="color:var(--warning);">18時以降</span>で時間的猶予が減っている中で、`;
+                
+                if (inv === 'cash' && rate !== '5.0') {
+                    situation += `<span style="color:var(--danger);">現金投資ギャップ</span>の痛手もある状況だ。`;
+                } else if (inv === 'medal') {
+                    situation += `<span style="color:var(--success);">持ちメダル遊技</span>なのはデカいな。`;
+                } else {
+                    situation += `等価での勝負だな。`;
+                }
+
+                let abeText = "";
+                if (s.abe >= 1100) abeText = `すでに<span style="color:var(--danger);">${s.abe}あべし</span>の天井到達圏内だ。`;
+                else if (s.abe >= 700) abeText = `<span style="color:var(--success);">${s.abe}あべし</span>まで育っているな。`;
+                else abeText = `まだ<span style="color:var(--warning);">${s.abe}あべし</span>の浅い所だが、`;
+
+                let advice = "";
+                if (aiConsult === 'weak') {
+                    advice = `ただの<span style="color:var(--warning);">ざわざわ（フェイク）</span>だな。連続演出ハズレまで平均15〜20G引っ張られて、約30枚のメダルと時間を無駄にする。このロスを反映して時給を下方修正したぜ。基本はヤメだBro！`;
+                } else if (aiConsult === 'strong') {
+                    advice = `<span style="color:var(--danger);">天命の刻（強前兆）</span>に移行したな！トータルの本前兆期待度は約35%〜40%だ。ここで仕留められるかが勝負の分かれ目だぜ。期待値を大幅に上乗せして再計算したから、最後までレバーに気合入れろBro！`;
+                } else if (aiConsult === 'char') {
+                    advice = `<span style="color:var(--success);">特定キャラ頻出</span>は通常B以上のサインだ！ここで中チェを引けば一撃必殺。期待値が底上げされてるからボーダーを下げて攻めるぜBro！`;
+                } else if (aiConsult === 'rare') {
+                    advice = `<span style="color:var(--danger);">中チェ等のレア役</span>降臨だな！通常でも25%、天国なら100%でブッ刺さる絶対的フラグだ。状態を見極めるまで絶対に席を立つなよBro！`;
+                }
+
+                broHtml = `<div class="alert alert-info" style="border-color: var(--accent); background: rgba(88, 166, 255, 0.05); margin-bottom: 12px;">
+                    <div style="font-size: 1.1em; font-weight: bold; color: var(--accent); margin-bottom: 8px;">🤖 AI Bro コンサルレポート</div>
+                    <div style="font-size: 0.95em; line-height: 1.6; color: #c9d1d9;">${situation}<br>${abeText}<br><br>${advice}</div>
+                </div>`;
+            }
+        }
+
+        if (broHtml !== "") res += broHtml;
 
         let displayEV = isVip ? `￥${s.ev}前後` : `<span style="background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;">【🔒VIP限定】</span>`;
         const evDisp = (val) => `<br><span style="font-size:1.1em; font-weight:bold; color:var(--success);">💰期待値: ${displayEV}</span><br><span style="font-size:0.85em; color:#8b949e;">🎯最大天井まで残り: <b>${s.remainCeiling}</b> あべし</span>`;
