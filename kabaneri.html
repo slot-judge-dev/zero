@@ -63,8 +63,6 @@
         .mark-star { color: #d29922; font-weight: bold; font-size: 1.1em; }
         .color-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; border: 1px solid #fff; vertical-align: middle; }
 
-        .ad-space { background: #161b22; border: 1px dashed #484f58; padding: 20px; text-align: center; color: #8b949e; font-size: 0.85em; border-radius: 8px; margin-top: 20px; }
-        
         /* 法的リスク回避用フッター（Ω同期版） */
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
@@ -232,6 +230,13 @@
     <button onclick="executeKabaneriAnalysis()">海門軍師の最終判断 (EXECUTE)</button>
     <div id="result-area-k"></div>
 
+    <div id="ad-container" style="margin: 15px auto; text-align: center; max-width: 300px; display: block;">
+        <p style="font-size: 10px; color: #888; margin-bottom: 5px;">スポンサーリンク</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4AZAW5+CI3Q42+0K+10YDIP" rel="nofollow">
+        <img border="0" width="300" height="250" alt="" src="https://www22.a8.net/svt/bgt?aid=260307941756&wid=001&eno=01&mid=s00000000002006207000&mc=1"></a>
+        <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4AZAW5+CI3Q42+0K+10YDIP" alt="">
+    </div>
+
     <div class="card" style="margin-top:15px;">
         <h3>📋 海門 期待値カンペ</h3>
         <p style="font-size:0.8em; color:#8b949e;">※環境設定に連動。短縮＝リセット/駆け抜け/景之ST後。</p>
@@ -292,12 +297,18 @@
 
     function checkVIPStatus() {
         isVip = localStorage.getItem('zero_vip_status') === 'true';
+        const vipSec = document.getElementById('vip-section');
+        const freeNot = document.getElementById('free-notice');
+        const adContainer = document.getElementById('ad-container'); // Ω広告枠の取得
+
         if (isVip) {
-            document.getElementById('vip-section').style.display = 'block';
-            document.getElementById('free-notice').style.display = 'none';
+            if (vipSec) vipSec.style.display = 'block';
+            if (freeNot) freeNot.style.display = 'none';
+            if (adContainer) adContainer.style.display = 'none'; // ΩVIP時は広告非表示
         } else {
-            document.getElementById('vip-section').style.display = 'none';
-            document.getElementById('free-notice').style.display = 'block';
+            if (vipSec) vipSec.style.display = 'none';
+            if (freeNot) freeNot.style.display = 'block';
+            if (adContainer) adContainer.style.display = 'block'; // Ω未認証時は広告表示
         }
     }
 
