@@ -317,7 +317,7 @@
         else if (reset) maxCeiling = 1280;
         let remainCeiling = Math.max(0, maxCeiling - abe);
 
-        // 期待値個別定数計算 (マスキング防止・Ω仕様)
+        // 期待値個別定数計算 (マスキング防止)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
@@ -329,7 +329,6 @@
         let evPremium = isValidPremium ? 2500 : EV_NONE;
         let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;
         
-        // 聖域：VIP差枚数フォロー加算 (v7.3.1)
         let evDiffBonus = (isVip && diff >= 1000 && abe <= 128) ? 1000 : 0;
 
         let wageAbe = (abe >= 1100) ? 5500 : (abe > 700) ? 3100 : (abe > 400) ? 1600 : 800;
@@ -452,34 +451,57 @@
         let m = ""; let cls = "alert-info";
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
         
-        // 小役合算確率の算出 (スイカ+弱チェ)
         let totalSmallRole = countSuika + countWCherry;
         let roleProb = (totalSmallRole > 0 && t > 0) ? (t / totalSmallRole) : 999;
 
-        // GA4イベント送信
         if (typeof gtag === 'function') {
             gtag('event', 'execute_guess', {'machine': 'hokuto_tensei2', 'is_vip': isVip});
         }
 
         if (!isVip) {
-            m = "【🔒VIP限定】精密AI診断プロトコル。スイカ・弱チェ確率と初当たりを多角的に分析します。"; 
+            m = "【🔒VIP限定】精密AI診断プロトコル。スイカ・弱チェ確率と初当たりを独立して多角的に分析します。"; 
             cls = "alert-warning"; 
         } else {
-            // Ω：MECEな深層診断ロジック
-            if (trophy === 'rainbow' || (t >= 1500 && atProb <= 245 && roleProb <= 32)) { 
-                m = "【設定6確定/濃厚】究極の数値です。小役・初当たり共に設定6を凌駕。閉店まで回し倒せ！"; 
-                cls = "alert-success"; 
-            } else if (trophy === 'gold' || (t >= 1500 && atProb <= 275 && roleProb <= 35)) { 
-                m = "【高設定期待】設定4・5の可能性が極めて高い。さらなるトロフィー出現に注視せよ。"; 
-                cls = "alert-success"; 
-            } else if (t >= 1500 && atProb > 320) { 
-                m = "【低設定濃厚】初当たりが重すぎます。これ以上の深追いは致命傷になりかねません。"; 
-                cls = "alert-error"; 
-            } else { 
+            // Ω：初当たり確率と小役確率を独立・段階的に評価しマスキングを排除
+            if (trophy === 'rainbow') {
+                m = "【設定6確定】究極の挙動です。閉店まで全ツッパを推奨。";
+                cls = "alert-success";
+            } else if (trophy === 'gold') {
+                m = "【設定4以上確定】高設定域です。粘り強く続行を推奨。";
+                cls = "alert-success";
+            } else if (t >= 1500) {
+                if (atProb <= 245) {
+                    if (roleProb <= 32) {
+                        m = "【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！";
+                        cls = "alert-success";
+                    } else {
+                        m = "【高設定濃厚】初当たり確率は優秀。小役のブレに注意しつつ続行。";
+                        cls = "alert-success";
+                    }
+                } else if (atProb <= 275) {
+                    if (roleProb <= 35) {
+                        m = "【高設定期待】初当たりは中間レベルだが小役が優秀。様子見続行。";
+                        cls = "alert-success";
+                    } else {
+                        m = "【中間設定の可能性】数値が少し弱含み。今後の展開次第で撤収も視野に。";
+                        cls = "alert-warning";
+                    }
+                } else {
+                    if (roleProb <= 32) {
+                        m = "【判断保留】初当たりは悪いが小役が異様に落ちる。罠の可能性あり、慎重に。";
+                        cls = "alert-warning";
+                    } else {
+                        m = "【低設定濃厚】初当たり・小役共に絶望的。即撤収を強く推奨。";
+                        cls = "alert-error";
+                    }
+                }
+            } else {
                 m = "【サンプル不足】現在の回転数では判断を保留。1500G以上の試行データを推奨します。"; 
             }
         }
-        document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 小役合算 1/${roleProb.toFixed(1)}<br>🤖 AI軍師: ${m}</div>`;
+        
+        let displayRoleProb = (roleProb === 999) ? "未入力" : `1/${roleProb.toFixed(1)}`;
+        document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 小役合算 ${displayRoleProb}<br>🤖 AI軍師: ${m}</div>`;
     }
 </script>
 </body>
