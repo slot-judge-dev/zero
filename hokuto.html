@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQDH3TYRTL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WQDH3TYRTL');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Protocol ZERO - 北斗の拳 転生2</title>
     <style>
         :root { --bg: #0a0c10; --panel: #161b22; --accent: #58a6ff; --text: #c9d1d9; --danger: #f85149; --success: #3fb950; --warning: #d29922; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 120px; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 140px; }
         
         .sticky-header { position: sticky; top: 0; background: var(--bg); z-index: 1000; padding: 10px 0; border-bottom: 2px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
         .back-btn { background: #21262d; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.9em; border: 1px solid #30363d; }
@@ -50,18 +58,9 @@
         .mark-ng { color: #8b949e; }
         .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 1px solid #fff; vertical-align: middle; }
 
-        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; }
+        /* 法的リスク回避用常駐フッター */
+        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WQDH3TYRTL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-WQDH3TYRTL');
-</script>
-
 </head>
 <body>
 
@@ -222,8 +221,8 @@
         <h3>🔍 精密設定推測カウンター</h3>
         <label>総回転数 (G) / 初当たり(AT)回数</label>
         <div style="display:flex;gap:8px;">
-            <input type="number" id="total_rot" placeholder="総回転数" oninput="updateHokutoCounter(); executeHokutoGuess();">
-            <input type="number" id="at_count" placeholder="AT回数" oninput="executeHokutoGuess();">
+            <input type="number" id="total_rot" placeholder="総回転数" oninput="updateHokutoCounter(); updateUI();">
+            <input type="number" id="at_count" placeholder="AT回数" oninput="updateUI();">
         </div>
         <div style="display:flex; gap:6px; margin-top:10px;">
             <div style="flex:1; background:#0d1117; padding:8px; border-radius:8px; text-align:center; border: 1px solid #30363d;">
@@ -246,15 +245,18 @@
             </div>
         </div>
         <label style="margin-top: 10px;">サミートロフィー確認</label>
-        <select id="trophy_h" onchange="executeHokutoGuess()">
+        <select id="trophy_h" onchange="updateUI()">
             <option value="none">示唆なし</option>
             <option value="gold">金以上確認 (設定4-5確定)</option>
             <option value="rainbow">虹/キリン確認 (設定6確定)</option>
         </select>
+        <button onclick="executeHokutoGuess()" style="background:var(--success); margin-top:10px;">AI推測プロトコルを実行</button>
         <div id="setting-result-h"></div>
     </div>
 
-    <div class="legal-footer">© 2026 Protocol ZERO</div>
+    <div class="legal-footer">
+        ※本アプリは独自解析データに基づく期待値シミュレーターであり、収益を完全に保証するものではありません。<br>© 2026 Protocol ZERO
+    </div>
 
 <script>
     let isVip = false;
@@ -319,24 +321,19 @@
         // 個別定数計算による期待値算出 (マスキング防止)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
-        
-        // リセット時ゾーン詳細 (MECE復旧)
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
         let evResetS = (reset && abe >= 450 && abe <= 576) ? 1400 : EV_NONE;
         let evResetL = (reset && abe >= 200 && abe <= 256) ? 1200 : EV_NONE;
-        
         let evModeB = (mode === 'shutter' && abe >= 150) ? 1400 : EV_NONE;
         let evModeC = (mode === 'mode_c' && abe >= 350) ? 1200 : EV_NONE;
         let evHeaven = (mode === 'heaven') ? 650 : EV_NONE;
         let evPremium = isValidPremium ? 2500 : EV_NONE;
         let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;
 
-        // 時給基礎
         let wageAbe = (abe >= 1100) ? 5500 : (abe > 700) ? 3100 : (abe > 400) ? 1600 : 800;
         let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
         let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
 
-        // ボーナス・デバフ
         let bonusEV = 0; let bonusWage = 0;
         if (aiConsult === 'strong' || aiConsult === 'rare') { bonusEV += 2500; bonusWage += 3000; }
         if (isVip && diff >= 1000 && abe <= 128) { bonusEV += 1000; bonusWage += 1000; }
@@ -344,16 +341,13 @@
         let baseEV = Math.max(evAbe, evResetZ, evResetS, evResetL, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;
         let baseWage = Math.max(wageAbe, wageReset, wageState) + bonusWage;
 
-        // 設定保障
         if (trophy === 'rainbow' || isHighSettingProb) { baseWage = Math.max(baseWage, 8000); baseEV = Math.max(baseEV, 6500); } 
         else if (trophy === 'gold') { baseWage = Math.max(baseWage, 5000); baseEV = Math.max(baseEV, 3000); }
 
-        // 環境ペナルティ重複適用 (数学的整合性)
         let finalEV = baseEV; let finalWage = baseWage;
         if (time >= 18) { let hp = (time - 17); finalWage -= (hp * 700); finalEV -= (hp * 400); }
         if (inv === 'cash' && rate !== '5.0') { finalWage -= 2500; if (finalEV > 0) finalEV = Math.floor(finalEV * 0.60); }
 
-        // 夜間ボーダー補正 (v7.3.1 UI連動保護)
         let baseBorder = 950;
         if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || aiConsult === 'strong') {
             baseBorder = 0; 
@@ -361,12 +355,9 @@
             if (mode === 'shutter') baseBorder = 150; 
             else if (mode === 'mode_c') baseBorder = 350; 
             else if (reset) baseBorder = 700;
-            
-            // 夜間・現金加算
             if (time >= 18) baseBorder += 100;
             if (time >= 21) baseBorder += 100;
             if (inv === 'cash' && rate !== '5.0') baseBorder += 150;
-            // VIP差枚優遇
             if (isVip && diff >= 1000) baseBorder = Math.max(0, baseBorder - 150);
         }
 
@@ -384,7 +375,6 @@
         let displayEV = isVip ? `￥${s.ev}前後` : `<span style="background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;">【🔒VIP限定】</span>`;
         const evDisp = (val) => `<br><span style="font-size:1.1em; font-weight:bold; color:var(--success);">💰期待値: ${displayEV}</span><br><span style="font-size:0.85em; color:#8b949e;">🎯最大天井まで残り: <b>${s.remainCeiling}</b> あべし</span>`;
 
-        // 21時アラートの絶対的UI出力 (View-Logic Binding確保)
         if (s.time === 21) {
             res += `<div class="alert alert-warning" style="border-color:var(--danger); color:var(--danger); background:rgba(248,81,73,0.1);">⚠️ 【閉店欠損アラート】21時を過ぎています。取り切れないリスクが急増中。</div>`;
         }
@@ -392,12 +382,11 @@
         if (s.ev < 0 && s.abe < 1100) {
             res += `<div class="alert alert-error">❄️ 【判定：撤収】待機目安: <b>${s.border}あべし</b>${evDisp(s.ev)}</div>`;
         } else {
-            if (s.abe >= 1100) res += `<div class="alert alert-ceiling">👊 【天井到達圏内】当選までヤメ厳禁。${evDisp(s.ev)}</div>`;
+            if (s.abe >= 1100) res += `<div class="alert alert-ceiling">👊 【天井到達圏内】当選までヤメ厳禁。${evDisp(s.ev)}<br><span style="text-decoration:underline;">🚨 当選までヤメ厳禁。</span></div>`;
             else if (s.abe >= s.border) res += `<div class="alert alert-success">🔥 【判定：GO】特攻せよ！${evDisp(s.ev)}</div>`;
             else res += `<div class="alert alert-error">❄️ 【判定：撤収】期待値不足。🎯目安: <b>${s.border}あべし</b>${evDisp(s.ev)}</div>`;
         }
         
-        // 動的強調ヤメ時ナビ
         let naviHtml = "";
         if (isVip) {
             const isCeiling = (s.abe >= 1100);
@@ -413,7 +402,7 @@
         } else {
             naviHtml = "【🔒VIP限定】状況に応じた最適解を提示。";
         }
-        res += `<div class="alert alert-warning">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;
+        res += `<div class="alert alert-warning" style="border-color:var(--accent);">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;
         document.getElementById('result-area-h').innerHTML = res;
     }
 
@@ -455,13 +444,20 @@
     }
 
     function executeHokutoGuess() {
-        const t = parseFloat(document.getElementById('total_rot').value); const a = parseFloat(document.getElementById('at_count').value);
+        const t = parseFloat(document.getElementById('total_rot').value) || 0; 
+        const a = parseFloat(document.getElementById('at_count').value) || 0;
         const trophy = document.getElementById('trophy_h').value;
-        if(t > 0 && a > 0) {
-            const p = Math.floor(t/a);
-            let m = (trophy === 'rainbow' || p <= 245) ? "【設定6確定/濃厚】" : (p <= 275 ? "【高設定期待】" : "【低設定濃厚】");
-            document.getElementById('setting-result-h').innerHTML = `<div class="alert alert-info">📊 初当確率: 1/${p} ➔ AI診断: ${m}</div>`;
+        let m = ""; let cls = "alert-info";
+        let atProb = (a > 0 && t > 0) ? (t / a) : 999;
+
+        if (!isVip) { m = "【🔒VIP限定】AI精密診断。"; cls = "alert-warning"; }
+        else {
+            if (trophy === 'rainbow' || (t >= 1500 && atProb <= 245)) { m = "【設定6確定/濃厚】全ツッパ。"; cls = "alert-success"; }
+            else if (trophy === 'gold' || (t >= 1500 && atProb <= 275)) { m = "【高設定期待】粘りも視野。"; cls = "alert-success"; }
+            else if (t >= 1500) { m = "【低設定濃厚】撤収推奨。"; cls = "alert-error"; }
+            else { m = "【サンプル不足】"; }
         }
+        document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 初当確率: 1/${Math.floor(atProb)}<br>🤖 AI診断: ${m}</div>`;
     }
 </script>
 </body>
