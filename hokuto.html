@@ -345,8 +345,10 @@
         let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
         let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
 
+        // Ω：AIコンサルペナルティの適正化（カバネリと統一）
         let bonusEV = evDiffBonus; let bonusWage = 0;
         if (aiConsult === 'strong' || aiConsult === 'rare') { bonusEV += 2500; bonusWage += 3000; }
+        else if (aiConsult === 'weak') { bonusEV -= 300; bonusWage -= 500; }
         if (evDiffBonus > 0) bonusWage += 1000;
 
         let baseEV = Math.max(evAbe, evResetZ, evResetS, evResetL, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;
