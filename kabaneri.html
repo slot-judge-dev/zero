@@ -382,7 +382,7 @@
         let bonusEV = 0; let bonusWage = 0;
         if (ai === 'super') { bonusEV += 3000; bonusWage += 3500; }
         else if (ai === 'chance') { bonusEV += 1000; bonusWage += 1200; }
-        else if (ai === 'weak') { bonusEV -= 500; bonusWage -= 1500; }
+        else if (ai === 'weak') { bonusEV -= 300; bonusWage -= 500; }
 
         let baseEV = Math.max(evCeilN, evCeilS, evCycN, evCycS, evZ150, evZ300, evZ450, evZ650, evKage, evPts, evPost) + bonusEV;
         let baseWage = Math.max(wageCeilN, wageCeilS, 800) + bonusWage;
@@ -416,6 +416,49 @@
         const s = getKabaneriStats();
         let res = `<h3 style="color:var(--kabaneri);">📊 海門 最終戦略分析</h3>`;
         if (s.isTimeOver) { document.getElementById('result-area-k').innerHTML = res + `<div class="alert alert-error">🚨 【致命的警告】22時を過ぎています。即時帰宅してください。</div>`; return; }
+
+        // Ω：AI Bro コンサル専用テキストフィードバックの動的生成
+        let broHtml = "";
+        if (isVip) {
+            const aiConsult = document.getElementById('k_ai_consult').value;
+            if (aiConsult !== 'none') {
+                let situation = "";
+                const inv = document.getElementById('invest_type').value;
+                const rate = document.getElementById('rate').value;
+                
+                if (s.time >= 21) situation += `今は<span style="color:var(--danger);">21時以降</span>の閉店リスクが極めて高い時間帯で、`;
+                else if (s.time >= 18) situation += `もう<span style="color:var(--warning);">18時以降</span>で時間的猶予が減っている中で、`;
+                
+                if (inv === 'cash' && rate !== '5.0') {
+                    situation += `<span style="color:var(--danger);">現金投資ギャップ</span>の痛手もある状況だ。`;
+                } else if (inv === 'medal') {
+                    situation += `<span style="color:var(--success);">持ちメダル遊技</span>なのはデカいな。`;
+                } else {
+                    situation += `等価での勝負だな。`;
+                }
+
+                let gText = "";
+                if (s.remainCeiling <= 150) gText = `すでに天井まで残り<span style="color:var(--danger);">${s.remainCeiling}G</span>の到達圏内だ。`;
+                else if (s.kg >= 650 || (s.isShort && s.kg >= 350)) gText = `ST間<span style="color:var(--success);">${s.kg}G</span>まで育っているな。`;
+                else gText = `まだST間<span style="color:var(--warning);">${s.kg}G</span>の浅い所だが、`;
+
+                let advice = "";
+                if (aiConsult === 'weak') {
+                    advice = `ただの<span style="color:var(--warning);">ざわざわ（フェイク）</span>だな。連続演出ハズレまで平均15〜20G引っ張られて、約30枚のメダルと時間を無駄にする。このロスを反映して時給を下方修正したぜ。基本はヤメだBro！`;
+                } else if (aiConsult === 'chance') {
+                    advice = `<span style="color:var(--danger);">カバネチャンス目</span>を引いたな！通常状態でも期待度25%、対応ランプ点灯中の高確なら100%（CZ or ボーナス濃厚）の激アツフラグだ。ランプ状況をしっかり確認しろBro！`;
+                } else if (aiConsult === 'super') {
+                    advice = `<span style="color:var(--danger);">カバネ最終防衛区域（強前兆）</span>に移行したな！本前兆濃厚の最強ルートだ。さらに消化中の複合チャンス目でエピボ100%書き換えがあるから、毎G気合入れてレバー叩けBro！`;
+                }
+
+                broHtml = `<div class="alert alert-info" style="border-color: var(--kabaneri); background: rgba(255, 123, 114, 0.05); margin-bottom: 12px;">
+                    <div style="font-size: 1.1em; font-weight: bold; color: var(--kabaneri); margin-bottom: 8px;">🤖 AI Bro コンサルレポート</div>
+                    <div style="font-size: 0.95em; line-height: 1.6; color: #c9d1d9;">${situation}<br>${gText}<br><br>${advice}</div>
+                </div>`;
+            }
+        }
+
+        if (broHtml !== "") res += broHtml;
 
         const evColor = s.ev > 0 ? "var(--kabaneri)" : "var(--danger)";
         let displayEV = isVip ? `￥${s.ev}前後` : `<span style="background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;">【🔒VIP限定】</span>`;
