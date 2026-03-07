@@ -48,6 +48,9 @@
         .clear-btn { background: transparent; color: #8b949e; border: 1px solid #30363d; padding: 10px; font-size: 0.8em; margin-top: 15px; box-shadow: none; cursor: pointer; width: 100%; }
         .clear-btn:hover { background: rgba(248, 81, 73, 0.1); color: #ffa198; border-color: #f85149; }
         .backup-btn { background: #21262d; border: 1px solid #30363d; padding: 12px; font-size: 0.9em; width: 100%; margin-top: 5px; }
+
+        /* 広告バナー枠（無料版用） */
+        .ad-space { background: #161b22; border: 1px dashed #484f58; padding: 20px; text-align: center; color: #8b949e; font-size: 0.85em; border-radius: 8px; margin-top: 20px; }
         
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; }
     </style>
@@ -73,7 +76,7 @@
         <h3 style="color: var(--warning);">👑 VIP アカウント認証</h3>
         <p style="font-size:0.8em; color:#8b949e; margin-top:0;">パスワードを入力して全機能を解放し、広告を非表示にします。</p>
         <a href="https://jirosamurai.gumroad.com/l/protocol-zero" target="_blank" style="display:block; text-align:center; color:var(--warning); margin-bottom:12px; font-size:0.9em; font-weight:bold; text-decoration:underline;">▶ VIP認証キーを入手する</a>
-        <input type="password" id="vip_pwd" placeholder="VIP認証キー (例: pz-vip-777x)">
+        <input type="password" id="vip_pwd" placeholder="購入したVIP認証キーを入力">
         <button onclick="authenticateVIP()" style="background:var(--warning); color:#000;">認証して機能を解放する</button>
         <div id="vip-status-msg"></div>
     </div>
@@ -152,7 +155,6 @@
         renderCalendar(); 
     };
 
-    // Ω：VIP認証ロジック更新 (pz-vip-777x)
     function authenticateVIP() {
         const pwd = document.getElementById('vip_pwd').value;
         const msgArea = document.getElementById('vip-status-msg');
@@ -166,7 +168,6 @@
         }
     }
 
-    // Ω：広告非表示ロジック
     function checkVIPStatus() {
         const isVip = localStorage.getItem('zero_vip_status') === 'true';
         const adContainer = document.getElementById('ad-container');
@@ -179,7 +180,6 @@
         }
     }
 
-    // Ω：カレンダー・データ保存ロジック更新 (slice(0,365)へ変更)
     function saveProfit() { 
         const i = parseInt(document.getElementById('in_medal').value)||0; 
         const o = parseInt(document.getElementById('out_medal').value)||0; 
