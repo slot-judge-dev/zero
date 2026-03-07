@@ -478,30 +478,55 @@
         let bellProb = (countKBell > 0 && t > 0) ? (t / countKBell) : 999;
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
 
-        // Ω：GA4イベント送信シミュレーション
+        // Ω：GA4イベント送信
         if (typeof gtag === 'function') {
             gtag('event', 'execute_guess', {'machine': 'kabaneri_unato', 'is_vip': isVip});
         }
 
         if (!isVip) { 
-            m = "【🔒VIP限定】精密AI診断プロトコル。下段ベルと初当たりを多角的に分析します。"; 
+            m = "【🔒VIP限定】精密AI診断プロトコル。下段ベルと初当たりを独立して多角的に分析します。"; 
             cls = "alert-warning"; 
         } else {
-            // Ω：MECEな深層診断ロジック（AND条件による厳格化）
-            if (trophy === 'rainbow' || (t >= 1000 && atProb <= 235 && bellProb <= 104)) { 
-                m = "【設定6確定/濃厚】究極の数値です。初当たり・ベル共に設定6を凌駕。閉店まで全ツッパ！"; 
+            // Ω：初当たり確率を第一関門とし、未入力(999)のマスキングを排除したMECEロジック
+            if (trophy === 'rainbow') { 
+                m = "【設定6確定】究極の挙動です。閉店まで全ツッパ推奨！"; 
                 cls = "alert-success"; 
-            } else if (trophy === 'gold' || (t >= 1000 && atProb <= 245 && bellProb <= 106)) { 
-                m = "【高設定期待】設定4・5の可能性が高い。さらなるトロフィー出現を待ちつつ粘れ。"; 
+            } else if (trophy === 'gold') { 
+                m = "【設定4以上確定】高設定域です。粘り強く続行せよ。"; 
                 cls = "alert-success"; 
-            } else if (t >= 1000 && (atProb > 255 || bellProb > 108)) { 
-                m = "【低設定濃厚】数値が悪すぎます。これ以上の深追いは致命傷になりかねません。撤収推奨。"; 
-                cls = "alert-error"; 
+            } else if (t >= 1000) {
+                if (atProb <= 235) {
+                    if (bellProb <= 104) {
+                        m = "【設定6濃厚】初当たり・ベル共に完璧。全ツッパ体制へ！"; 
+                        cls = "alert-success"; 
+                    } else {
+                        m = "【高設定濃厚】初当たり確率は優秀。ベルのブレに注意しつつ続行。"; 
+                        cls = "alert-success"; 
+                    }
+                } else if (atProb <= 255) {
+                    if (bellProb <= 107) {
+                        m = "【高設定期待】初当たりは中間レベルだがベルが優秀。様子見続行。"; 
+                        cls = "alert-success"; 
+                    } else {
+                        m = "【中間設定の可能性】数値が少し弱含み。今後の展開次第で撤収も視野に。"; 
+                        cls = "alert-warning"; 
+                    }
+                } else {
+                    if (bellProb <= 105 && bellProb !== 999) {
+                        m = "【判断保留】初当たりは悪いがベルが異様に落ちる。罠の可能性あり、慎重に。"; 
+                        cls = "alert-warning"; 
+                    } else {
+                        m = "【低設定濃厚】初当たりが重すぎます。即撤収を強く推奨。"; 
+                        cls = "alert-error"; 
+                    }
+                }
             } else { 
                 m = "【サンプル不足】現在の回転数では判断を保留。1000G以上の試行データを推奨します。"; 
             }
         }
-        document.getElementById('setting-result-k').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 🔔ベル 1/${bellProb.toFixed(1)}<br>🤖 AI軍師: ${m}</div>`;
+        
+        let displayBellProb = (bellProb === 999) ? "未入力" : `1/${bellProb.toFixed(1)}`;
+        document.getElementById('setting-result-k').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 🔔ベル ${displayBellProb}<br>🤖 AI軍師: ${m}</div>`;
     }
 </script>
 </body>
