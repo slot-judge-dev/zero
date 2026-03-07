@@ -58,6 +58,7 @@
         .mark-ng { color: #8b949e; }
         .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 1px solid #fff; vertical-align: middle; }
 
+        /* 法的リスク回避用常駐フッター（Ω同期版） */
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
 </head>
@@ -80,7 +81,7 @@
             </select>
             <select id="invest_type" onchange="updateUI()">
                 <option value="medal">持ちメダル</option>
-                <option value="cash">現金投資（ギャップ適用）</option>
+                <option value="cash">現金投資（ギャップペナルティ完全適用）</option>
             </select>
         </div>
         <label style="margin-top:8px;">現在時刻 (閉店欠損算出用)</label>
@@ -316,6 +317,7 @@
         else if (reset) maxCeiling = 1280;
         let remainCeiling = Math.max(0, maxCeiling - abe);
 
+        // 期待値個別定数計算 (マスキング防止)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
@@ -457,10 +459,10 @@
         }
 
         if (!isVip) {
-            m = "【🔒VIP限定】精密AI診断プロトコル。小役確率と初当たりを独立して多角的に分析します。"; 
+            m = "【🔒VIP限定】精密AI診断プロトコル。初当たりと小役確率を独立して分析します。"; 
             cls = "alert-warning"; 
         } else {
-            // Ω：初当たり確率を第一関門とし、未入力(999)のマスキングを排除したMECEロジック
+            // Ω：初当たり確率を第一関門とするMECEロジック（現実の解析値に準拠）
             if (trophy === 'rainbow') {
                 m = "【設定6確定】究極の挙動です。閉店まで全ツッパを推奨。";
                 cls = "alert-success";
@@ -468,26 +470,38 @@
                 m = "【設定4以上確定】高設定域です。粘り強く続行を推奨。";
                 cls = "alert-success";
             } else if (t >= 1500) {
+                // 設定6域 (1/245以内)
                 if (atProb <= 245) {
-                    if (roleProb <= 32) {
+                    if (roleProb <= 42) {
                         m = "【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！";
                         cls = "alert-success";
                     } else {
-                        m = "【高設定濃厚】初当たり確率は優秀。小役のブレに注意しつつ続行。";
+                        m = "【高設定濃厚】初当たり(設定6域)は極めて優秀。小役のブレに注意しつつ続行。";
                         cls = "alert-success";
                     }
-                } else if (atProb <= 275) {
-                    if (roleProb <= 35) {
-                        m = "【高設定期待】初当たりは中間レベルだが小役が優秀。様子見続行。";
+                // 設定5域 (1/300以内)
+                } else if (atProb <= 300) {
+                    if (roleProb <= 45) {
+                        m = "【高設定期待】初当たり(設定5域)・小役共に優秀。粘り強く続行を推奨。";
                         cls = "alert-success";
                     } else {
-                        m = "【中間設定の可能性】数値が少し弱含み。今後の展開次第で撤収も視野に。";
+                        m = "【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。";
                         cls = "alert-warning";
                     }
-                } else {
-                    if (roleProb <= 32 && roleProb !== 999) {
-                        m = "【判断保留】初当たりは悪いが小役が異様に落ちる。罠の可能性あり、慎重に。";
+                // 設定4域 (1/350以内)
+                } else if (atProb <= 350) {
+                    if (roleProb <= 42 && roleProb !== 999) {
+                        m = "【判断保留】初当たり(設定4域)は平凡だが小役が優秀。罠に注意しつつ様子見。";
                         cls = "alert-warning";
+                    } else {
+                        m = "【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。";
+                        cls = "alert-warning";
+                    }
+                // 低設定域 (1/351以上)
+                } else {
+                    if (roleProb <= 42 && roleProb !== 999) {
+                        m = "【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。";
+                        cls = "alert-error";
                     } else {
                         m = "【低設定濃厚】初当たりが重すぎます。即撤収を強く推奨。";
                         cls = "alert-error";
