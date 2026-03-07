@@ -14,7 +14,7 @@
     <title>Protocol ZERO - 北斗の拳 転生2</title>
     <style>
         :root { --bg: #0a0c10; --panel: #161b22; --accent: #58a6ff; --text: #c9d1d9; --danger: #f85149; --success: #3fb950; --warning: #d29922; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 140px; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 160px; }
         
         .sticky-header { position: sticky; top: 0; background: var(--bg); z-index: 1000; padding: 10px 0; border-bottom: 2px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
         .back-btn { background: #21262d; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.9em; border: 1px solid #30363d; }
@@ -58,7 +58,7 @@
         .mark-ng { color: #8b949e; }
         .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 1px solid #fff; vertical-align: middle; }
 
-        /* 法的リスク回避用常駐フッター */
+        /* 法的リスク回避用：常駐フッター（Ω仕様） */
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
 </head>
@@ -250,7 +250,7 @@
             <option value="gold">金以上確認 (設定4-5確定)</option>
             <option value="rainbow">虹/キリン確認 (設定6確定)</option>
         </select>
-        <button onclick="executeHokutoGuess()" style="background:var(--success); margin-top:10px;">AI推測プロトコルを実行</button>
+        <button onclick="executeHokutoGuess()" style="background:var(--success); margin-top:10px;">AI推測プロトコルを実行 (EXECUTE)</button>
         <div id="setting-result-h"></div>
     </div>
 
@@ -310,7 +310,6 @@
         const a_cnt = parseFloat(document.getElementById('at_count').value) || 0;
         let isHighSettingProb = (t_rot >= 2000 && (t_rot/a_cnt) <= 245); 
 
-        // 天井設定 (v7.3.1 聖域)
         let maxCeiling = 1536; 
         if (mode === 'heaven') maxCeiling = 128;
         else if (mode === 'mode_c') maxCeiling = 576;
@@ -318,7 +317,6 @@
         else if (reset) maxCeiling = 1280;
         let remainCeiling = Math.max(0, maxCeiling - abe);
 
-        // 個別定数計算による期待値算出 (マスキング防止)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
@@ -450,12 +448,27 @@
         let m = ""; let cls = "alert-info";
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
 
-        if (!isVip) { m = "【🔒VIP限定】AI精密診断。"; cls = "alert-warning"; }
-        else {
-            if (trophy === 'rainbow' || (t >= 1500 && atProb <= 245)) { m = "【設定6確定/濃厚】全ツッパ。"; cls = "alert-success"; }
-            else if (trophy === 'gold' || (t >= 1500 && atProb <= 275)) { m = "【高設定期待】粘りも視野。"; cls = "alert-success"; }
-            else if (t >= 1500) { m = "【低設定濃厚】撤収推奨。"; cls = "alert-error"; }
-            else { m = "【サンプル不足】"; }
+        // Ω：GA4イベント送信シミュレーション
+        if (typeof gtag === 'function') {
+            gtag('event', 'execute_guess', {'machine': 'hokuto_tensei2', 'is_vip': isVip});
+        }
+
+        if (!isVip) {
+            m = "【🔒VIP限定】AI精密診断。"; 
+            cls = "alert-warning"; 
+        } else {
+            if (trophy === 'rainbow' || (t >= 1500 && atProb <= 245)) { 
+                m = "【設定6確定/濃厚】究極の挙動です。閉店まで全ツッパを推奨。"; 
+                cls = "alert-success"; 
+            } else if (trophy === 'gold' || (t >= 1500 && atProb <= 275)) { 
+                m = "【高設定期待】粘り強く続行し、トロフィー出現を待て。"; 
+                cls = "alert-success"; 
+            } else if (t >= 1500) { 
+                m = "【低設定濃厚】これ以上の投資は危険。撤収を強く推奨。"; 
+                cls = "alert-error"; 
+            } else { 
+                m = "【サンプル不足】総回転数1500G以上の試行で精度が劇的に向上します。"; 
+            }
         }
         document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 初当確率: 1/${Math.floor(atProb)}<br>🤖 AI診断: ${m}</div>`;
     }
