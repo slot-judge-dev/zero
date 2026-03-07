@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQDH3TYRTL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WQDH3TYRTL');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Protocol ZERO - カバネリ 海門決戦</title>
     <style>
         :root { --bg: #0a0c10; --panel: #161b22; --kabaneri: #ff7b72; --text: #c9d1d9; --danger: #f85149; --success: #3fb950; --warning: #d29922; --accent: #58a6ff; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 120px; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 160px; }
         
         .sticky-header { position: sticky; top: 0; background: var(--bg); z-index: 1000; padding: 10px 0; border-bottom: 2px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
         .back-btn { background: #21262d; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.9em; border: 1px solid #30363d; }
@@ -38,7 +46,7 @@
         .counter-btn { width:35px; padding:6px 0; background:#21262d; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:1.1em; box-shadow:none; }
         .counter-btn.plus { background: var(--kabaneri); }
 
-        /* --- バイブル（知恵袋）タブシステム --- */
+        /* バイブル（知恵袋）タブシステム */
         .bible-tabs { display: flex; gap: 4px; margin-bottom: 12px; border-bottom: 1px solid #30363d; overflow-x: auto; white-space: nowrap; }
         .tab-btn { padding: 10px 8px; background: #1b2128; color: #8b949e; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 0.75em; font-weight: bold; transition: 0.3s; flex: 1; }
         .tab-btn.active { background: #30363d; color: white; border-bottom: 2px solid var(--kabaneri); }
@@ -57,8 +65,8 @@
 
         .ad-space { background: #161b22; border: 1px dashed #484f58; padding: 20px; text-align: center; color: #8b949e; font-size: 0.85em; border-radius: 8px; margin-top: 20px; }
         
-        /* 法的リスク回避用フッター（更新済） */
-        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; line-height: 1.4; }
+        /* 法的リスク回避用フッター（Ω同期版） */
+        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -242,8 +250,8 @@
         <h3>🔍 海門 精密設定推測</h3>
         <label>総回転数 (G) / 初当たり回数</label>
         <div style="display:flex;gap:8px; margin-bottom:15px;">
-            <input type="number" id="total_rot_k" placeholder="総回転数" oninput="updateKabaneriCounter(); updateUI(); executeKabaneriGuess();">
-            <input type="number" id="at_count_k" placeholder="初当回数" oninput="updateUI(); executeKabaneriGuess();">
+            <input type="number" id="total_rot_k" placeholder="総回転数" oninput="updateKabaneriCounter(); updateUI();">
+            <input type="number" id="at_count_k" placeholder="初当回数" oninput="updateUI();">
         </div>
         <div style="background:#0d1117; padding:12px; border-radius:8px; border:1px solid #30363d; margin-bottom:15px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -262,7 +270,7 @@
             <option value="gold">金以上確認 (設定4-5確定)</option>
             <option value="rainbow">虹/キリン確認 (設定6確定)</option>
         </select>
-        <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px;">AI推測プロトコルを実行</button>
+        <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px;">AI推測プロトコルを実行 (EXECUTE)</button>
         <div id="setting-result-k"></div>
     </div>
 
@@ -404,7 +412,7 @@
         } else {
             if (s.pts === 'large') res += `<div class="alert alert-warning" style="border-color:#fff; color:#fff; background:#000;">🌑 【黒煙(大) 蓄積】<br>次回STが「裏景之ST」濃厚！絶対に捨てないでください。${evDisp(s.ev)}</div>`;
             else if (s.isKage) res += `<div class="alert alert-warning" style="border-color:var(--kabaneri); color:white;">⚠️ 景之(かげゆき)ループ発動中<br>短縮＆ループ濃厚。ヤメ厳禁。${evDisp(s.ev)}</div>`;
-            else if (s.remainCeiling <= 150) res += `<div class="alert alert-ceiling">🚂 【天井到達圏内】<br>ST当選まで一直線です。${evDisp(s.ev)}</div>`;
+            else if (s.remainCeiling <= 150) res += `<div class="alert alert-ceiling">🚂 【天井到達圏内】<br>ST当選まで一直線です。<br><span style="text-decoration:underline;">🚨 当選までヤメ厳禁。</span>${evDisp(s.ev)}</div>`;
             else if (s.isShort && s.kg >= s.border) res += `<div class="alert alert-success">🔥 【短縮天井 狙い】<br>596天井へ特攻してください。${evDisp(s.ev)}</div>`;
             else if (!s.isShort && s.kg >= s.border) res += `<div class="alert alert-success">🔥 【通常天井 狙い】<br>996天井へ特攻してください。${evDisp(s.ev)}</div>`;
             else if ((s.kg >= 100 && s.kg <= 150) || s.kcycle === 1) res += `<div class="alert alert-info">⚡ 【1周期目 ゾーン狙い】${evDisp(s.ev)}</div>`;
@@ -455,11 +463,13 @@
         if(type === 'bell') countKBell = Math.max(0, countKBell + val);
         updateKabaneriCounter();
     }
+    
     function updateKabaneriCounter() {
         document.getElementById('val_k_bell').innerText = countKBell;
         const t = parseFloat(document.getElementById('total_rot_k').value) || 0;
         document.getElementById('prob_k_bell').innerText = (countKBell > 0 && t > 0) ? `1/${(t/countKBell).toFixed(1)}` : "確率: ---";
     }
+
     function executeKabaneriGuess() {
         const trophy = document.getElementById('hidden_trophy').value;
         const t = parseFloat(document.getElementById('total_rot_k').value) || 0;
@@ -467,14 +477,31 @@
         let m = ""; let cls = "alert-info";
         let bellProb = (countKBell > 0 && t > 0) ? (t / countKBell) : 999;
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
-        if (!isVip) { m = "【🔒VIP限定】精密設定診断。"; cls = "alert-warning"; }
-        else {
-            if (trophy === 'rainbow') { m = "【設定6確定】全ツッパ。"; cls = "alert-success"; }
-            else if (t >= 1000 && atProb <= 235 && bellProb <= 105) { m = "【設定6濃厚】全ツッパ。"; cls = "alert-success"; }
-            else if (t >= 1000) { m = "【中間〜低設定濃厚】撤収も視野に。"; cls = "alert-error"; }
-            else { m = "【サンプル不足】"; }
+
+        // Ω：GA4イベント送信シミュレーション
+        if (typeof gtag === 'function') {
+            gtag('event', 'execute_guess', {'machine': 'kabaneri_unato', 'is_vip': isVip});
         }
-        document.getElementById('setting-result-k').innerHTML = `<div class="alert ${cls}">📊 初当たり: 1/${Math.floor(atProb)} / 🔔 ベル: 1/${bellProb.toFixed(1)}<br>🤖 AI診断: ${m}</div>`;
+
+        if (!isVip) { 
+            m = "【🔒VIP限定】精密AI診断プロトコル。下段ベルと初当たりを多角的に分析します。"; 
+            cls = "alert-warning"; 
+        } else {
+            // Ω：MECEな深層診断ロジック（AND条件による厳格化）
+            if (trophy === 'rainbow' || (t >= 1000 && atProb <= 235 && bellProb <= 104)) { 
+                m = "【設定6確定/濃厚】究極の数値です。初当たり・ベル共に設定6を凌駕。閉店まで全ツッパ！"; 
+                cls = "alert-success"; 
+            } else if (trophy === 'gold' || (t >= 1000 && atProb <= 245 && bellProb <= 106)) { 
+                m = "【高設定期待】設定4・5の可能性が高い。さらなるトロフィー出現を待ちつつ粘れ。"; 
+                cls = "alert-success"; 
+            } else if (t >= 1000 && (atProb > 255 || bellProb > 108)) { 
+                m = "【低設定濃厚】数値が悪すぎます。これ以上の深追いは致命傷になりかねません。撤収推奨。"; 
+                cls = "alert-error"; 
+            } else { 
+                m = "【サンプル不足】現在の回転数では判断を保留。1000G以上の試行データを推奨します。"; 
+            }
+        }
+        document.getElementById('setting-result-k').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 🔔ベル 1/${bellProb.toFixed(1)}<br>🤖 AI軍師: ${m}</div>`;
     }
 </script>
 </body>
