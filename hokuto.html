@@ -58,7 +58,7 @@
         .mark-ng { color: #8b949e; }
         .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 1px solid #fff; vertical-align: middle; }
 
-        /* 法的リスク回避用：常駐フッター（Ω仕様） */
+        /* 法的リスク回避用常駐フッター（Ω同期版） */
         .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
     </style>
 </head>
@@ -176,7 +176,7 @@
     <div id="vip-section" style="display:none;">
         <div class="card" style="border: 2px solid var(--warning);">
             <div id="wage-display-h" class="live-wage">￥---</div>
-            <label style="color:var(--warning);">💎 ツラヌキ差枚数スライダー (+1000枚超で優遇)</label>
+            <label style="color:var(--warning);">💎 ツラヌキ差枚数スライダー (+1000枚超で期待値加算)</label>
             <input type="range" id="diff_coins_h" min="-3000" max="3000" step="100" value="0" oninput="document.getElementById('diff_val_h').innerText = this.value + '枚'; updateUI();">
             <div id="diff_val_h" style="text-align:right; font-size:0.9em; color:var(--accent); font-weight:bold;">0枚</div>
             <label style="color:var(--warning);">💎 ボーダー微調整 (±100あべし)</label>
@@ -317,6 +317,7 @@
         else if (reset) maxCeiling = 1280;
         let remainCeiling = Math.max(0, maxCeiling - abe);
 
+        // 期待値個別定数計算 (マスキング防止・Ω仕様)
         const EV_NONE = -600;
         let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;
         let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;
@@ -327,14 +328,17 @@
         let evHeaven = (mode === 'heaven') ? 650 : EV_NONE;
         let evPremium = isValidPremium ? 2500 : EV_NONE;
         let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;
+        
+        // 聖域：VIP差枚数フォロー加算 (v7.3.1)
+        let evDiffBonus = (isVip && diff >= 1000 && abe <= 128) ? 1000 : 0;
 
         let wageAbe = (abe >= 1100) ? 5500 : (abe > 700) ? 3100 : (abe > 400) ? 1600 : 800;
         let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
         let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
 
-        let bonusEV = 0; let bonusWage = 0;
+        let bonusEV = evDiffBonus; let bonusWage = 0;
         if (aiConsult === 'strong' || aiConsult === 'rare') { bonusEV += 2500; bonusWage += 3000; }
-        if (isVip && diff >= 1000 && abe <= 128) { bonusEV += 1000; bonusWage += 1000; }
+        if (evDiffBonus > 0) bonusWage += 1000;
 
         let baseEV = Math.max(evAbe, evResetZ, evResetS, evResetL, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;
         let baseWage = Math.max(wageAbe, wageReset, wageState) + bonusWage;
@@ -447,30 +451,35 @@
         const trophy = document.getElementById('trophy_h').value;
         let m = ""; let cls = "alert-info";
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
+        
+        // 小役合算確率の算出 (スイカ+弱チェ)
+        let totalSmallRole = countSuika + countWCherry;
+        let roleProb = (totalSmallRole > 0 && t > 0) ? (t / totalSmallRole) : 999;
 
-        // Ω：GA4イベント送信シミュレーション
+        // GA4イベント送信
         if (typeof gtag === 'function') {
             gtag('event', 'execute_guess', {'machine': 'hokuto_tensei2', 'is_vip': isVip});
         }
 
         if (!isVip) {
-            m = "【🔒VIP限定】AI精密診断。"; 
+            m = "【🔒VIP限定】精密AI診断プロトコル。スイカ・弱チェ確率と初当たりを多角的に分析します。"; 
             cls = "alert-warning"; 
         } else {
-            if (trophy === 'rainbow' || (t >= 1500 && atProb <= 245)) { 
-                m = "【設定6確定/濃厚】究極の挙動です。閉店まで全ツッパを推奨。"; 
+            // Ω：MECEな深層診断ロジック
+            if (trophy === 'rainbow' || (t >= 1500 && atProb <= 245 && roleProb <= 32)) { 
+                m = "【設定6確定/濃厚】究極の数値です。小役・初当たり共に設定6を凌駕。閉店まで回し倒せ！"; 
                 cls = "alert-success"; 
-            } else if (trophy === 'gold' || (t >= 1500 && atProb <= 275)) { 
-                m = "【高設定期待】粘り強く続行し、トロフィー出現を待て。"; 
+            } else if (trophy === 'gold' || (t >= 1500 && atProb <= 275 && roleProb <= 35)) { 
+                m = "【高設定期待】設定4・5の可能性が極めて高い。さらなるトロフィー出現に注視せよ。"; 
                 cls = "alert-success"; 
-            } else if (t >= 1500) { 
-                m = "【低設定濃厚】これ以上の投資は危険。撤収を強く推奨。"; 
+            } else if (t >= 1500 && atProb > 320) { 
+                m = "【低設定濃厚】初当たりが重すぎます。これ以上の深追いは致命傷になりかねません。"; 
                 cls = "alert-error"; 
             } else { 
-                m = "【サンプル不足】総回転数1500G以上の試行で精度が劇的に向上します。"; 
+                m = "【サンプル不足】現在の回転数では判断を保留。1500G以上の試行データを推奨します。"; 
             }
         }
-        document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 初当確率: 1/${Math.floor(atProb)}<br>🤖 AI診断: ${m}</div>`;
+        document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 小役合算 1/${roleProb.toFixed(1)}<br>🤖 AI軍師: ${m}</div>`;
     }
 </script>
 </body>
