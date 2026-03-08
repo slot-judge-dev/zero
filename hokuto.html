@@ -33,6 +33,7 @@
         .alert-success { background: rgba(63, 185, 80, 0.1); border-left-color: var(--success); color: #56d364; }
         .alert-error { background: rgba(248, 81, 73, 0.1); border-left-color: var(--danger); color: #ffa198; }
         .alert-warning { background: rgba(210, 153, 34, 0.1); border-left-color: var(--warning); color: #e3b341; }
+        .alert-info { background: rgba(88, 166, 255, 0.1); border-left-color: var(--accent); color: #79c0ff; }
         .alert-ceiling { background: #f85149; color: white; border: 2px solid white; animation: blink 0.8s infinite; text-align: center; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
@@ -110,65 +111,53 @@
     </div>
 
     <div class="card" style="border: 1px solid #30363d; background: #0d1117;">
-        <h3 style="color:var(--accent); font-size:1em;">📜 軍師の知恵袋（お役立ち）</h3>
+        <h3 style="color:var(--accent); font-size:1em;">📜 軍師の知恵袋（転生2専用）</h3>
         <div class="bible-tabs">
-            <button class="tab-btn active" onclick="openBible(event, 'tab-zones')">モード推測</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-lamp-center')">100G中央</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-lamp-side')">100G左右</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-sub-lcd')">サブ液晶</button>
+            <button class="tab-btn active" onclick="openBible(event, 'tab-zones')">モード/ゾーン</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-lamps')">筐体ランプ</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-densho')">伝承/宝玉</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-battle')">バトル/恩恵</button>
         </div>
 
         <div id="tab-zones" class="tab-content active">
-            <label style="color:var(--success);">▼ フェイクAT前兆発生による推測</label>
+            <label style="color:var(--success);">▼ 滞在モード別の最大天井</label>
             <table class="guide-table">
-                <tr><th>あべし数</th><th>示唆内容</th></tr>
-                <tr><td>1～64</td><td><span class="mark-go">モードB以上滞在確定</span></td></tr>
-                <tr><td>129～192</td><td><span class="mark-go">モードB or C滞在確定</span></td></tr>
-                <tr><td>257～320</td><td>(通常B/Cのフェイク前兆なし区間)</td></tr>
-                <tr><td>321～384</td><td>モードB or C滞在の可能性UP</td></tr>
-                <tr><td>385～512</td><td><span class="mark-go">モードB or C滞在確定</span></td></tr>
-                <tr><td>705～768</td><td>モードB滞在の可能性UP</td></tr>
+                <tr><th>滞在モード</th><th>通常時</th><th>設定変更後</th></tr>
+                <tr><td>モードA</td><td>1536あべし</td><td>1280あべし</td></tr>
+                <tr><td>モードB</td><td>896あべし</td><td>896あべし</td></tr>
+                <tr><td>モードC</td><td>576あべし</td><td>576あべし</td></tr>
+                <tr><td>天国モード</td><td>128あべし</td><td>128あべし</td></tr>
             </table>
+            <p style="font-size:0.7em; color:#8b949e; margin-top:8px;">※193〜256あべしは全モード共通の強ゾーン！</p>
         </div>
 
-        <div id="tab-lamp-center" class="tab-content">
-            <label style="color:var(--warning);">▼ トップランプ中央（設定示唆）</label>
-            <table class="guide-table">
-                <tr><th style="width:35%;">パターン</th><th>示唆法則</th></tr>
-                <tr><td>白点灯</td><td>設定2・4で出やすい</td></tr>
-                <tr><td>白点滅</td><td>設定3・5で出やすい</td></tr>
-                <tr><td><span class="color-dot" style="background:#00ffff;"></span>水色点灯</td><td>高設定期待度アップ</td></tr>
-                <tr><td><span class="color-dot" style="background:#00ffff;"></span>水色点滅</td><td>高設定期待度大幅アップ</td></tr>
-                <tr><td><span class="color-dot" style="background:#adff2f;"></span>黄緑点灯</td><td><span class="mark-go">設定2以上確定</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#adff2f;"></span>黄緑点滅</td><td><span class="mark-go">設定4以上確定</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#ffd700;"></span>金点灯</td><td><span class="mark-go">設定6確定!!</span></td></tr>
-            </table>
+        <div id="tab-lamps" class="tab-content">
+            <label style="color:var(--warning);">▼ あべし表示と上部ランプ示唆</label>
+            <ul style="font-size:0.8em; color:#c9d1d9; line-height:1.5; padding-left:20px;">
+                <li><span style="color:#ffd700;">台座が金色（数字が赤色）</span>：天国モード滞在濃厚！</li>
+                <li><span style="color:var(--accent);">100Gごとのランプ矛盾</span>：通常B以上の期待度UP！</li>
+                <li><span style="color:var(--success);">黄緑点灯/点滅</span>：モードB/C以上の濃厚示唆。</li>
+            </ul>
         </div>
 
-        <div id="tab-lamp-side" class="tab-content">
-            <label style="color:var(--warning);">▼ トップランプ左右（規定/モード示唆）</label>
+        <div id="tab-densho" class="tab-content">
+            <label style="color:var(--accent);">▼ 伝承モード（天破ループ率）</label>
             <table class="guide-table">
-                <tr><th style="width:30%;">色/挙ர்ப்பு</th<th>示唆内容</th></tr>
-                <tr><td>白点灯/点滅</td><td>1280あべし以内示唆(点滅＝強)</td></tr>
-                <tr><td>水色点灯</td><td>896あべし以内示唆(弱)</td></tr>
-                <tr><td>水色点滅</td><td>576あべし以内示唆(弱)</td></tr>
-                <tr><td>水色＋白流</td><td>上記規定あべしの期待度【強】</td></tr>
-                <tr><td><span class="color-dot" style="background:#adff2f;"></span>黄緑点灯</td><td>モードB以上濃厚 <span class="mark-go">(否定で設定2以上)</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#adff2f;"></span>黄緑点滅</td><td>モードC以上濃厚 <span class="mark-go">(否定で設定2以上)</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#ffd700;"></span>金点灯</td><td>モードB以上濃厚 <span class="mark-go">(否定で設定4以上)</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#ffd700;"></span>金点滅</td><td>モードC以上濃厚 <span class="mark-go">(否定で設定4以上)</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#800080;"></span>紫点灯</td><td>モードB以上濃厚 <span class="mark-go">(否定で設定6確定)</span></td></tr>
-                <tr><td><span class="color-dot" style="background:#800080;"></span>紫点滅</td><td>モードC以上濃厚 <span class="mark-go">(否定で設定6確定)</span></td></tr>
+                <tr><th>種類</th><th>ループ率</th><th>宝玉示唆</th></tr>
+                <tr><td>ショート</td><td>約24.5%</td><td>点滅なし</td></tr>
+                <tr><td>ミドル</td><td>約69.4%</td><td>白点滅</td></tr>
+                <tr><td>ロング</td><td>約90.1%</td><td>紫点滅</td></tr>
             </table>
+            <p style="font-size:0.7em; color:#8b949e; margin-top:8px;">※白/紫点滅はAT本前兆示唆も兼ねる。</p>
         </div>
 
-        <div id="tab-sub-lcd" class="tab-content">
-            <label style="color:var(--warning);">▼ サブ液晶上下ランプ（残りあべし示唆）</label>
+        <div id="tab-battle" class="tab-content">
+            <label style="color:var(--danger);">▼ 敵キャラ別・勝利時の恩恵</label>
             <table class="guide-table">
-                <tr><th>パターン</th><th>規定到達までの残りあべし数</th></tr>
-                <tr><td><span class="color-dot" style="background:#00ffff;"></span>水色点灯</td><td>早い当り示唆(弱)</td></tr>
-                <tr><td><span class="color-dot" style="background:#adff2f;"></span>黄緑点灯</td><td>早い当り示唆(中)</td></tr>
-                <tr><td><span class="color-dot" style="background:#ffd700;"></span>金点灯</td><td><span class="mark-go">早い当り示唆(強)</span></td></tr>
+                <tr><th>敵キャラ</th><th>勝利時の恩恵</th></tr>
+                <tr><td>アミバ</td><td>ATレベル2以上濃厚！</td></tr>
+                <tr><td>でかいばばあ</td><td>ATレベル3以上濃厚！</td></tr>
+                <tr><td>シン/サウザー/ジャギ</td><td>北斗揃い or 上位AT期待度UP！</td></tr>
             </table>
         </div>
     </div>
@@ -176,19 +165,21 @@
     <div id="vip-section" style="display:none;">
         <div class="card" style="border: 2px solid var(--warning);">
             <div id="wage-display-h" class="live-wage">￥---</div>
-            <label style="color:var(--warning);">💎 ツラヌキ差枚数スライダー (+1000枚超で期待値加算)</label>
+            <label style="color:var(--warning);">💎 ツラヌキ差枚数スライダー (+1000枚超で有利リセット128フォロー)</label>
             <input type="range" id="diff_coins_h" min="-3000" max="3000" step="100" value="0" oninput="document.getElementById('diff_val_h').innerText = this.value + '枚'; updateUI();">
             <div id="diff_val_h" style="text-align:right; font-size:0.9em; color:var(--accent); font-weight:bold;">0枚</div>
             <label style="color:var(--warning);">💎 ボーダー微調整 (±100あべし)</label>
             <input type="range" id="border_adj_h" min="-100" max="100" step="10" value="0" oninput="document.getElementById('adj_val_h').innerText = this.value + 'あべし'; updateUI();">
             <div id="adj_val_h" style="text-align:right; font-size:0.9em; color:var(--accent); font-weight:bold;">0あべし</div>
-            <label style="color:var(--warning);">🤖 AI Bro コンサル</label>
+            <label style="color:var(--warning);">🤖 AI Bro コンサル（転生2専用）</label>
             <select id="ai_consult_h" onchange="updateUI()">
                 <option value="none">選択なし</option>
-                <option value="weak">ざわざわのみ（弱前兆）</option>
-                <option value="strong">天命の刻移行（強前兆）</option>
-                <option value="char">特定キャラの頻出（通常B以上示唆）</option>
-                <option value="rare">レア役直後（中チェ等）</option>
+                <option value="weak">ざわざわのみ（弱前兆・フェイク）</option>
+                <option value="heaven_gold">【天国濃厚】あべし台座が金色（数字赤）</option>
+                <option value="lamp_error">【通常B以上濃厚】ランプ矛盾・矛盾点灯</option>
+                <option value="densho_loop">【伝承ループ】宝玉白/紫点滅・カサンドラ</option>
+                <option value="battle_rare">【上位/北斗揃い期待】アミバ/デカばばあ等</option>
+                <option value="tengeki_post">【上位引き戻し濃厚】CZ天撃 失敗直後</option>
             </select>
         </div>
     </div>
@@ -210,7 +201,7 @@
 
     <div class="card" style="margin-top:15px;">
         <h3>📋 北斗 期待値カンペ</h3>
-        <p style="font-size:0.8em; color:#8b949e;">※環境設定にリアルタイム連動。B以上/C以上示唆時は優先。</p>
+        <p style="font-size:0.8em; color:#8b949e;">※環境設定に連動。B以上/C以上示唆時は優先。</p>
         <table class="guide-table" style="text-align: center;">
             <tr><th>あべし</th><th>通常</th><th>リセット</th><th>モードB/C</th></tr>
             <tr><td>150〜</td><td class="mark-ng">✕ スルー</td><td class="mark-ng">✕ スルー</td><td id="g-150-m" class="mark-go">B:特攻</td></tr>
@@ -233,7 +224,7 @@
         </div>
         <div style="display:flex; gap:6px; margin-top:10px;">
             <div style="flex:1; background:#0d1117; padding:8px; border-radius:8px; text-align:center; border: 1px solid #30363d;">
-                <div style="font-size:0.7em; color:#8b949e;">🍉 スイカ</div>
+                <div style="font-size:0.7em; color:#8b949e;">🍉 スイカ (1/79.9)</div>
                 <div id="prob_suika" style="font-weight:bold; font-size:0.9em; color:var(--success);">---</div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
                     <button class="counter-btn" onclick="changeHCounter('suika', -1)">-</button>
@@ -242,7 +233,7 @@
                 </div>
             </div>
             <div style="flex:1; background:#0d1117; padding:8px; border-radius:8px; text-align:center; border: 1px solid #30363d;">
-                <div style="font-size:0.7em; color:#8b949e;">🍒 弱チェ</div>
+                <div style="font-size:0.7em; color:#8b949e;">🍒 弱チェ (1/99.6)</div>
                 <div id="prob_wcherry" style="font-weight:bold; font-size:0.9em; color:var(--success);">---</div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
                     <button class="counter-btn" onclick="changeHCounter('wcherry', -1)">-</button>
@@ -322,7 +313,7 @@
         let isHighSettingProb = (t_rot >= 2000 && (t_rot/a_cnt) <= 245); 
 
         let maxCeiling = 1536; 
-        if (mode === 'heaven') maxCeiling = 128;
+        if (mode === 'heaven' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') maxCeiling = 128;
         else if (mode === 'mode_c') maxCeiling = 576;
         else if (mode === 'shutter') maxCeiling = 896; 
         else if (reset) maxCeiling = 1280;
@@ -345,8 +336,12 @@
         let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
         let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
 
+        // Ω：AIコンサル転生2真ロジック適用
         let bonusEV = evDiffBonus; let bonusWage = 0;
-        if (aiConsult === 'strong' || aiConsult === 'rare') { bonusEV += 2500; bonusWage += 3000; }
+        if (aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') { bonusEV += 3500; bonusWage += 4000; }
+        else if (aiConsult === 'lamp_error') { bonusEV += 1500; bonusWage += 2000; }
+        else if (aiConsult === 'densho_loop') { bonusEV += 2000; bonusWage += 2500; }
+        else if (aiConsult === 'battle_rare') { bonusEV += 3000; bonusWage += 3500; }
         else if (aiConsult === 'weak') { bonusEV -= 300; bonusWage -= 500; }
         if (evDiffBonus > 0) bonusWage += 1000;
 
@@ -361,10 +356,10 @@
         if (inv === 'cash' && rate !== '5.0') { finalWage -= 2500; if (finalEV > 0) finalEV = Math.floor(finalEV * 0.60); }
 
         let baseBorder = 950;
-        if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || aiConsult === 'strong') {
+        if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') {
             baseBorder = 0; 
         } else {
-            if (mode === 'shutter') baseBorder = 150; 
+            if (mode === 'shutter' || aiConsult === 'lamp_error') baseBorder = 150; 
             else if (mode === 'mode_c') baseBorder = 350; 
             else if (reset) baseBorder = 700;
             if (time >= 18) baseBorder += 100;
@@ -384,7 +379,6 @@
         let res = `<h3>📊 北斗 最終戦略分析</h3>`;
         if (s.isTimeOver) { document.getElementById('result-area-h').innerHTML = res + `<div class="alert alert-error">🚨 22時以降。即時帰宅！</div>`; return; }
 
-        // Ω：AI Bro コンサル専用テキストフィードバックの動的生成
         let broHtml = "";
         if (isVip) {
             const aiConsult = document.getElementById('ai_consult_h').value;
@@ -392,17 +386,11 @@
                 let situation = "";
                 const inv = document.getElementById('invest_type').value;
                 const rate = document.getElementById('rate').value;
-                
                 if (s.time >= 21) situation += `今は<span style="color:var(--danger);">21時以降</span>の閉店リスクが極めて高い時間帯で、`;
                 else if (s.time >= 18) situation += `もう<span style="color:var(--warning);">18時以降</span>で時間的猶予が減っている中で、`;
-                
-                if (inv === 'cash' && rate !== '5.0') {
-                    situation += `<span style="color:var(--danger);">現金投資ギャップ</span>の痛手もある状況だ。`;
-                } else if (inv === 'medal') {
-                    situation += `<span style="color:var(--success);">持ちメダル遊技</span>なのはデカいな。`;
-                } else {
-                    situation += `等価での勝負だな。`;
-                }
+                if (inv === 'cash' && rate !== '5.0') situation += `<span style="color:var(--danger);">現金投資ギャップ</span>の痛手もある状況だ。`;
+                else if (inv === 'medal') situation += `<span style="color:var(--success);">持ちメダル遊技</span>なのはデカいな。`;
+                else situation += `等価での勝負だな。`;
 
                 let abeText = "";
                 if (s.abe >= 1100) abeText = `すでに<span style="color:var(--danger);">${s.abe}あべし</span>の天井到達圏内だ。`;
@@ -412,12 +400,16 @@
                 let advice = "";
                 if (aiConsult === 'weak') {
                     advice = `ただの<span style="color:var(--warning);">ざわざわ（フェイク）</span>だな。連続演出ハズレまで平均15〜20G引っ張られて、約30枚のメダルと時間を無駄にする。このロスを反映して時給を下方修正したぜ。基本はヤメだBro！`;
-                } else if (aiConsult === 'strong') {
-                    advice = `<span style="color:var(--danger);">天命の刻（強前兆）</span>に移行したな！トータルの本前兆期待度は約35%〜40%だ。ここで仕留められるかが勝負の分かれ目だぜ。期待値を大幅に上乗せして再計算したから、最後までレバーに気合入れろBro！`;
-                } else if (aiConsult === 'char') {
-                    advice = `<span style="color:var(--success);">特定キャラ頻出</span>は通常B以上のサインだ！ここで中チェを引けば一撃必殺。期待値が底上げされてるからボーダーを下げて攻めるぜBro！`;
-                } else if (aiConsult === 'rare') {
-                    advice = `<span style="color:var(--danger);">中チェ等のレア役</span>降臨だな！通常でも25%、天国なら100%でブッ刺さる絶対的フラグだ。状態を見極めるまで絶対に席を立つなよBro！`;
+                } else if (aiConsult === 'heaven_gold') {
+                    advice = `<span style="color:#ffd700;">台座が金色（数字が赤色）</span>だな！天国モード（128あべし）滞在濃厚の最強状態だ。ここでヤメるのは金を捨てるのと同じだ。時給を極限まで上乗せしたぜ。当選までフルスロットルだBro！`;
+                } else if (aiConsult === 'lamp_error') {
+                    advice = `<span style="color:var(--accent);">筐体上部ランプの矛盾</span>を確認だな！通常B以上の期待度が爆上がりだ。深いハマりを回避しつつ早い初当たりに期待できるから、期待値を底上げして再計算したぜ。粘る価値ありだBro！`;
+                } else if (aiConsult === 'densho_loop') {
+                    advice = `<span style="color:var(--success);">伝承モード（宝玉白/紫）</span>のサインが出ているな！天破ループで実質ゲーム数を大幅にショートカットできる稼ぎ時だぜ。伝承が抜けるまで時給上乗せで攻め抜こうぜBro！`;
+                } else if (aiConsult === 'battle_rare') {
+                    advice = `<span style="color:var(--danger);">アミバやデカばばあ</span>とのバトル中、または強敵バトル中だな！勝てば高ATレベル＝大量獲得のチャンスだ。期待枚数の跳ね上がりを加味して時給をブーストしたぜBro！`;
+                } else if (aiConsult === 'tengeki_post') {
+                    advice = `<span style="color:var(--accent);">CZ天撃 失敗直後</span>だな！次は128あべし以内の当選が約束されている最強の引き戻し区間だ。ヤメ厳禁のボーナスタイムだから、期待値を最大化して再計算したぜ。ツッパ一択だBro！`;
                 }
 
                 broHtml = `<div class="alert alert-info" style="border-color: var(--accent); background: rgba(88, 166, 255, 0.05); margin-bottom: 12px;">
@@ -426,7 +418,6 @@
                 </div>`;
             }
         }
-
         if (broHtml !== "") res += broHtml;
 
         let displayEV = isVip ? `￥${s.ev}前後` : `<span style="background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;">【🔒VIP限定】</span>`;
@@ -447,15 +438,15 @@
         let naviHtml = "";
         if (isVip) {
             const isCeiling = (s.abe >= 1100);
-            const isPremium = (s.lastSt === 'premium');
-            const isDensho = (s.lastSt === 'densho');
+            const isPremium = (s.lastSt === 'premium' || document.getElementById('ai_consult_h').value === 'tengeki_post');
+            const isDensho = (s.lastSt === 'densho' || document.getElementById('ai_consult_h').value === 'densho_loop');
             const isTsuranuki = (s.diff >= 1000);
 
             naviHtml += `<div class="navi-rule ${isCeiling ? 'active' : ''}">★【天井保護】当選までヤメ厳禁（最優先ルール）</div>`;
-            naviHtml += `<div class="navi-rule ${(isPremium && !isCeiling) ? 'active' : ''}">①上位AT(天撃)後128：天国率大幅UP。ヤメ厳禁。</div>`;
-            naviHtml += `<div class="navi-rule ${(isDensho && !isCeiling && !isPremium) ? 'active' : ''}">②伝承ループ：天破ループ確認。抜けまで。</div>`;
-            naviHtml += `<div class="navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}">③VIP差枚128：有利リセット。128フォロー。</div>`;
-            naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④通常1即：高確なしを確認して即ヤメ。</div>`;
+            naviHtml += `<div class="navi-rule ${(isPremium && !isCeiling) ? 'active' : ''}">①上位AT(天撃)後/天国：128あべし+前兆までヤメ厳禁。</div>`;
+            naviHtml += `<div class="navi-rule ${(isDensho && !isCeiling && !isPremium) ? 'active' : ''}">②伝承ループ：天破ループ確認。宝玉点滅抜けまで。</div>`;
+            naviHtml += `<div class="navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}">③VIP差枚128：有利リセットフォロー。128あべしまで。</div>`;
+            naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;
         } else {
             naviHtml = "【🔒VIP限定】状況に応じた最適解を提示。";
         }
@@ -496,8 +487,8 @@
     function updateHokutoCounter() {
         document.getElementById('val_suika').innerText = countSuika; document.getElementById('val_wcherry').innerText = countWCherry;
         const t = parseFloat(document.getElementById('total_rot').value) || 0;
-        document.getElementById('prob_suika').innerText = (countSuika > 0 && t > 0) ? `1/${Math.floor(t/countSuika)}` : "---";
-        document.getElementById('prob_wcherry').innerText = (countWCherry > 0 && t > 0) ? `1/${Math.floor(t/countWCherry)}` : "---";
+        document.getElementById('prob_suika').innerText = (countSuika > 0 && t > 0) ? `1/${(t/countSuika).toFixed(1)}` : "---";
+        document.getElementById('prob_wcherry').innerText = (countWCherry > 0 && t > 0) ? `1/${(t/countWCherry).toFixed(1)}` : "---";
     }
 
     function executeHokutoGuess() {
@@ -506,7 +497,6 @@
         const trophy = document.getElementById('trophy_h').value;
         let m = ""; let cls = "alert-info";
         let atProb = (a > 0 && t > 0) ? (t / a) : 999;
-        
         let totalSmallRole = countSuika + countWCherry;
         let roleProb = (totalSmallRole > 0 && t > 0) ? (t / totalSmallRole) : 999;
 
@@ -526,43 +516,20 @@
                 cls = "alert-success";
             } else if (t >= 1500) {
                 if (atProb <= 245) {
-                    if (roleProb <= 42) {
-                        m = "【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！";
-                        cls = "alert-success";
-                    } else {
-                        m = "【高設定濃厚】初当たり(設定6域)は極めて優秀。小役のブレに注意しつつ続行。";
-                        cls = "alert-success";
-                    }
+                    if (roleProb <= 42) { m = "【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！"; cls = "alert-success"; }
+                    else { m = "【高設定濃厚】初当たり(設定6域)は優秀。小役のブレに注意しつつ続行。"; cls = "alert-success"; }
                 } else if (atProb <= 300) {
-                    if (roleProb <= 45) {
-                        m = "【高設定期待】初当たり(設定5域)・小役共に優秀。粘り強く続行を推奨。";
-                        cls = "alert-success";
-                    } else {
-                        m = "【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。";
-                        cls = "alert-warning";
-                    }
+                    if (roleProb <= 45) { m = "【高設定期待】初当たり(設定5域)・小役共に優秀。粘り強く続行を推奨。"; cls = "alert-success"; }
+                    else { m = "【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。"; cls = "alert-warning"; }
                 } else if (atProb <= 350) {
-                    if (roleProb <= 42 && roleProb !== 999) {
-                        m = "【判断保留】初当たり(設定4域)は平凡だが小役が優秀。罠に注意しつつ様子見。";
-                        cls = "alert-warning";
-                    } else {
-                        m = "【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。";
-                        cls = "alert-warning";
-                    }
+                    if (roleProb <= 42 && roleProb !== 999) { m = "【判断保留】初当たり(設定4域)は平凡だが小役が優秀。罠に注意しつつ様子見。"; cls = "alert-warning"; }
+                    else { m = "【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。"; cls = "alert-warning"; }
                 } else {
-                    if (roleProb <= 42 && roleProb !== 999) {
-                        m = "【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。";
-                        cls = "alert-error";
-                    } else {
-                        m = "【低設定濃厚】初当たりが重すぎます。即撤収を強く推奨。";
-                        cls = "alert-error";
-                    }
+                    if (roleProb <= 42 && roleProb !== 999) { m = "【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。"; cls = "alert-error"; }
+                    else { m = "【低設定濃厚】初当たりが重すぎます。即撤収を強く推奨。"; cls = "alert-error"; }
                 }
-            } else {
-                m = "【サンプル不足】現在の回転数では判断を保留。1500G以上の試行データを推奨します。"; 
-            }
+            } else { m = "【サンプル不足】現在の回転数では判断を保留。1500G以上の試行データを推奨します。"; }
         }
-        
         let displayRoleProb = (roleProb === 999) ? "未入力" : `1/${roleProb.toFixed(1)}`;
         document.getElementById('setting-result-h').innerHTML = `<div class="alert ${cls}">📊 診断結果: 初当 1/${Math.floor(atProb)} / 小役合算 ${displayRoleProb}<br>🤖 AI軍師: ${m}</div>`;
     }
