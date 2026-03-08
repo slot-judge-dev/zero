@@ -86,7 +86,7 @@
             </select>
             <select id="invest_type" onchange="updateUI()">
                 <option value="medal">持ちメダル</option>
-                <option value="cash">現金投資（ギャップ適用）</option>
+                <option value="cash">現金投資（ギャップペナルティ適用）</option>
             </select>
         </div>
         <label style="margin-top:8px;">現在時刻 (閉店欠損算出用)</label>
@@ -103,7 +103,7 @@
         <select id="k_current_cycle" onchange="updateUI()">
             <option value="0">0周期目</option>
             <option value="1">1周期目 (約150G)</option>
-            <option value="2">2周期目 (約300G)</option>
+            <option value="2">2周期目 (約300G/初当約77%)</option>
             <option value="3">3周期目 (約450G)</option>
             <option value="4">4周期目 (約596G / 短縮天井)</option>
             <option value="5">5周期目 (約750G)</option>
@@ -115,22 +115,29 @@
             <label><input type="checkbox" id="k_is_reset" onchange="updateUI()"> 設定変更(朝イチ) or ST駆け抜け後</label>
             <label><input type="checkbox" id="k_is_kageyuki" onchange="updateUI()"> 景之(かげゆき)ST終了後 <span style="color:#d29922;">(ループ濃厚)</span></label>
         </div>
+
+        <label>背景・演出示唆（海門決戦解析マージ）</label>
+        <select id="k_bg_state" onchange="updateUI()">
+            <option value="none">示唆なし</option>
+            <option value="sakura">桜背景 (4周期以内EP期待大)</option>
+            <option value="umato">海門城背景 (実質上位ST以上濃厚)</option>
+        </select>
         
         <label>黒煙ポイント（穢れ）示唆状態</label>
         <select id="k_point_state" onchange="updateUI()">
             <option value="none">示唆なし / 非発光</option>
             <option value="small">黒煙(小) 吸収確認</option>
             <option value="medium">黒煙(中) 吸収確認</option>
-            <option value="large">🔥 黒煙(大) 溢れ確認 (MAX濃厚)</option>
+            <option value="large">🔥 黒煙(大) 溢れ確認 (裏景之ST濃厚)</option>
         </select>
     </div>
 
     <div class="card" style="border: 1px solid #30363d; background: #0d1117;">
-        <h3 style="color:var(--kabaneri); font-size:1em;">📜 海門 軍師の知恵袋（解析・設定示唆）</h3>
+        <h3 style="color:var(--kabaneri); font-size:1em;">📜 海門 軍師の知恵袋（完全解析）</h3>
         <div class="bible-tabs">
             <button class="tab-btn active" onclick="openBible(event, 'tab-zones-k')">周期/CZ</button>
             <button class="tab-btn" onclick="openBible(event, 'tab-short-smoke-k')">短縮/黒煙</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-omikuji-k')">終了画面/声</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-omikuji-k')">終了画面/おみくじ</button>
             <button class="tab-btn" onclick="openBible(event, 'tab-bonus-k')">キャラ/枚数</button>
         </div>
 
@@ -169,7 +176,7 @@
                 <tr><th style="width:45%;">蓄積示唆（吸収/溢れ）</th><th>状態と恩恵</th></tr>
                 <tr><td>黒煙(小) 吸収</td><td>ポイント獲得示唆</td></tr>
                 <tr><td>黒煙(中) 吸収</td><td>中ポイント獲得示唆</td></tr>
-                <tr><td><span style="color:#f85149; font-weight:bold;">黒煙(大) 溢れ</span></td><td><span class="mark-star">MAX濃厚！</span><br><span class="mark-go">次回「裏景之ST」確定。</span></td></tr>
+                <tr><td><span style="color:#f85149; font-weight:bold;">黒煙(大) 溢れ</span></td><td><span class="mark-star">MAX濃厚！</span><br><span class="mark-go">次回「裏景之ST」確定。期待枚数約3600枚！</span></td></tr>
             </table>
         </div>
 
@@ -219,12 +226,17 @@
             <label style="color:var(--warning);">💎 ボーダー微調整 (±50G)</label>
             <input type="range" id="border_adj_k" min="-50" max="50" step="10" value="0" oninput="document.getElementById('adj_val_k').innerText = this.value + 'G'; updateUI();">
             <div id="adj_val_k" style="text-align:right; font-size:0.9em; color:var(--kabaneri); font-weight:bold;">0G</div>
-            <label style="color:var(--warning);">🤖 AI Bro コンサル</label>
+            <label style="color:var(--warning);">🤖 AI Bro コンサル（海門決戦・深層解析対応）</label>
             <select id="k_ai_consult" onchange="updateUI()">
                 <option value="none">選択なし</option>
-                <option value="weak">ざわざわのみ (前兆フェイク)</option>
-                <option value="chance">カバネチャンス目 直後</option>
+                <option value="omikuji_luck">【おみくじ】輪廻の果報 / 六根清浄（当選濃厚）</option>
+                <option value="bg_umato">【背景】海門城背景（実質上位ST以上濃厚）</option>
+                <option value="bg_sakura">【背景】桜背景（4周期以内期待大）</option>
+                <option value="himaku_high">【皮膜レベル】Lv.3〜4（天井間近示唆）</option>
+                <option value="kiri_high">【キリ番】無名寝転び/桜（当選期待度高）</option>
+                <option value="chance">カバネチャンス目 直後 (25%~100%)</option>
                 <option value="super">カバネ最終防衛区域 (本前兆濃厚)</option>
+                <option value="weak">ざわざわのみ (前兆フェイク消化ロス)</option>
             </select>
         </div>
     </div>
@@ -340,6 +352,7 @@
         const kcycle = parseInt(document.getElementById('k_current_cycle').value) || 0;
         const isReset = document.getElementById('k_is_reset').checked;
         const isKage = document.getElementById('k_is_kageyuki').checked;
+        const bg = document.getElementById('k_bg_state').value;
         const pts = document.getElementById('k_point_state').value; 
         const time = parseInt(document.getElementById('time_slider').value);
         const inv = document.getElementById('invest_type').value;
@@ -376,17 +389,22 @@
         let evZ650 = (!isShort && kg >= 600 && kg <= 650) ? 1500 : EV_NONE;
 
         let evKage = isKage ? 4000 : EV_NONE;
-        let evPts = (pts === 'large') ? 3500 : (pts === 'medium') ? 1500 : EV_NONE;
+        let evPts = (pts === 'large') ? 5000 : (pts === 'medium') ? 1800 : EV_NONE;
         let evPost = (kg <= 20) ? 1000 : EV_NONE;
+        
+        let evBg = (bg === 'umato') ? 5000 : (bg === 'sakura') ? 1500 : EV_NONE;
+        let evCyc = (kcycle === 2 || (kg >= 250 && kg <= 300)) ? 1800 : (kcycle === 1) ? 1200 : EV_NONE;
 
         let bonusEV = 0; let bonusWage = 0;
-        if (ai === 'super') { bonusEV += 3000; bonusWage += 3500; }
-        else if (ai === 'chance') { bonusEV += 1000; bonusWage += 1200; }
+        if (ai === 'super' || ai === 'omikuji_luck') { bonusEV += 3500; bonusWage += 4000; }
+        else if (ai === 'chance' || ai === 'himaku_high' || ai === 'kiri_high' || ai === 'bg_sakura') { bonusEV += 1200; bonusWage += 1500; }
+        else if (ai === 'bg_umato') { bonusEV += 4500; bonusWage += 5000; }
         else if (ai === 'weak') { bonusEV -= 300; bonusWage -= 500; }
 
-        let baseEV = Math.max(evCeilN, evCeilS, evCycN, evCycS, evZ150, evZ300, evZ450, evZ650, evKage, evPts, evPost) + bonusEV;
+        let baseEV = Math.max(evCeilN, evCeilS, evCycN, evCycS, evZ150, evZ300, evZ450, evZ650, evKage, evPts, evPost, evBg, evCyc) + bonusEV;
         let baseWage = Math.max(wageCeilN, wageCeilS, 800) + bonusWage;
-        if (isKage || pts === 'large') baseWage = Math.max(baseWage, 5000);
+        
+        if (isKage || pts === 'large' || bg === 'umato' || ai === 'omikuji_luck') baseWage = Math.max(baseWage, 5500);
 
         if (trophy === 'rainbow' || isHighSettingProb) { baseWage = Math.max(baseWage, 8000); baseEV = Math.max(baseEV, 6500); } 
         else if (trophy === 'gold') { baseWage = Math.max(baseWage, 5000); baseEV = Math.max(baseEV, 3000); }
@@ -397,7 +415,7 @@
 
         let baseBorder = isShort ? 350 : 650; 
         let isAbsoluteGo = false; 
-        if (trophy === 'rainbow' || trophy === 'gold' || isHighSettingProb || isKage || pts === 'large' || ai === 'super' || kg <= 20) { 
+        if (trophy === 'rainbow' || trophy === 'gold' || isHighSettingProb || isKage || pts === 'large' || ai === 'super' || kg <= 20 || bg === 'umato' || ai === 'omikuji_luck') { 
             baseBorder = 0; isAbsoluteGo = true; 
         }
         
@@ -406,7 +424,7 @@
 
         return { 
             kg: kg, kcycle: kcycle, inv: inv, rate: rate, time: time, trophy: trophy, isHighSetting: isHighSettingProb,
-            isShort: isShort, isKage: isKage, pts: pts, ai: ai, isTimeOver: false, 
+            isShort: isShort, isKage: isKage, pts: pts, bg: bg, ai: ai, isTimeOver: false, 
             remainCeiling: remainCeiling, remainCycle: remainCycle,
             border: isAbsoluteGo ? 0 : Math.max(0, baseBorder + adj), wage: Math.floor(finalWage), ev: Math.floor(finalEV)
         };
@@ -417,7 +435,6 @@
         let res = `<h3 style="color:var(--kabaneri);">📊 海門 最終戦略分析</h3>`;
         if (s.isTimeOver) { document.getElementById('result-area-k').innerHTML = res + `<div class="alert alert-error">🚨 【致命的警告】22時を過ぎています。即時帰宅してください。</div>`; return; }
 
-        // Ω：AI Bro コンサル専用テキストフィードバックの動的生成
         let broHtml = "";
         if (isVip) {
             const aiConsult = document.getElementById('k_ai_consult').value;
@@ -449,6 +466,16 @@
                     advice = `<span style="color:var(--danger);">カバネチャンス目</span>を引いたな！通常状態でも期待度25%、対応ランプ点灯中の高確なら100%（CZ or ボーナス濃厚）の激アツフラグだ。ランプ状況をしっかり確認しろBro！`;
                 } else if (aiConsult === 'super') {
                     advice = `<span style="color:var(--danger);">カバネ最終防衛区域（強前兆）</span>に移行したな！本前兆濃厚の最強ルートだ。さらに消化中の複合チャンス目でエピボ100%書き換えがあるから、毎G気合入れてレバー叩けBro！`;
+                } else if (aiConsult === 'omikuji_luck') {
+                    advice = `<span style="color:var(--success);">おみくじ「輪廻の果報/六根清浄」</span>だな！当該周期での当選濃厚、かつEPボーナスの期待も極大だ。時給を最大ブーストして計算したぜBro！`;
+                } else if (aiConsult === 'bg_umato') {
+                    advice = `<span style="color:var(--success);">海門城背景</span>だな！4周期以内当選＋実質上位STスタートが濃厚の最強示唆だ。ヤメる理由は1ミリもないぜ！`;
+                } else if (aiConsult === 'bg_sakura') {
+                    advice = `<span style="color:var(--accent);">桜背景</span>だな！4周期以内のEPボーナス期待度が激高だ。早い初当たりに期待して攻めていいぜBro！`;
+                } else if (aiConsult === 'himaku_high') {
+                    advice = `<span style="color:var(--warning);">皮膜レベルLv.3〜4</span>だな！カバネポイントが天井間近のサインだ。海門前兆（周期）まで確実に回せよ！`;
+                } else if (aiConsult === 'kiri_high') {
+                    advice = `<span style="color:var(--accent);">キリ番（無名寝転び/桜）</span>だな！当該周期の当選期待度が大幅アップ中だ。ここは様子見を推奨するぜBro！`;
                 }
 
                 broHtml = `<div class="alert alert-info" style="border-color: var(--kabaneri); background: rgba(255, 123, 114, 0.05); margin-bottom: 12px;">
@@ -472,6 +499,7 @@
             res += `<div class="alert alert-error">❄️ 【判定：撤収】待機目安: <b>${s.border}G</b>${evDisp(s.ev)}</div>`;
         } else {
             if (s.pts === 'large') res += `<div class="alert alert-warning" style="border-color:#fff; color:#fff; background:#000;">🌑 【黒煙(大) 蓄積】<br>次回STが「裏景之ST」濃厚！絶対に捨てないでください。${evDisp(s.ev)}</div>`;
+            else if (s.bg === 'umato') res += `<div class="alert alert-warning" style="border-color:var(--kabaneri); color:white;">🏯 【海門城背景】<br>実質上位ST以上スタート濃厚！ヤメ厳禁だ。${evDisp(s.ev)}</div>`;
             else if (s.isKage) res += `<div class="alert alert-warning" style="border-color:var(--kabaneri); color:white;">⚠️ 景之(かげゆき)ループ発動中<br>短縮＆ループ濃厚。ヤメ厳禁。${evDisp(s.ev)}</div>`;
             else if (s.remainCeiling <= 150) res += `<div class="alert alert-ceiling">🚂 【天井到達圏内】<br>ST当選まで一直線です。<br><span style="text-decoration:underline;">🚨 当選までヤメ厳禁。</span>${evDisp(s.ev)}</div>`;
             else if (s.isShort && s.kg >= s.border) res += `<div class="alert alert-success">🔥 【短縮天井 狙い】<br>596天井へ特攻してください。${evDisp(s.ev)}</div>`;
@@ -483,14 +511,14 @@
 
         let naviHtml = "";
         if (isVip) {
-            const isAbsolute = (s.pts === 'large');
+            const isAbsolute = (s.pts === 'large' || s.bg === 'umato');
             const isKageLoop = (s.isKage);
             const isCeilNear = (s.remainCeiling <= 150);
 
-            naviHtml += `<div class="navi-rule ${isAbsolute ? 'active' : ''}">👑 【黒煙MAX】次回ST当選まで絶対にヤメ厳禁。</div>`;
+            naviHtml += `<div class="navi-rule ${isAbsolute ? 'active' : ''}">👑 【最強恩恵】次回ST当選まで絶対にヤメ厳禁。</div>`;
             naviHtml += `<div class="navi-rule ${(isKageLoop && !isAbsolute) ? 'active' : ''}">① 【景之ループ】次回ST当選までヤメ厳禁。</div>`;
             naviHtml += `<div class="navi-rule ${(isCeilNear && !isAbsolute && !isKageLoop) ? 'active' : ''}">② 【天井到達圏内】当選までツッパ（天井保護）。</div>`;
-            naviHtml += `<div class="navi-rule ${(!isAbsolute && !isKageLoop && !isCeilNear) ? 'active' : ''}">③ 【通常】駿城/ST終了後、高確を確認し即ヤメ。</div>`;
+            naviHtml += `<div class="navi-rule ${(!isAbsolute && !isKageLoop && !isCeilNear) ? 'active' : ''}">③ 【通常】駿城/ST終了後、高確・示唆背景なしを確認し即ヤメ。</div>`;
         } else {
             naviHtml = "【🔒VIP限定】状況に応じた最適解を提示します。";
         }
