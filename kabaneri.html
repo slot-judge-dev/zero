@@ -242,7 +242,7 @@
     </div>
 
     <div id="free-notice" class="card" style="border: 1px solid #484f58; text-align:center; display:block;">
-        <p style="color:#8b949e; font-size:0.9em;">具体的な期待値(￥)と詳細なヤメ時ナビ、<br>想定時給等のプロ機能はロックされています。</p>
+        <p style="color:#8b949e; font-size:0.9em;">具体的な期待値(￥)と特殊な状況のヤメ時ナビ、<br>想定時給等のプロ機能はロックされています。</p>
         <a href="index.html" style="color:var(--warning); text-decoration:none; font-weight:bold;">🔒 ポータルでVIPパスワードを入力する</a>
     </div>
 
@@ -511,6 +511,7 @@
 
         let naviHtml = "";
         if (isVip) {
+            // VIP版（有料版）：状況に応じた利益最大化の動的ヤメ時ナビ
             const isAbsolute = (s.pts === 'large' || s.bg === 'umato');
             const isKageLoop = (s.isKage);
             const isCeilNear = (s.remainCeiling <= 150);
@@ -518,9 +519,10 @@
             naviHtml += `<div class="navi-rule ${isAbsolute ? 'active' : ''}">👑 【最強恩恵】次回ST当選まで絶対にヤメ厳禁。</div>`;
             naviHtml += `<div class="navi-rule ${(isKageLoop && !isAbsolute) ? 'active' : ''}">① 【景之ループ】次回ST当選までヤメ厳禁。</div>`;
             naviHtml += `<div class="navi-rule ${(isCeilNear && !isAbsolute && !isKageLoop) ? 'active' : ''}">② 【天井到達圏内】当選までツッパ（天井保護）。</div>`;
-            naviHtml += `<div class="navi-rule ${(!isAbsolute && !isKageLoop && !isCeilNear) ? 'active' : ''}">③ 【通常】駿城/ST終了後、高確・示唆背景なしを確認し即ヤメ。</div>`;
+            naviHtml += `<div class="navi-rule ${(!isAbsolute && !isKageLoop && !isCeilNear) ? 'active' : ''}">③ 【動的フォロー】駿城/ST終了後、高確・示唆背景なしを確認し即ヤメ。</div>`;
         } else {
-            naviHtml = "【🔒VIP限定】状況に応じた最適解を提示します。";
+            // 無料版（非VIP）：マーケ案適用（基本のヤメ時を表示し、負けを防ぐ）
+            naviHtml = `<div class="navi-rule active">③ 【基本】駿城/ST終了後、高確・示唆背景なしを確認し即ヤメ。<br><span style="font-size:0.85em; color:var(--warning);">（※特殊状況や天井保護の完全フォローは🔒VIP限定）</span></div>`;
         }
         res += `<div class="alert alert-warning" style="border-color:var(--kabaneri);">🛑 海門ヤメ時ナビ：<br>${naviHtml}</div>`;
         document.getElementById('result-area-k').innerHTML = res;
