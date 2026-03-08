@@ -336,7 +336,6 @@
         let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;
         let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);
 
-        // Ω：AIコンサル転生2真ロジック適用
         let bonusEV = evDiffBonus; let bonusWage = 0;
         if (aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') { bonusEV += 3500; bonusWage += 4000; }
         else if (aiConsult === 'lamp_error') { bonusEV += 1500; bonusWage += 2000; }
@@ -446,9 +445,9 @@
             naviHtml += `<div class="navi-rule ${(isPremium && !isCeiling) ? 'active' : ''}">①上位AT(天撃)後/天国：128あべし+前兆までヤメ厳禁。</div>`;
             naviHtml += `<div class="navi-rule ${(isDensho && !isCeiling && !isPremium) ? 'active' : ''}">②伝承ループ：天破ループ確認。宝玉点滅抜けまで。</div>`;
             naviHtml += `<div class="navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}">③VIP差枚128：有利リセットフォロー。128あべしまで。</div>`;
-            naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;
+            naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④【動的フォロー】通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;
         } else {
-            naviHtml = "【🔒VIP限定】状況に応じた最適解を提示。";
+            naviHtml = `<div class="navi-rule active">④【基本】AT終了後、高確・宝玉点滅なしを確認して即ヤメ。<br><span style="font-size:0.85em; color:var(--warning);">（※天国フォローや伝承ループ等の完全フォローは🔒VIP限定）</span></div>`;
         }
         res += `<div class="alert alert-warning" style="border-color:var(--accent);">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;
         document.getElementById('result-area-h').innerHTML = res;
