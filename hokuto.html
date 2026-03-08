@@ -185,8 +185,8 @@
     </div>
 
     <div id="free-notice" class="card" style="border: 1px solid #484f58; text-align:center; display:block;">
-        <p style="color:#8b949e; font-size:0.9em;">具体的な期待値(￥)と詳細なヤメ時ナビはロックされています。</p>
-        <a href="index.html" style="color:var(--warning); text-decoration:none; font-weight:bold;">🔒 ポータルでパスワードを入力する</a>
+        <p style="color:#8b949e; font-size:0.9em;">具体的な期待値(￥)と特殊な状況のヤメ時ナビ、<br>想定時給等のプロ機能はロックされています。</p>
+        <a href="index.html" style="color:var(--warning); text-decoration:none; font-weight:bold;">🔒 ポータルでVIPパスワードを入力する</a>
     </div>
 
     <button onclick="executeAnalysis()">北斗軍師の最終判断 (EXECUTE)</button>
@@ -272,12 +272,12 @@
         const adContainer = document.getElementById('ad-container'); 
 
         if (isVip) {
-            vipSec.style.display = 'block';
-            freeNot.style.display = 'none';
+            if (vipSec) vipSec.style.display = 'block';
+            if (freeNot) freeNot.style.display = 'none';
             if (adContainer) adContainer.style.display = 'none'; 
         } else {
-            vipSec.style.display = 'none';
-            freeNot.style.display = 'block';
+            if (vipSec) vipSec.style.display = 'none';
+            if (freeNot) freeNot.style.display = 'block';
             if (adContainer) adContainer.style.display = 'block'; 
         }
     }
@@ -351,6 +351,7 @@
         else if (trophy === 'gold') { baseWage = Math.max(baseWage, 5000); baseEV = Math.max(baseEV, 3000); }
 
         let finalEV = baseEV; let finalWage = baseWage;
+        // ペナルティの完全独立計算
         if (time >= 18) { let hp = (time - 17); finalWage -= (hp * 700); finalEV -= (hp * 400); }
         if (inv === 'cash' && rate !== '5.0') { finalWage -= 2500; if (finalEV > 0) finalEV = Math.floor(finalEV * 0.60); }
 
@@ -361,6 +362,8 @@
             if (mode === 'shutter' || aiConsult === 'lamp_error') baseBorder = 150; 
             else if (mode === 'mode_c') baseBorder = 350; 
             else if (reset) baseBorder = 700;
+            
+            // ペナルティ環境下でのボーダー上昇（UI連動）
             if (time >= 18) baseBorder += 100;
             if (time >= 21) baseBorder += 100;
             if (inv === 'cash' && rate !== '5.0') baseBorder += 150;
@@ -447,6 +450,7 @@
             naviHtml += `<div class="navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}">③VIP差枚128：有利リセットフォロー。128あべしまで。</div>`;
             naviHtml += `<div class="navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}">④【動的フォロー】通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;
         } else {
+            // 無料版（非VIP）：マーケ案適用（基本のヤメ時を表示し、負けを防ぐ）
             naviHtml = `<div class="navi-rule active">④【基本】AT終了後、高確・宝玉点滅なしを確認して即ヤメ。<br><span style="font-size:0.85em; color:var(--warning);">（※天国フォローや伝承ループ等の完全フォローは🔒VIP限定）</span></div>`;
         }
         res += `<div class="alert alert-warning" style="border-color:var(--accent);">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;
