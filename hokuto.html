@@ -116,7 +116,7 @@
             <button class="tab-btn active" onclick="openBible(event, 'tab-zones')">モード/ゾーン</button>
             <button class="tab-btn" onclick="openBible(event, 'tab-lamps')">筐体ランプ</button>
             <button class="tab-btn" onclick="openBible(event, 'tab-densho')">伝承/宝玉</button>
-            <button class="tab-btn" onclick="openBible(event, 'tab-battle')">バトル/恩恵</button>
+            <button class="tab-btn" onclick="openBible(event, 'tab-rumor')">前兆法則</button>
         </div>
 
         <div id="tab-zones" class="tab-content active">
@@ -151,14 +151,14 @@
             <p style="font-size:0.7em; color:#8b949e; margin-top:8px;">※白/紫点滅はAT本前兆示唆も兼ねる。</p>
         </div>
 
-        <div id="tab-battle" class="tab-content">
-            <label style="color:var(--danger);">▼ 敵キャラ別・勝利時の恩恵</label>
-            <table class="guide-table">
-                <tr><th>敵キャラ</th><th>勝利時の恩恵</th></tr>
-                <tr><td>アミバ</td><td>ATレベル2以上濃厚！</td></tr>
-                <tr><td>でかいばばあ</td><td>ATレベル3以上濃厚！</td></tr>
-                <tr><td>シン/サウザー/ジャギ</td><td>北斗揃い or 上位AT期待度UP！</td></tr>
-            </table>
+        <div id="tab-rumor" class="tab-content">
+            <label style="color:var(--danger);">▼ シャッター・フェイク前兆の法則（実践値）</label>
+            <p style="font-size:0.75em; color:#c9d1d9; margin-top:4px; line-height:1.5;">
+                特定のゾーン外であべしシャッター演出（ガタガタ）が発生した場合、<b>通常B以上（896あべし以内）が濃厚</b>となる傾向があります。<br><br>
+                <span style="color:var(--warning);">【特にアツいゾーン（C相当・576以内の期待大）】</span><br>
+                ・37〜45、166〜173、288〜303、421〜429、489〜495付近。<br><br>
+                ※あくまで実践上の傾向であり、解析値ではありません。参考程度に留め、判断は自己責任で！
+            </p>
         </div>
     </div>
 
@@ -205,11 +205,11 @@
         <table class="guide-table" style="text-align: center;">
             <tr><th>あべし</th><th>通常</th><th>リセット</th><th>モードB/C</th></tr>
             <tr><td>150〜</td><td class="mark-ng">✕ スルー</td><td class="mark-ng">✕ スルー</td><td id="g-150-m" class="mark-go">B:特攻</td></tr>
-            <tr><td>200〜</td><td id="g-200-n" class="mark-warn">△ 256</td><td id="g-200-r" class="mark-warn">△ 256</td><td class="mark-ng">-</td></tr>
-            <tr><td>350〜</td><td class="mark-ng">✕ スルー</td><td class="mark-ng">✕ スルー</td><td id="g-350-m" class="mark-go">C:特攻</td></tr>
-            <tr><td>480〜</td><td id="g-480-n" class="mark-warn">△ 576</td><td class="mark-ng">-</td><td class="mark-ng">-</td></tr>
-            <tr><td>700〜</td><td class="mark-ng">✕ スルー</td><td id="g-700-r" class="mark-go">〇 特攻</td><td class="mark-ng">-</td></tr>
-            <tr><td>750〜</td><td id="g-750-n" class="mark-go">〇 ゾーン</td><td id="g-750-r" class="mark-go">◎ 特攻</td><td class="mark-ng">-</td></tr>
+            <tr><td>250〜</td><td id="g-200-n" class="mark-warn">△ ゾーン</td><td id="g-200-r" class="mark-warn">△ ゾーン</td><td class="mark-ng">-</td></tr>
+            <tr><td>350〜</td><td id="g-350-n" class="mark-warn">△ 慎重</td><td class="mark-ng">✕ スルー</td><td id="g-350-m" class="mark-go">C:特攻</td></tr>
+            <tr><td>400〜</td><td id="g-480-n" class="mark-go">〇 特攻</td><td class="mark-warn">△ 慎重</td><td class="mark-ng">-</td></tr>
+            <tr><td>600〜</td><td class="mark-go">◎ 特攻</td><td id="g-700-r" class="mark-go">〇 特攻</td><td class="mark-ng">-</td></tr>
+            <tr><td>750〜</td><td id="g-750-n" class="mark-go">◎ 特攻</td><td id="g-750-r" class="mark-go">◎ 特攻</td><td class="mark-ng">-</td></tr>
             <tr><td>950〜</td><td id="g-950-n" class="mark-go">◎ 特攻</td><td id="g-950-r" class="mark-go">◎ 特攻</td><td class="mark-ng">-</td></tr>
             <tr><td>1100〜</td><td class="mark-success">★ 極限</td><td class="mark-success">★ 極限</td><td class="mark-ng">-</td></tr>
         </table>
@@ -312,7 +312,7 @@ const _0xHokuto = [
     "    const isValidPremium = (lastSt === 'premium' && abe <= 128);",
     "    const t_rot = parseFloat(document.getElementById('total_rot').value) || 0;",
     "    const a_cnt = parseFloat(document.getElementById('at_count').value) || 0;",
-    "    let isHighSettingProb = (t_rot >= 2000 && (t_rot/a_cnt) <= 245); ",
+    "    let isHighSettingProb = (t_rot >= 2000 && (t_rot/a_cnt) <= 273.1); ",
     "",
     "    let maxCeiling = 1536; ",
     "    if (mode === 'heaven' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') maxCeiling = 128;",
@@ -322,20 +322,18 @@ const _0xHokuto = [
     "    let remainCeiling = Math.max(0, maxCeiling - abe);",
     "",
     "    const EV_NONE = -600;",
-    "    let evAbe = (abe >= 1473) ? 6500 : (abe >= 1100) ? 4300 : (abe >= 750) ? 1600 : (abe >= 480) ? 1150 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;",
-    "    let evResetZ = (reset && abe >= 700) ? 1900 : EV_NONE;",
-    "    let evResetS = (reset && abe >= 450 && abe <= 576) ? 1400 : EV_NONE;",
-    "    let evResetL = (reset && abe >= 200 && abe <= 256) ? 1200 : EV_NONE;",
-    "    let evModeB = (mode === 'shutter' && abe >= 150) ? 1400 : EV_NONE;",
-    "    let evModeC = (mode === 'mode_c' && abe >= 350) ? 1200 : EV_NONE;",
-    "    let evHeaven = (mode === 'heaven') ? 650 : EV_NONE;",
-    "    let evPremium = isValidPremium ? 2500 : EV_NONE;",
-    "    let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;",
+    "    let evAbe = (abe >= 1473) ? 15000 : (abe >= 1100) ? 9411 : (abe >= 750) ? 5873 : (abe >= 450) ? 3127 : (abe >= 350) ? 1782 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;",
+    "    let evResetZ = (reset && abe >= 600) ? 6000 : EV_NONE;",
+    "    let evResetS = (reset && abe >= 450 && abe <= 576) ? 5205 : EV_NONE;",
+    "    let evResetL = (reset && abe >= 200 && abe <= 256) ? 2841 : EV_NONE;",
+    "    let evModeB = (mode === 'shutter' && abe >= 150) ? 5500 : EV_NONE;",
+    "    let evModeC = (mode === 'mode_c' && abe >= 350) ? 8000 : EV_NONE;",
+    "    let evHeaven = (mode === 'heaven') ? 1500 : EV_NONE;",
     "    ",
     "    let evDiffBonus = (isVip && diff >= 1000 && abe <= 128) ? 1000 : 0;",
     "",
-    "    let wageAbe = (abe >= 1100) ? 5500 : (abe > 700) ? 3100 : (abe > 400) ? 1600 : 800;",
-    "    let wageReset = reset ? ((abe >= 400) ? 3300 : 800) : 0;",
+    "    let wageAbe = (abe >= 1100) ? 32949 : (abe > 750) ? 14069 : (abe > 450) ? 5830 : (abe > 350) ? 3192 : 800;",
+    "    let wageReset = reset ? ((abe >= 600) ? 11000 : (abe >= 450) ? 10000 : (abe >= 200) ? 5800 : 1500) : 0;",
     "    let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);",
     "",
     "    let bonusEV = evDiffBonus; let bonusWage = 0;",
@@ -356,13 +354,13 @@ const _0xHokuto = [
     "    if (time >= 18) { let hp = (time - 17); finalWage -= (hp * 700); finalEV -= (hp * 400); }",
     "    if (inv === 'cash' && rate !== '5.0') { finalWage -= 2500; if (finalEV > 0) finalEV = Math.floor(finalEV * 0.60); }",
     "",
-    "    let baseBorder = 950;",
+    "    let baseBorder = 400;",
     "    if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') {",
     "        baseBorder = 0; ",
     "    } else {",
     "        if (mode === 'shutter' || aiConsult === 'lamp_error') baseBorder = 150; ",
     "        else if (mode === 'mode_c') baseBorder = 350; ",
-    "        else if (reset) baseBorder = 700;",
+    "        else if (reset) baseBorder = 600;",
     "        if (time >= 18) baseBorder += 100;",
     "        if (time >= 21) baseBorder += 100;",
     "        if (inv === 'cash' && rate !== '5.0') baseBorder += 150;",
@@ -395,7 +393,7 @@ const _0xHokuto = [
     "",
     "            let abeText = \"\";",
     "            if (s.abe >= 1100) abeText = `すでに<span style=\"color:var(--danger);\">${s.abe}あべし</span>の天井到達圏内だ。`;",
-    "            else if (s.abe >= 700) abeText = `<span style=\"color:var(--success);\">${s.abe}あべし</span>まで育っているな。`;",
+    "            else if (s.abe >= 400) abeText = `<span style=\"color:var(--success);\">${s.abe}あべし</span>まで育っているな。`;",
     "            else abeText = `まだ<span style=\"color:var(--warning);\">${s.abe}あべし</span>の浅い所だが、`;",
     "",
     "            let advice = \"\";",
@@ -460,15 +458,15 @@ const _0xHokuto = [
     "    const rate = document.getElementById('rate').value;",
     "    const isPenalty = (inv === 'cash' && rate !== '5.0');",
     "    document.getElementById('g-150-m').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">B:特攻</span>';",
-    "    document.getElementById('g-200-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ 256</span>';",
-    "    document.getElementById('g-200-r').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ 256</span>';",
+    "    document.getElementById('g-200-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ ゾーン</span>';",
+    "    document.getElementById('g-200-r').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ ゾーン</span>';",
     "    document.getElementById('g-350-m').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">C:特攻</span>';",
-    "    document.getElementById('g-480-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ 576</span>';",
+    "    document.getElementById('g-480-n').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">〇 特攻</span>';",
     "    document.getElementById('g-700-r').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">〇 特攻</span>';",
-    "    document.getElementById('g-750-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-go\">〇 ゾーン</span>';",
+    "    document.getElementById('g-750-n').innerHTML = isPenalty ? '<span class=\"mark-go\">〇 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
     "    document.getElementById('g-750-r').innerHTML = isPenalty ? '<span class=\"mark-go\">〇 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
-    "    document.getElementById('g-950-n').innerHTML = isPenalty ? '<span class=\"mark-go\">〇 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
-    "    document.getElementById('g-950-r').innerHTML = isPenalty ? '<span class=\"mark-go\">〇 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
+    "    document.getElementById('g-950-n').innerHTML = isPenalty ? '<span class=\"mark-go\">◎ 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
+    "    document.getElementById('g-950-r').innerHTML = isPenalty ? '<span class=\"mark-go\">◎ 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
     "}",
     "",
     "function updateUI() { ",
@@ -516,14 +514,14 @@ const _0xHokuto = [
     "            m = \"【設定4以上確定】高設定域です。粘り強く続行を推奨。\";",
     "            cls = \"alert-success\";",
     "        } else if (t >= 1500) {",
-    "            if (atProb <= 245) {",
+    "            if (atProb <= 273.1) {",
     "                if (roleProb <= 42) { m = \"【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！\"; cls = \"alert-success\"; }",
     "                else { m = \"【高設定濃厚】初当たり(設定6域)は優秀。小役のブレに注意しつつ続行。\"; cls = \"alert-success\"; }",
-    "            } else if (atProb <= 300) {",
-    "                if (roleProb <= 45) { m = \"【高設定期待】初当たり(設定5域)・小役共に優秀。粘り強く続行を推奨。\"; cls = \"alert-success\"; }",
+    "            } else if (atProb <= 298.7) {",
+    "                if (roleProb <= 45) { m = \"【高設定期待】初当たり(設定4-5域)・小役共に優秀。粘り強く続行を推奨。\"; cls = \"alert-success\"; }",
     "                else { m = \"【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。\"; cls = \"alert-warning\"; }",
-    "            } else if (atProb <= 350) {",
-    "                if (roleProb <= 42 && roleProb !== 999) { m = \"【判断保留】初当たり(設定4域)は平凡だが小役が優秀。罠に注意しつつ様子見。\"; cls = \"alert-warning\"; }",
+    "            } else if (atProb <= 336.3) {",
+    "                if (roleProb <= 42 && roleProb !== 999) { m = \"【判断保留】初当たり(設定3域)は平凡だが小役が優秀。罠に注意しつつ様子見。\"; cls = \"alert-warning\"; }",
     "                else { m = \"【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。\"; cls = \"alert-warning\"; }",
     "            } else {",
     "                if (roleProb <= 42 && roleProb !== 999) { m = \"【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。\"; cls = \"alert-error\"; }",
