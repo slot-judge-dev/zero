@@ -329,6 +329,8 @@ const _0xHokuto = [
     "    let evModeB = (mode === 'shutter' && abe >= 150) ? 5500 : EV_NONE;",
     "    let evModeC = (mode === 'mode_c' && abe >= 350) ? 8000 : EV_NONE;",
     "    let evHeaven = (mode === 'heaven') ? 1500 : EV_NONE;",
+    "    let evPremium = isValidPremium ? 2500 : EV_NONE;",
+    "    let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;",
     "    ",
     "    let evDiffBonus = (isVip && diff >= 1000 && abe <= 128) ? 1000 : 0;",
     "",
