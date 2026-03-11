@@ -13,75 +13,411 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Protocol ZERO - 北斗の拳 転生2</title>
     <style>
-        :root { --bg: #0a0c10; --panel: #161b22; --accent: #58a6ff; --text: #c9d1d9; --danger: #f85149; --success: #3fb950; --warning: #d29922; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 10px; padding-bottom: 160px; }
+        :root { 
+            --bg: #0a0c10; 
+            --panel: #161b22; 
+            --accent: #58a6ff; 
+            --text: #c9d1d9; 
+            --danger: #f85149; 
+            --success: #3fb950; 
+            --warning: #d29922; 
+        }
         
-        .sticky-header { position: sticky; top: 0; background: var(--bg); z-index: 1000; padding: 10px 0; border-bottom: 2px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
-        .back-btn { background: #21262d; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.9em; border: 1px solid #30363d; }
-        .header-title { font-size: 1.1em; color: var(--accent); font-weight: bold; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            margin: 0; 
+            padding: 10px; 
+            padding-bottom: 160px; 
+        }
+        
+        .sticky-header { 
+            position: sticky; 
+            top: 0; 
+            background: var(--bg); 
+            z-index: 1000; 
+            padding: 10px 0; 
+            border-bottom: 2px solid #30363d; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .back-btn { 
+            background: #21262d; 
+            color: white; 
+            text-decoration: none; 
+            padding: 8px 12px; 
+            border-radius: 6px; 
+            font-size: 0.9em; 
+            border: 1px solid #30363d; 
+        }
+        
+        .header-title { 
+            font-size: 1.1em; 
+            color: var(--accent); 
+            font-weight: bold; 
+        }
 
-        .card { background: var(--panel); padding: 18px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #30363d; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-        h3 { margin-top: 0; margin-bottom: 12px; font-size: 1.1em; color: white; border-bottom: 1px solid #30363d; padding-bottom: 8px; }
+        .card { 
+            background: var(--panel); 
+            padding: 18px; 
+            border-radius: 12px; 
+            margin-bottom: 12px; 
+            border: 1px solid #30363d; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5); 
+        }
         
-        label { display: block; margin-bottom: 6px; font-size: 0.85em; font-weight: bold; color: #8b949e; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: white; box-sizing: border-box; font-size: 1em; }
+        h3 { 
+            margin-top: 0; 
+            margin-bottom: 12px; 
+            font-size: 1.1em; 
+            color: white; 
+            border-bottom: 1px solid #30363d; 
+            padding-bottom: 8px; 
+        }
         
-        button { width: 100%; padding: 20px; border-radius: 12px; font-weight: bold; background: var(--accent); color: white; border: none; cursor: pointer; font-size: 1.1em; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.2s; }
-        button:active { transform: scale(0.98); }
+        label { 
+            display: block; 
+            margin-bottom: 6px; 
+            font-size: 0.85em; 
+            font-weight: bold; 
+            color: #8b949e; 
+        }
         
-        .alert { padding: 16px; border-radius: 10px; margin-top: 12px; font-weight: bold; font-size: 1em; line-height: 1.6; border-left: 6px solid transparent; }
-        .alert-success { background: rgba(63, 185, 80, 0.1); border-left-color: var(--success); color: #56d364; }
-        .alert-error { background: rgba(248, 81, 73, 0.1); border-left-color: var(--danger); color: #ffa198; }
-        .alert-warning { background: rgba(210, 153, 34, 0.1); border-left-color: var(--warning); color: #e3b341; }
-        .alert-info { background: rgba(88, 166, 255, 0.1); border-left-color: var(--accent); color: #79c0ff; }
-        .alert-ceiling { background: #f85149; color: white; border: 2px solid white; animation: blink 0.8s infinite; text-align: center; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #30363d; 
+            background: #0d1117; 
+            color: white; 
+            box-sizing: border-box; 
+            font-size: 1em; 
+        }
+        
+        button { 
+            width: 100%; 
+            padding: 20px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            background: var(--accent); 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 1.1em; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+            transition: 0.2s; 
+        }
+        
+        button:active { 
+            transform: scale(0.98); 
+        }
+        
+        .alert { 
+            padding: 16px; 
+            border-radius: 10px; 
+            margin-top: 12px; 
+            font-weight: bold; 
+            font-size: 1em; 
+            line-height: 1.6; 
+            border-left: 6px solid transparent; 
+        }
+        
+        .alert-success { 
+            background: rgba(63, 185, 80, 0.1); 
+            border-left-color: var(--success); 
+            color: #56d364; 
+        }
+        
+        .alert-error { 
+            background: rgba(248, 81, 73, 0.1); 
+            border-left-color: var(--danger); 
+            color: #ffa198; 
+        }
+        
+        .alert-warning { 
+            background: rgba(210, 153, 34, 0.1); 
+            border-left-color: var(--warning); 
+            color: #e3b341; 
+        }
+        
+        .alert-info { 
+            background: rgba(88, 166, 255, 0.1); 
+            border-left-color: var(--accent); 
+            color: #79c0ff; 
+        }
+        
+        .alert-ceiling { 
+            background: #f85149; 
+            color: white; 
+            border: 2px solid white; 
+            animation: blink 0.8s infinite; 
+            text-align: center; 
+        }
+        
+        @keyframes blink { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.6; } 
+            100% { opacity: 1; } 
+        }
 
-        .live-wage { font-size: 2.4em; font-weight: bold; color: var(--success); text-align: center; margin: 10px 0; text-shadow: 0 0 20px rgba(63, 185, 80, 0.4); }
-        .highlight-text { color: #f85149; font-weight: bold; font-size: 1.1em; text-decoration: underline; background: rgba(248, 81, 73, 0.1); padding: 2px 4px; border-radius: 4px; }
-        .navi-rule { font-size: 0.9em; padding: 8px 0; border-bottom: 1px solid #30363d; color: #8b949e; }
-        .navi-rule.active { color: #56d364; font-weight: bold; border-left: 4px solid #56d364; padding-left: 10px; background: rgba(63, 185, 80, 0.05); }
+        .live-wage { 
+            font-size: 2.4em; 
+            font-weight: bold; 
+            color: var(--success); 
+            text-align: center; 
+            margin: 10px 0; 
+            text-shadow: 0 0 20px rgba(63, 185, 80, 0.4); 
+        }
         
-        .counter-btn { width:35px; padding:6px 0; background:#21262d; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; font-size:1.1em; }
-        .counter-btn.plus { background: var(--accent); }
+        .highlight-text { 
+            color: #f85149; 
+            font-weight: bold; 
+            font-size: 1.1em; 
+            text-decoration: underline; 
+            background: rgba(248, 81, 73, 0.1); 
+            padding: 2px 4px; 
+            border-radius: 4px; 
+        }
+        
+        .navi-rule { 
+            font-size: 0.9em; 
+            padding: 8px 0; 
+            border-bottom: 1px solid #30363d; 
+            color: #8b949e; 
+        }
+        
+        .navi-rule.active { 
+            color: #56d364; 
+            font-weight: bold; 
+            border-left: 4px solid #56d364; 
+            padding-left: 10px; 
+            background: rgba(63, 185, 80, 0.05); 
+        }
+        
+        .counter-btn { 
+            width:35px; 
+            padding:6px 0; 
+            background:#21262d; 
+            color:white; 
+            border:none; 
+            border-radius:6px; 
+            cursor:pointer; 
+            font-weight:bold; 
+            font-size:1.1em; 
+        }
+        
+        .counter-btn.plus { 
+            background: var(--accent); 
+        }
 
-        .bible-tabs { display: flex; gap: 4px; margin-bottom: 12px; border-bottom: 1px solid #30363d; overflow-x: auto; white-space: nowrap; }
-        .tab-btn { padding: 10px 15px; background: #1b2128; color: #8b949e; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: 0.3s; }
-        .tab-btn.active { background: #30363d; color: white; border-bottom: 2px solid var(--accent); }
-        .tab-content { display: none; padding: 10px 0; }
-        .tab-content.active { display: block; }
+        .bible-tabs { 
+            display: flex; 
+            gap: 4px; 
+            margin-bottom: 12px; 
+            border-bottom: 1px solid #30363d; 
+            overflow-x: auto; 
+            white-space: nowrap; 
+        }
+        
+        .tab-btn { 
+            padding: 10px 15px; 
+            background: #1b2128; 
+            color: #8b949e; 
+            border: none; 
+            border-radius: 8px 8px 0 0; 
+            cursor: pointer; 
+            font-size: 0.8em; 
+            font-weight: bold; 
+            transition: 0.3s; 
+        }
+        
+        .tab-btn.active { 
+            background: #30363d; 
+            color: white; 
+            border-bottom: 2px solid var(--accent); 
+        }
+        
+        .tab-content { 
+            display: none; 
+            padding: 10px 0; 
+        }
+        
+        .tab-content.active { 
+            display: block; 
+        }
 
-        .guide-table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 0.75em; text-align: left; }
-        .guide-table th { background: #21262d; color: #8b949e; padding: 10px 5px; border: 1px solid #30363d; text-align: center; }
-        .guide-table td { padding: 12px 5px; border: 1px solid #30363d; background: #0d1117; line-height: 1.5; }
+        .guide-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 5px; 
+            font-size: 0.75em; 
+            text-align: left; 
+        }
+        
+        .guide-table th { 
+            background: #21262d; 
+            color: #8b949e; 
+            padding: 10px 5px; 
+            border: 1px solid #30363d; 
+            text-align: center; 
+        }
+        
+        .guide-table td { 
+            padding: 12px 5px; 
+            border: 1px solid #30363d; 
+            background: #0d1117; 
+            line-height: 1.5; 
+        }
+        
         .mark-go { color: var(--success); font-weight: bold; }
         .mark-warn { color: var(--warning); font-weight: bold; }
         .mark-ng { color: #8b949e; }
-        .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 1px solid #fff; vertical-align: middle; }
+        
+        .color-dot { 
+            display: inline-block; 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            margin-right: 6px; 
+            border: 1px solid #fff; 
+            vertical-align: middle; 
+        }
 
-        .legal-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10,12,16,0.98); padding: 15px; font-size: 0.65em; color: #484f58; text-align: center; border-top: 1px solid #30363d; z-index: 2000; pointer-events: none; line-height: 1.4; }
+        .legal-footer { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: rgba(10,12,16,0.98); 
+            padding: 15px; 
+            font-size: 0.65em; 
+            color: #484f58; 
+            text-align: center; 
+            border-top: 1px solid #30363d; 
+            z-index: 2000; 
+            pointer-events: none; 
+            line-height: 1.4; 
+        }
 
         /* 新規追加スタイル (Tier S / 段階的開示プロトコル) */
-        .authority-text { font-size: 0.8em; color: #8b949e; text-align: center; margin: 15px 5px; line-height: 1.5; font-weight: bold; }
-        .authority-text span { color: var(--danger); }
+        .authority-text { 
+            font-size: 0.8em; 
+            color: #8b949e; 
+            text-align: center; 
+            margin: 15px 5px; 
+            line-height: 1.5; 
+            font-weight: bold; 
+        }
         
-        .hero-section { background: rgba(22, 27, 34, 0.8); border: 2px solid var(--accent); padding: 25px 15px; text-align: center; margin-bottom: 12px; box-shadow: 0 0 20px rgba(88, 166, 255, 0.2); }
-        .hero-input { font-size: 2.8em; text-align: center; font-weight: bold; height: 80px; margin: 15px 0; color: var(--success); background: #000; border: 3px solid #30363d; border-radius: 12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
-        .btn-execute { background: #d73a49; color: white; font-size: 1.4em; padding: 22px; border-radius: 12px; box-shadow: 0 0 20px rgba(215, 58, 73, 0.6); border: 2px solid #ff7b72; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); letter-spacing: 1px; }
-        .btn-execute:active { transform: scale(0.95); }
+        .authority-text span { 
+            color: var(--danger); 
+        }
+        
+        .hero-section { 
+            background: rgba(22, 27, 34, 0.8); 
+            border: 2px solid var(--accent); 
+            padding: 25px 15px; 
+            text-align: center; 
+            margin-bottom: 12px; 
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2); 
+        }
+        
+        .hero-input { 
+            font-size: 2.8em; 
+            text-align: center; 
+            font-weight: bold; 
+            height: 80px; 
+            margin: 15px 0; 
+            color: var(--success); 
+            background: #000; 
+            border: 3px solid #30363d; 
+            border-radius: 12px; 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8); 
+        }
+        
+        .btn-execute { 
+            background: #d73a49; 
+            color: white; 
+            font-size: 1.4em; 
+            padding: 22px; 
+            border-radius: 12px; 
+            box-shadow: 0 0 20px rgba(215, 58, 73, 0.6); 
+            border: 2px solid #ff7b72; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
+            letter-spacing: 1px; 
+        }
+        
+        .btn-execute:active { 
+            transform: scale(0.95); 
+        }
 
-        .compact-section { padding: 15px; margin-bottom: 12px; }
-        .compact-select { padding: 10px; font-size: 0.9em; margin-bottom: 0; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .compact-section { 
+            padding: 15px; 
+            margin-bottom: 12px; 
+        }
+        
+        .compact-select { 
+            padding: 10px; 
+            font-size: 0.9em; 
+            margin-bottom: 0; 
+        }
+        
+        .grid-2 { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+            margin-bottom: 10px; 
+        }
 
         /* アコーディオン (Tier B) */
-        .accordion { margin-bottom: 12px; background: var(--panel); border-radius: 12px; border: 1px solid #30363d; overflow: hidden; }
-        .accordion summary { padding: 15px; font-weight: bold; font-size: 1em; color: white; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: #21262d; }
-        .accordion summary::-webkit-details-marker { display: none; }
-        .accordion summary::after { content: "▼"; font-size: 0.8em; color: var(--accent); transition: 0.3s; }
-        .accordion[open] summary::after { transform: rotate(180deg); }
-        .accordion[open] summary { border-bottom: 1px solid #30363d; }
-        .accordion-content { padding: 15px; background: #0d1117; }
+        .accordion { 
+            margin-bottom: 12px; 
+            background: var(--panel); 
+            border-radius: 12px; 
+            border: 1px solid #30363d; 
+            overflow: hidden; 
+        }
+        
+        .accordion summary { 
+            padding: 15px; 
+            font-weight: bold; 
+            font-size: 1em; 
+            color: white; 
+            cursor: pointer; 
+            list-style: none; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #21262d; 
+        }
+        
+        .accordion summary::-webkit-details-marker { 
+            display: none; 
+        }
+        
+        .accordion summary::after { 
+            content: "▼"; 
+            font-size: 0.8em; 
+            color: var(--accent); 
+            transition: 0.3s; 
+        }
+        
+        .accordion[open] summary::after { 
+            transform: rotate(180deg); 
+        }
+        
+        .accordion[open] summary { 
+            border-bottom: 1px solid #30363d; 
+        }
+        
+        .accordion-content { 
+            padding: 15px; 
+            background: #0d1117; 
+        }
     </style>
 </head>
 <body>
@@ -99,6 +435,34 @@
     <div class="card hero-section">
         <label for="current_abe" style="font-size:1.1em; color:var(--accent); text-align:center;">現在の液晶あべし数</label>
         <input type="number" id="current_abe" class="hero-input" value="0" oninput="updateUI()">
+        
+        <div style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #30363d; text-align: left;">
+            <label style="margin-bottom:8px; font-size:0.9em; color:var(--text); display:flex; align-items:center; gap:8px;">
+                <input type="checkbox" id="is_reset" onchange="updateUI()" style="width:20px; height:20px; margin:0;"> 🌅 朝イチ（設定変更/リセット）
+            </label>
+            <div class="grid-2" style="margin-bottom: 0;">
+                <div>
+                    <label style="font-size:0.75em;">前回AT後の状態</label>
+                    <select id="last_status" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
+                        <option value="none">通常</option>
+                        <option value="densho">伝承示唆</option>
+                        <option value="premium">★上位(天撃)後</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.75em;">モード示唆 (ランプ等)</label>
+                    <select id="mode_hint" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
+                        <option value="none">示唆なし</option>
+                        <option value="shutter">シャッター(B以上)</option>
+                        <option value="lamp_100g_b">100G黄緑点灯(B以上)</option>
+                        <option value="lamp_100g_c">100G黄緑点滅(C以上)</option>
+                        <option value="lamp_error">小役ランプ矛盾(天国/本前兆)</option>
+                        <option value="heaven">天国濃厚</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <button onclick="executeAnalysis()" class="btn-execute">北斗軍師の最終判断 (EXECUTE)</button>
     </div>
 
@@ -138,32 +502,8 @@
     </div>
 
     <div class="card compact-section">
-        <h3 style="font-size:0.95em; margin-bottom:10px; color:#8b949e; border-bottom:1px solid #30363d; padding-bottom:5px;">⚙️ 詳細条件 (投資環境・状況)</h3>
+        <h3 style="font-size:0.95em; margin-bottom:10px; color:#8b949e; border-bottom:1px solid #30363d; padding-bottom:5px;">⚙️ 詳細条件 (投資環境)</h3>
         
-        <div class="grid-2">
-            <div>
-                <label style="font-size:0.75em;">前回AT後の状態</label>
-                <select id="last_status" class="compact-select" style="width:100%;" onchange="updateUI()">
-                    <option value="none">通常</option>
-                    <option value="densho">伝承示唆</option>
-                    <option value="premium">★上位(天撃)後</option>
-                </select>
-            </div>
-            <div>
-                <label style="font-size:0.75em;">モード示唆 (ランプ等)</label>
-                <select id="mode_hint" class="compact-select" style="width:100%;" onchange="updateUI()">
-                    <option value="none">示唆なし</option>
-                    <option value="shutter">シャッター(B以上)</option>
-                    <option value="lamp_100g_b">100G黄緑点灯(B以上)</option>
-                    <option value="lamp_100g_c">100G黄緑点滅(C以上)</option>
-                    <option value="lamp_error">小役ランプ矛盾(天国/本前兆)</option>
-                    <option value="heaven">天国濃厚</option>
-                </select>
-            </div>
-        </div>
-
-        <label style="margin-bottom:10px; font-size:0.85em; color:var(--text);"><input type="checkbox" id="is_reset" onchange="updateUI()"> 🌅 朝イチ（設定変更/リセット1280）</label>
-
         <div class="grid-2">
             <div>
                 <label style="font-size:0.75em;">交換率</label>
@@ -308,7 +648,8 @@
 <script>
 const _0xHokuto = [
     "let isVip = false;",
-    "let countSuika = 0; let countWCherry = 0;",
+    "let countSuika = 0;",
+    "let countWCherry = 0;",
     "",
     "window.onload = () => { ",
     "    checkVIPStatus();",
@@ -323,22 +664,26 @@ const _0xHokuto = [
     "    const adContainer = document.getElementById('ad-container'); ",
     "",
     "    if (isVip) {",
-    "        if (vipSec) vipSec.style.display = 'block';",
-    "        if (freeNot) freeNot.style.display = 'none';",
-    "        if (adContainer) adContainer.style.display = 'none'; ",
+    "        if (vipSec) { vipSec.style.display = 'block'; }",
+    "        if (freeNot) { freeNot.style.display = 'none'; }",
+    "        if (adContainer) { adContainer.style.display = 'none'; }",
     "    } else {",
-    "        if (vipSec) vipSec.style.display = 'none';",
-    "        if (freeNot) freeNot.style.display = 'block';",
-    "        if (adContainer) adContainer.style.display = 'block'; ",
+    "        if (vipSec) { vipSec.style.display = 'none'; }",
+    "        if (freeNot) { freeNot.style.display = 'block'; }",
+    "        if (adContainer) { adContainer.style.display = 'block'; }",
     "    }",
     "}",
     "",
     "function openBible(evt, tabName) {",
     "    let i, tabcontent, tablinks;",
     "    tabcontent = document.getElementsByClassName('tab-content');",
-    "    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove('active'); }",
+    "    for (i = 0; i < tabcontent.length; i++) {",
+    "        tabcontent[i].classList.remove('active');",
+    "    }",
     "    tablinks = document.getElementsByClassName('tab-btn');",
-    "    for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove('active'); }",
+    "    for (i = 0; i < tablinks.length; i++) {",
+    "        tablinks[i].classList.remove('active');",
+    "    }",
     "    document.getElementById(tabName).classList.add('active');",
     "    evt.currentTarget.classList.add('active');",
     "}",
@@ -356,80 +701,181 @@ const _0xHokuto = [
     "    const trophy = document.getElementById('trophy_h').value;",
     "    const aiConsult = isVip ? document.getElementById('ai_consult_h').value : 'none';",
     "",
-    "    if (time >= 22) return { isTimeOver: true, time: time };",
+    "    if (time >= 22) {",
+    "        return { isTimeOver: true, time: time };",
+    "    }",
     "",
     "    const isValidPremium = (lastSt === 'premium' && abe <= 128);",
     "    const t_rot = parseFloat(document.getElementById('total_rot').value) || 0;",
     "    const a_cnt = parseFloat(document.getElementById('at_count').value) || 0;",
-    "    let isHighSettingProb = (t_rot >= 2000 && (t_rot/a_cnt) <= 273.1); ",
+    "    let isHighSettingProb = (t_rot >= 2000 && (t_rot / a_cnt) <= 273.1); ",
     "",
-    "    let isHotZone = (abe >= 34 && abe <= 45) || (abe >= 166 && abe <= 173) || (abe >= 288 && abe <= 303) || (abe >= 421 && abe <= 429) || (abe >= 489 && abe <= 496);",
+    "    let isHotZone = false;",
+    "    if ((abe >= 34 && abe <= 45) || (abe >= 166 && abe <= 173) || (abe >= 288 && abe <= 303) || (abe >= 421 && abe <= 429) || (abe >= 489 && abe <= 496)) {",
+    "        isHotZone = true;",
+    "    }",
     "",
     "    let maxCeiling = 1536; ",
-    "    if (mode === 'heaven' || mode === 'lamp_error' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') maxCeiling = 128;",
-    "    else if (mode === 'mode_c' || mode === 'lamp_100g_c') maxCeiling = 576;",
-    "    else if (mode === 'shutter' || mode === 'lamp_100g_b') maxCeiling = 896; ",
-    "    else if (reset) maxCeiling = 1280;",
+    "    if (mode === 'heaven' || mode === 'lamp_error' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') {",
+    "        maxCeiling = 128;",
+    "    } else if (mode === 'mode_c' || mode === 'lamp_100g_c') {",
+    "        maxCeiling = 576;",
+    "    } else if (mode === 'shutter' || mode === 'lamp_100g_b') {",
+    "        maxCeiling = 896; ",
+    "    } else if (reset) {",
+    "        maxCeiling = 1280;",
+    "    }",
+    "    ",
     "    let remainCeiling = Math.max(0, maxCeiling - abe);",
     "",
     "    const EV_NONE = -600;",
-    "    let evAbe = (abe >= 1473) ? 15000 : (abe >= 1100) ? 9411 : (abe >= 750) ? 5873 : (abe >= 450) ? 3127 : (abe >= 350) ? 1782 : (abe >= 200 && abe <= 256) ? 900 : EV_NONE;",
-    "    let evResetZ = (reset && abe >= 600) ? 6000 : EV_NONE;",
-    "    let evResetS = (reset && abe >= 450 && abe <= 576) ? 5205 : EV_NONE;",
-    "    let evResetL = (reset && abe >= 200 && abe <= 256) ? 2841 : EV_NONE;",
-    "    let evModeB = ((mode === 'shutter' || mode === 'lamp_100g_b') && abe >= 150) ? 5500 : EV_NONE;",
-    "    let evModeC = ((mode === 'mode_c' || mode === 'lamp_100g_c') && abe >= 350) ? 8000 : EV_NONE;",
-    "    let evHeaven = (mode === 'heaven' || mode === 'lamp_error') ? 1500 : EV_NONE;",
-    "    let evPremium = isValidPremium ? 2500 : EV_NONE;",
-    "    let evDensho = (lastSt === 'densho') ? 1500 : EV_NONE;",
     "    ",
-    "    let evDiffBonus = (isVip && diff >= 1000 && abe <= 128) ? 1000 : 0;",
+    "    let evAbe = EV_NONE;",
+    "    if (abe >= 1473) { evAbe = 15000; }",
+    "    else if (abe >= 1100) { evAbe = 9411; }",
+    "    else if (abe >= 750) { evAbe = 5873; }",
+    "    else if (abe >= 450) { evAbe = 3127; }",
+    "    else if (abe >= 350) { evAbe = 1782; }",
+    "    else if (abe >= 200 && abe <= 256) { evAbe = 900; }",
     "",
-    "    let wageAbe = (abe >= 1100) ? 32949 : (abe > 750) ? 14069 : (abe > 450) ? 5830 : (abe > 350) ? 3192 : 800;",
-    "    let wageReset = reset ? ((abe >= 600) ? 11000 : (abe >= 450) ? 10000 : (abe >= 200) ? 5800 : 1500) : 0;",
-    "    let wageState = isValidPremium ? 5500 : (lastSt === 'densho' ? 4000 : 800);",
+    "    let evResetZ = EV_NONE;",
+    "    if (reset && abe >= 600) { evResetZ = 6000; }",
+    "    ",
+    "    let evResetS = EV_NONE;",
+    "    if (reset && abe >= 450 && abe <= 576) { evResetS = 5205; }",
+    "    ",
+    "    let evResetL = EV_NONE;",
+    "    if (reset && abe >= 200 && abe <= 256) { evResetL = 2841; }",
+    "    ",
+    "    let evModeB = EV_NONE;",
+    "    if ((mode === 'shutter' || mode === 'lamp_100g_b') && abe >= 150) { evModeB = 5500; }",
+    "    ",
+    "    let evModeC = EV_NONE;",
+    "    if ((mode === 'mode_c' || mode === 'lamp_100g_c') && abe >= 350) { evModeC = 8000; }",
+    "    ",
+    "    let evHeaven = EV_NONE;",
+    "    if (mode === 'heaven' || mode === 'lamp_error') { evHeaven = 1500; }",
+    "    ",
+    "    let evPremium = EV_NONE;",
+    "    if (isValidPremium) { evPremium = 2500; }",
+    "    ",
+    "    let evDensho = EV_NONE;",
+    "    if (lastSt === 'densho') { evDensho = 1500; }",
+    "    ",
+    "    let evDiffBonus = 0;",
+    "    if (isVip && diff >= 1000 && abe <= 128) { evDiffBonus = 1000; }",
     "",
-    "    let bonusEV = evDiffBonus; let bonusWage = 0;",
-    "    if (aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') { bonusEV += 3500; bonusWage += 4000; }",
-    "    else if (aiConsult === 'densho_loop') { bonusEV += 2000; bonusWage += 2500; }",
-    "    else if (aiConsult === 'battle_rare') { bonusEV += 3000; bonusWage += 3500; }",
-    "    else if (aiConsult === 'weak') { bonusEV -= 300; bonusWage -= 500; }",
-    "    if (mode === 'lamp_error') { bonusEV += 1500; bonusWage += 2000; }",
-    "    if (evDiffBonus > 0) bonusWage += 1000;",
+    "    let wageAbe = 800;",
+    "    if (abe >= 1100) { wageAbe = 32949; }",
+    "    else if (abe > 750) { wageAbe = 14069; }",
+    "    else if (abe > 450) { wageAbe = 5830; }",
+    "    else if (abe > 350) { wageAbe = 3192; }",
+    "    ",
+    "    let wageReset = 0;",
+    "    if (reset) {",
+    "        if (abe >= 600) { wageReset = 11000; }",
+    "        else if (abe >= 450) { wageReset = 10000; }",
+    "        else if (abe >= 200) { wageReset = 5800; }",
+    "        else { wageReset = 1500; }",
+    "    }",
+    "    ",
+    "    let wageState = 800;",
+    "    if (isValidPremium) { wageState = 5500; }",
+    "    else if (lastSt === 'densho') { wageState = 4000; }",
+    "",
+    "    let bonusEV = evDiffBonus; ",
+    "    let bonusWage = 0;",
+    "    ",
+    "    if (aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') { ",
+    "        bonusEV += 3500; ",
+    "        bonusWage += 4000; ",
+    "    } else if (aiConsult === 'densho_loop') { ",
+    "        bonusEV += 2000; ",
+    "        bonusWage += 2500; ",
+    "    } else if (aiConsult === 'battle_rare') { ",
+    "        bonusEV += 3000; ",
+    "        bonusWage += 3500; ",
+    "    } else if (aiConsult === 'weak') { ",
+    "        bonusEV -= 300; ",
+    "        bonusWage -= 500; ",
+    "    }",
+    "    ",
+    "    if (mode === 'lamp_error') { ",
+    "        bonusEV += 1500; ",
+    "        bonusWage += 2000; ",
+    "    }",
+    "    ",
+    "    if (evDiffBonus > 0) { ",
+    "        bonusWage += 1000; ",
+    "    }",
     "",
     "    let baseEV = Math.max(evAbe, evResetZ, evResetS, evResetL, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;",
     "    let baseWage = Math.max(wageAbe, wageReset, wageState) + bonusWage;",
     "",
-    "    if (trophy === 'rainbow' || isHighSettingProb) { baseWage = Math.max(baseWage, 8000); baseEV = Math.max(baseEV, 6500); } ",
-    "    else if (trophy === 'gold') { baseWage = Math.max(baseWage, 5000); baseEV = Math.max(baseEV, 3000); }",
+    "    if (trophy === 'rainbow' || isHighSettingProb) { ",
+    "        baseWage = Math.max(baseWage, 8000); ",
+    "        baseEV = Math.max(baseEV, 6500); ",
+    "    } else if (trophy === 'gold') { ",
+    "        baseWage = Math.max(baseWage, 5000); ",
+    "        baseEV = Math.max(baseEV, 3000); ",
+    "    }",
     "",
-    "    let finalEV = baseEV; let finalWage = baseWage;",
-    "    if (time >= 18) { let hp = (time - 17); finalWage -= (hp * 700); finalEV -= (hp * 400); }",
-    "    if (inv === 'cash' && rate !== '5.0') { finalWage -= 2500; if (finalEV > 0) finalEV = Math.floor(finalEV * 0.60); }",
+    "    let finalEV = baseEV; ",
+    "    let finalWage = baseWage;",
+    "    ",
+    "    if (time >= 18) { ",
+    "        let hp = (time - 17); ",
+    "        finalWage -= (hp * 700); ",
+    "        finalEV -= (hp * 400); ",
+    "    }",
+    "    ",
+    "    if (inv === 'cash' && rate !== '5.0') { ",
+    "        finalWage -= 2500; ",
+    "        if (finalEV > 0) {",
+    "            finalEV = Math.floor(finalEV * 0.60); ",
+    "        }",
+    "    }",
     "",
     "    let baseBorder = 400;",
     "    if (trophy === 'rainbow' || isHighSettingProb || isValidPremium || mode === 'heaven' || mode === 'lamp_error' || aiConsult === 'heaven_gold' || aiConsult === 'tengeki_post') {",
     "        baseBorder = 0; ",
     "    } else {",
-    "        if (mode === 'shutter' || mode === 'lamp_100g_b') baseBorder = 150; ",
-    "        else if (mode === 'mode_c' || mode === 'lamp_100g_c') baseBorder = 350; ",
-    "        else if (reset) baseBorder = 600;",
-    "        if (time >= 18) baseBorder += 100;",
-    "        if (time >= 21) baseBorder += 100;",
-    "        if (inv === 'cash' && rate !== '5.0') baseBorder += 150;",
-    "        if (isVip && diff >= 1000) baseBorder = Math.max(0, baseBorder - 150);",
+    "        if (mode === 'shutter' || mode === 'lamp_100g_b') {",
+    "            baseBorder = 150; ",
+    "        } else if (mode === 'mode_c' || mode === 'lamp_100g_c') {",
+    "            baseBorder = 350; ",
+    "        } else if (reset) {",
+    "            baseBorder = 600;",
+    "        }",
+    "        ",
+    "        if (time >= 18) { baseBorder += 100; }",
+    "        if (time >= 21) { baseBorder += 100; }",
+    "        if (inv === 'cash' && rate !== '5.0') { baseBorder += 150; }",
+    "        if (isVip && diff >= 1000) { baseBorder = Math.max(0, baseBorder - 150); }",
     "    }",
     "",
     "    return { ",
-    "        abe: abe, lastSt: lastSt, diff: diff, isTimeOver: false, time: time, remainCeiling: remainCeiling, ",
-    "        border: Math.max(0, baseBorder + adj), wage: Math.floor(finalWage), ev: Math.floor(finalEV), isHotZone: isHotZone",
+    "        abe: abe, ",
+    "        lastSt: lastSt, ",
+    "        diff: diff, ",
+    "        isTimeOver: false, ",
+    "        time: time, ",
+    "        remainCeiling: remainCeiling, ",
+    "        border: Math.max(0, baseBorder + adj), ",
+    "        wage: Math.floor(finalWage), ",
+    "        ev: Math.floor(finalEV), ",
+    "        isHotZone: isHotZone",
     "    };",
     "}",
     "",
     "function executeAnalysis() {",
     "    const s = getLogicStats();",
     "    let res = `<h3>📊 北斗 最終戦略分析</h3>`;",
-    "    if (s.isTimeOver) { document.getElementById('result-area-h').innerHTML = res + `<div class=\"alert alert-error\">🚨 22時以降。即時帰宅！</div>`; return; }",
+    "    ",
+    "    if (s.isTimeOver) { ",
+    "        document.getElementById('result-area-h').innerHTML = res + `<div class=\"alert alert-error\">🚨 22時以降。即時帰宅！</div>`; ",
+    "        return; ",
+    "    }",
     "",
     "    let broHtml = \"\";",
     "    if (isVip) {",
@@ -438,16 +884,29 @@ const _0xHokuto = [
     "            let situation = \"\";",
     "            const inv = document.getElementById('invest_type').value;",
     "            const rate = document.getElementById('rate').value;",
-    "            if (s.time >= 21) situation += `今は<span style=\"color:var(--danger);\">21時以降</span>の閉店リスクが極めて高い時間帯で、`;",
-    "            else if (s.time >= 18) situation += `もう<span style=\"color:var(--warning);\">18時以降</span>で時間的猶予が減っている中で、`;",
-    "            if (inv === 'cash' && rate !== '5.0') situation += `<span style=\"color:var(--danger);\">現金投資ギャップ</span>の痛手もある状況だ。`;",
-    "            else if (inv === 'medal') situation += `<span style=\"color:var(--success);\">持ちメダル遊技</span>なのはデカいな。`;",
-    "            else situation += `等価での勝負だな。`;",
+    "            ",
+    "            if (s.time >= 21) {",
+    "                situation += `今は<span style=\"color:var(--danger);\">21時以降</span>の閉店リスクが極めて高い時間帯で、`;",
+    "            } else if (s.time >= 18) {",
+    "                situation += `もう<span style=\"color:var(--warning);\">18時以降</span>で時間的猶予が減っている中で、`;",
+    "            }",
+    "            ",
+    "            if (inv === 'cash' && rate !== '5.0') {",
+    "                situation += `<span style=\"color:var(--danger);\">現金投資ギャップ</span>の痛手もある状況だ。`;",
+    "            } else if (inv === 'medal') {",
+    "                situation += `<span style=\"color:var(--success);\">持ちメダル遊技</span>なのはデカいな。`;",
+    "            } else {",
+    "                situation += `等価での勝負だな。`;",
+    "            }",
     "",
     "            let abeText = \"\";",
-    "            if (s.abe >= 1100) abeText = `すでに<span style=\"color:var(--danger);\">${s.abe}あべし</span>の天井到達圏内だ。`;",
-    "            else if (s.abe >= 400) abeText = `<span style=\"color:var(--success);\">${s.abe}あべし</span>まで育っているな。`;",
-    "            else abeText = `まだ<span style=\"color:var(--warning);\">${s.abe}あべし</span>の浅い所だが、`;",
+    "            if (s.abe >= 1100) {",
+    "                abeText = `すでに<span style=\"color:var(--danger);\">${s.abe}あべし</span>の天井到達圏内だ。`;",
+    "            } else if (s.abe >= 400) {",
+    "                abeText = `<span style=\"color:var(--success);\">${s.abe}あべし</span>まで育っているな。`;",
+    "            } else {",
+    "                abeText = `まだ<span style=\"color:var(--warning);\">${s.abe}あべし</span>の浅い所だが、`;",
+    "            }",
     "",
     "            let advice = \"\";",
     "            if (aiConsult === 'weak') {",
@@ -468,16 +927,28 @@ const _0xHokuto = [
     "            </div>`;",
     "        }",
     "    }",
-    "    if (broHtml !== \"\") res += broHtml;",
+    "    ",
+    "    if (broHtml !== \"\") {",
+    "        res += broHtml;",
+    "    }",
     "",
-    "    let displayEV = isVip ? `￥${s.ev}前後` : `<span style=\"background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;\">【🔒VIP限定】</span>`;",
-    "    const evDisp = (val) => `<br><span style=\"font-size:1.1em; font-weight:bold; color:var(--success);\">💰期待値: ${displayEV}</span><br><span style=\"font-size:0.85em; color:#8b949e;\">🎯最大天井まで残り: <b>${s.remainCeiling}</b> あべし</span>`;",
+    "    let displayEV = \"\";",
+    "    if (isVip) {",
+    "        displayEV = `￥${s.ev}前後`;",
+    "    } else {",
+    "        displayEV = `<span style=\"background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;\">【🔒VIP限定】</span>`;",
+    "    }",
+    "    ",
+    "    const evDisp = (val) => {",
+    "        return `<br><span style=\"font-size:1.1em; font-weight:bold; color:var(--success);\">💰期待値: ${displayEV}</span><br><span style=\"font-size:0.85em; color:#8b949e;\">🎯最大天井まで残り: <b>${s.remainCeiling}</b> あべし</span>`;",
+    "    };",
     "",
     "    if (s.time === 21) {",
     "        res += `<div class=\"alert alert-warning\" style=\"border-color:var(--danger); color:var(--danger); background:rgba(248,81,73,0.1);\">⚠️ 【閉店欠損アラート】21時を過ぎています。取り切れないリスクが急増中。</div>`;",
     "    }",
     "",
     "    let mode = document.getElementById('mode_hint').value;",
+    "    ",
     "    if (s.ev < 0 && s.abe < 1100) {",
     "        if ((mode === 'shutter' || mode === 'lamp_100g_b') && s.abe < 256) {",
     "            res += `<div class=\"alert alert-info\">⚡ 【256ゾーンまで特攻】モードB以上濃厚。浅いあべし数からの全ツッパは危険だが、最低でも256あべしの強ゾーン抜けまでは回せ。${evDisp(s.ev)}</div>`;",
@@ -507,14 +978,39 @@ const _0xHokuto = [
     "        const isDensho = (s.lastSt === 'densho' || document.getElementById('ai_consult_h').value === 'densho_loop');",
     "        const isTsuranuki = (s.diff >= 1000);",
     "",
-    "        naviHtml += `<div class=\"navi-rule ${isCeiling ? 'active' : ''}\">★【天井保護】当選までヤメ厳禁（最優先ルール）</div>`;",
-    "        naviHtml += `<div class=\"navi-rule ${(isPremium && !isCeiling) ? 'active' : ''}\">①上位AT(天撃)後/天国：128あべし+前兆までヤメ厳禁。</div>`;",
-    "        naviHtml += `<div class=\"navi-rule ${(isDensho && !isCeiling && !isPremium) ? 'active' : ''}\">②伝承ループ：天破ループ確認。宝玉点滅抜けまで。</div>`;",
-    "        naviHtml += `<div class=\"navi-rule ${(isTsuranuki && !isCeiling && !isPremium && !isDensho) ? 'active' : ''}\">③VIP差枚128：有利リセットフォロー。128あべしまで。</div>`;",
-    "        naviHtml += `<div class=\"navi-rule ${(!isCeiling && !isPremium && !isDensho && !isTsuranuki) ? 'active' : ''}\">④【動的フォロー】通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;",
+    "        if (isCeiling) {",
+    "            naviHtml += `<div class=\"navi-rule active\">★【天井保護】当選までヤメ厳禁（最優先ルール）</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">★【天井保護】当選までヤメ厳禁（最優先ルール）</div>`;",
+    "        }",
+    "        ",
+    "        if (isPremium && !isCeiling) {",
+    "            naviHtml += `<div class=\"navi-rule active\">①上位AT(天撃)後/天国：128あべし+前兆までヤメ厳禁。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">①上位AT(天撃)後/天国：128あべし+前兆までヤメ厳禁。</div>`;",
+    "        }",
+    "        ",
+    "        if (isDensho && !isCeiling && !isPremium) {",
+    "            naviHtml += `<div class=\"navi-rule active\">②伝承ループ：天破ループ確認。宝玉点滅抜けまで。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">②伝承ループ：天破ループ確認。宝玉点滅抜けまで。</div>`;",
+    "        }",
+    "        ",
+    "        if (isTsuranuki && !isCeiling && !isPremium && !isDensho) {",
+    "            naviHtml += `<div class=\"navi-rule active\">③VIP差枚128：有利リセットフォロー。128あべしまで。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">③VIP差枚128：有利リセットフォロー。128あべしまで。</div>`;",
+    "        }",
+    "        ",
+    "        if (!isCeiling && !isPremium && !isDensho && !isTsuranuki) {",
+    "            naviHtml += `<div class=\"navi-rule active\">④【動的フォロー】通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">④【動的フォロー】通常1即：高確なし、宝玉白点滅なしを確認して即ヤメ。</div>`;",
+    "        }",
     "    } else {",
     "        naviHtml = `<div class=\"navi-rule active\">④【基本】AT終了後、高確・宝玉点滅なしを確認して即ヤメ。<br><span style=\"font-size:0.85em; color:var(--warning);\">（※天国フォローや伝承ループ等の完全フォローは🔒VIP限定）</span></div>`;",
     "    }",
+    "    ",
     "    res += `<div class=\"alert alert-warning\" style=\"border-color:var(--accent);\">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;",
     "    document.getElementById('result-area-h').innerHTML = res;",
     "}",
@@ -523,16 +1019,30 @@ const _0xHokuto = [
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
     "    const isPenalty = (inv === 'cash' && rate !== '5.0');",
-    "    document.getElementById('g-150-m').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">B:特攻</span>';",
-    "    document.getElementById('g-200-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ ゾーン</span>';",
-    "    document.getElementById('g-200-r').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ ゾーン</span>';",
-    "    document.getElementById('g-350-m').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">C:特攻</span>';",
-    "    document.getElementById('g-480-n').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">〇 特攻</span>';",
-    "    document.getElementById('g-700-r').innerHTML = isPenalty ? '<span class=\"mark-warn\">△ 慎重</span>' : '<span class=\"mark-go\">〇 特攻</span>';",
-    "    document.getElementById('g-750-n').innerHTML = isPenalty ? '<span class=\"mark-go\">〇 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
-    "    document.getElementById('g-750-r').innerHTML = isPenalty ? '<span class=\"mark-go\">〇 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
-    "    document.getElementById('g-950-n').innerHTML = isPenalty ? '<span class=\"mark-go\">◎ 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
-    "    document.getElementById('g-950-r').innerHTML = isPenalty ? '<span class=\"mark-go\">◎ 特攻</span>' : '<span class=\"mark-go\">◎ 特攻</span>';",
+    "    ",
+    "    if (isPenalty) {",
+    "        document.getElementById('g-150-m').innerHTML = '<span class=\"mark-warn\">△ 慎重</span>';",
+    "        document.getElementById('g-200-n').innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        document.getElementById('g-200-r').innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        document.getElementById('g-350-m').innerHTML = '<span class=\"mark-warn\">△ 慎重</span>';",
+    "        document.getElementById('g-480-n').innerHTML = '<span class=\"mark-warn\">△ 慎重</span>';",
+    "        document.getElementById('g-700-r').innerHTML = '<span class=\"mark-warn\">△ 慎重</span>';",
+    "        document.getElementById('g-750-n').innerHTML = '<span class=\"mark-go\">〇 特攻</span>';",
+    "        document.getElementById('g-750-r').innerHTML = '<span class=\"mark-go\">〇 特攻</span>';",
+    "        document.getElementById('g-950-n').innerHTML = '<span class=\"mark-go\">◎ 特攻</span>';",
+    "        document.getElementById('g-950-r').innerHTML = '<span class=\"mark-go\">◎ 特攻</span>';",
+    "    } else {",
+    "        document.getElementById('g-150-m').innerHTML = '<span class=\"mark-go\">B:特攻</span>';",
+    "        document.getElementById('g-200-n').innerHTML = '<span class=\"mark-warn\">△ ゾーン</span>';",
+    "        document.getElementById('g-200-r').innerHTML = '<span class=\"mark-warn\">△ ゾーン</span>';",
+    "        document.getElementById('g-350-m').innerHTML = '<span class=\"mark-go\">C:特攻</span>';",
+    "        document.getElementById('g-480-n').innerHTML = '<span class=\"mark-go\">〇 特攻</span>';",
+    "        document.getElementById('g-700-r').innerHTML = '<span class=\"mark-go\">〇 特攻</span>';",
+    "        document.getElementById('g-750-n').innerHTML = '<span class=\"mark-go\">◎ 特攻</span>';",
+    "        document.getElementById('g-750-r').innerHTML = '<span class=\"mark-go\">◎ 特攻</span>';",
+    "        document.getElementById('g-950-n').innerHTML = '<span class=\"mark-go\">◎ 特攻</span>';",
+    "        document.getElementById('g-950-r').innerHTML = '<span class=\"mark-go\">◎ 特攻</span>';",
+    "    }",
     "}",
     "",
     "function updateUI() { ",
@@ -544,26 +1054,51 @@ const _0xHokuto = [
     "}",
     "",
     "function changeHCounter(type, val) {",
-    "    if (type === 'suika') countSuika = Math.max(0, countSuika + val);",
-    "    if (type === 'wcherry') countWCherry = Math.max(0, countWCherry + val);",
+    "    if (type === 'suika') {",
+    "        countSuika = Math.max(0, countSuika + val);",
+    "    }",
+    "    if (type === 'wcherry') {",
+    "        countWCherry = Math.max(0, countWCherry + val);",
+    "    }",
     "    updateHokutoCounter();",
     "}",
     "    ",
     "function updateHokutoCounter() {",
-    "    document.getElementById('val_suika').innerText = countSuika; document.getElementById('val_wcherry').innerText = countWCherry;",
+    "    document.getElementById('val_suika').innerText = countSuika; ",
+    "    document.getElementById('val_wcherry').innerText = countWCherry;",
+    "    ",
     "    const t = parseFloat(document.getElementById('total_rot').value) || 0;",
-    "    document.getElementById('prob_suika').innerText = (countSuika > 0 && t > 0) ? `1/${(t/countSuika).toFixed(1)}` : \"---\";",
-    "    document.getElementById('prob_wcherry').innerText = (countWCherry > 0 && t > 0) ? `1/${(t/countWCherry).toFixed(1)}` : \"---\";",
+    "    ",
+    "    if (countSuika > 0 && t > 0) {",
+    "        document.getElementById('prob_suika').innerText = `1/${(t / countSuika).toFixed(1)}`;",
+    "    } else {",
+    "        document.getElementById('prob_suika').innerText = \"---\";",
+    "    }",
+    "    ",
+    "    if (countWCherry > 0 && t > 0) {",
+    "        document.getElementById('prob_wcherry').innerText = `1/${(t / countWCherry).toFixed(1)}`;",
+    "    } else {",
+    "        document.getElementById('prob_wcherry').innerText = \"---\";",
+    "    }",
     "}",
     "",
     "function executeHokutoGuess() {",
     "    const t = parseFloat(document.getElementById('total_rot').value) || 0; ",
     "    const a = parseFloat(document.getElementById('at_count').value) || 0;",
     "    const trophy = document.getElementById('trophy_h').value;",
-    "    let m = \"\"; let cls = \"alert-info\";",
-    "    let atProb = (a > 0 && t > 0) ? (t / a) : 999;",
+    "    let m = \"\"; ",
+    "    let cls = \"alert-info\";",
+    "    ",
+    "    let atProb = 999;",
+    "    if (a > 0 && t > 0) {",
+    "        atProb = (t / a);",
+    "    }",
+    "    ",
     "    let totalSmallRole = countSuika + countWCherry;",
-    "    let roleProb = (totalSmallRole > 0 && t > 0) ? (t / totalSmallRole) : 999;",
+    "    let roleProb = 999;",
+    "    if (totalSmallRole > 0 && t > 0) {",
+    "        roleProb = (t / totalSmallRole);",
+    "    }",
     "",
     "    if (typeof gtag === 'function') {",
     "        gtag('event', 'execute_guess', {'machine': 'hokuto_tensei2', 'is_vip': isVip});",
@@ -581,21 +1116,50 @@ const _0xHokuto = [
     "            cls = \"alert-success\";",
     "        } else if (t >= 1500) {",
     "            if (atProb <= 273.1) {",
-    "                if (roleProb <= 42) { m = \"【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！\"; cls = \"alert-success\"; }",
-    "                else { m = \"【高設定濃厚】初当たり(設定6域)は優秀。小役のブレに注意しつつ続行。\"; cls = \"alert-success\"; }",
+    "                if (roleProb <= 42) { ",
+    "                    m = \"【設定6濃厚】初当たり・小役共に完璧。全ツッパ体制へ！\"; ",
+    "                    cls = \"alert-success\"; ",
+    "                } else { ",
+    "                    m = \"【高設定濃厚】初当たり(設定6域)は優秀。小役のブレに注意しつつ続行。\"; ",
+    "                    cls = \"alert-success\"; ",
+    "                }",
     "            } else if (atProb <= 298.7) {",
-    "                if (roleProb <= 45) { m = \"【高設定期待】初当たり(設定4-5域)・小役共に優秀。粘り強く続行を推奨。\"; cls = \"alert-success\"; }",
-    "                else { m = \"【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。\"; cls = \"alert-warning\"; }",
+    "                if (roleProb <= 45) { ",
+    "                    m = \"【高設定期待】初当たり(設定4-5域)・小役共に優秀。粘り強く続行を推奨。\"; ",
+    "                    cls = \"alert-success\"; ",
+    "                } else { ",
+    "                    m = \"【中間〜高設定】初当たりは優秀だが小役が弱い。展開次第でヤメ時も探れ。\"; ",
+    "                    cls = \"alert-warning\"; ",
+    "                }",
     "            } else if (atProb <= 336.3) {",
-    "                if (roleProb <= 42 && roleProb !== 999) { m = \"【判断保留】初当たり(設定3域)は平凡だが小役が優秀。罠に注意しつつ様子見。\"; cls = \"alert-warning\"; }",
-    "                else { m = \"【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。\"; cls = \"alert-warning\"; }",
+    "                if (roleProb <= 42 && roleProb !== 999) { ",
+    "                    m = \"【判断保留】初当たり(設定3域)は平凡だが小役が優秀。罠に注意しつつ様子見。\"; ",
+    "                    cls = \"alert-warning\"; ",
+    "                } else { ",
+    "                    m = \"【中間設定濃厚】初当たり・小役共に決め手に欠ける。深追いは危険。\"; ",
+    "                    cls = \"alert-warning\"; ",
+    "                }",
     "            } else {",
-    "                if (roleProb <= 42 && roleProb !== 999) { m = \"【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。\"; cls = \"alert-error\"; }",
-    "                else { m = \"【低設定濃厚】初当たりが重すぎます。即撤収を強く推奨。\"; cls = \"alert-error\"; }",
+    "                if (roleProb <= 42 && roleProb !== 999) { ",
+    "                    m = \"【判断保留】初当たりは絶望的だが小役だけは落ちる。基本は撤収を推奨。\"; ",
+    "                    cls = \"alert-error\"; ",
+    "                } else { ",
+    "                    m = \"【低設定濃厚】初当たりが重すぎます。即撤収を強く推奨。\"; ",
+    "                    cls = \"alert-error\"; ",
+    "                }",
     "            }",
-    "        } else { m = \"【サンプル不足】現在の回転数では判断を保留。1500G以上の試行データを推奨します。\"; }",
+    "        } else { ",
+    "            m = \"【サンプル不足】現在の回転数では判断を保留。1500G以上の試行データを推奨します。\"; ",
+    "        }",
     "    }",
-    "    let displayRoleProb = (roleProb === 999) ? \"未入力\" : `1/${roleProb.toFixed(1)}`;",
+    "    ",
+    "    let displayRoleProb = \"\";",
+    "    if (roleProb === 999) {",
+    "        displayRoleProb = \"未入力\";",
+    "    } else {",
+    "        displayRoleProb = `1/${roleProb.toFixed(1)}`;",
+    "    }",
+    "    ",
     "    document.getElementById('setting-result-h').innerHTML = `<div class=\"alert ${cls}\">📊 診断結果: 初当 1/${Math.floor(atProb)} / 小役合算 ${displayRoleProb}<br>🤖 AI軍師: ${m}</div>`;",
     "}",
     "",
