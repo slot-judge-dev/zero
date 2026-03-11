@@ -262,11 +262,13 @@
             border: 1px solid #30363d; 
             background: #0d1117; 
             line-height: 1.5; 
+            text-align: center;
         }
         
         .mark-go { color: var(--success); font-weight: bold; }
         .mark-warn { color: var(--warning); font-weight: bold; }
         .mark-ng { color: #8b949e; }
+        .mark-star { color: #f85149; font-weight: bold; }
 
         .legal-footer { 
             position: fixed; 
@@ -284,7 +286,7 @@
             line-height: 1.4; 
         }
 
-        /* Tier S / 段階的開示プロトコル */
+        /* Tier S / UI 階層化 */
         .authority-text { 
             font-size: 0.8em; 
             color: #8b949e; 
@@ -415,7 +417,7 @@
         <div style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #30363d; text-align: left;">
             <div class="grid-2">
                 <label style="margin:0; font-size:0.85em; color:var(--text); display:flex; align-items:center; gap:8px;">
-                    <input type="checkbox" id="k_is_reset" onchange="updateUI()" style="width:20px; height:20px; margin:0;"> 🌅 朝イチ/駆け抜け後
+                    <input type="checkbox" id="k_is_reset" onchange="updateUI()" style="width:20px; height:20px; margin:0;"> 🌅 朝イチ/駆け抜け
                 </label>
                 <label style="margin:0; font-size:0.85em; color:var(--text); display:flex; align-items:center; gap:8px;">
                     <input type="checkbox" id="k_is_kageyuki" onchange="updateUI()" style="width:20px; height:20px; margin:0;"> ⚠️ 景した後(ループ)
@@ -425,22 +427,22 @@
             <div class="grid-2" style="margin-top:10px; margin-bottom: 0;">
                 <div>
                     <label style="font-size:0.75em;">現在の周期数</label>
-                    <select id="k_current_cycle" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
-                        <option value="0">0周期目</option>
-                        <option value="1">1周期目</option>
-                        <option value="2">2周期目</option>
-                        <option value="3">3周期目</option>
-                        <option value="4">4周期目(短縮)</option>
-                        <option value="5">5周期目</option>
-                        <option value="6">6周期目(通常)</option>
+                    <select id="k_cycle" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
+                        <option value="0">0周期</option>
+                        <option value="1">1周期</option>
+                        <option value="2">2周期</option>
+                        <option value="3">3周期</option>
+                        <option value="4">4周期(短縮)</option>
+                        <option value="5">5周期</option>
+                        <option value="6">6周期(通常)</option>
                     </select>
                 </div>
                 <div>
                     <label style="font-size:0.75em;">背景/穢れ示唆</label>
-                    <select id="k_bg_state_and_pts" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
+                    <select id="k_state" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
                         <option value="none">示唆なし</option>
-                        <option value="sakura">桜背景(4周期以内大)</option>
-                        <option value="umato">海門城背景(上位期待)</option>
+                        <option value="sakura">桜背景</option>
+                        <option value="umato">海門城背景</option>
                         <option value="pts_large">🔥 黒煙(大)溢れ</option>
                     </select>
                 </div>
@@ -458,14 +460,12 @@
             <label style="color:var(--warning);">💎 ボーダー微調整 (±50G)</label>
             <input type="range" id="border_adj_k" min="-50" max="50" step="10" value="0" oninput="document.getElementById('adj_val_k').innerText = this.value + 'G'; updateUI();">
             <div id="adj_val_k" style="text-align:right; font-size:0.9em; color:var(--kabaneri); font-weight:bold;">0G</div>
-            <label style="color:var(--warning);">🤖 AI Bro コンサル（海門決戦対応）</label>
+            <label style="color:var(--warning);">🤖 AI Bro コンサルレポート</label>
             <select id="k_ai_consult" class="compact-select" style="width:100%;" onchange="updateUI()">
                 <option value="none">選択なし</option>
-                <option value="omikuji_luck">【おみくじ】輪廻の果報/六根清浄(当選濃厚)</option>
+                <option value="omikuji_luck">【おみくじ】輪廻の果報(当選濃厚)</option>
                 <option value="himaku_high">【皮膜レベル】Lv.3〜4(天井間近)</option>
-                <option value="kiri_high">【キリ番】無名寝転び/桜(期待度高)</option>
                 <option value="chance">チャンス目 直後(期待度大)</option>
-                <option value="super">防衛区域(本前兆濃厚)</option>
                 <option value="weak">ざわざわのみ(フェイク)</option>
             </select>
         </div>
@@ -502,7 +502,6 @@
                 </select>
             </div>
         </div>
-        
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
             <label style="margin:0; font-size:0.75em;">現在時刻 (閉店欠損)</label>
             <span id="time_val" style="color:white; font-weight:bold; font-size:0.9em;">15時</span>
@@ -513,14 +512,13 @@
     <details class="accordion">
         <summary>📋 海門 期待値カンペ</summary>
         <div class="accordion-content">
-            <p style="font-size:0.8em; color:#8b949e; margin-top:0;">※環境連動。短縮＝リセット/駆け抜け/景後。</p>
+            <p style="font-size:0.8em; color:#8b949e; margin-top:0;">※短縮＝リセット/ST駆け抜け/景之後。</p>
             <table class="guide-table">
                 <tr><th>G数目安</th><th>通常天井</th><th>短縮天井</th><th>景之ST後</th></tr>
-                <tr><td>0〜20G</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td></tr>
                 <tr><td>100G〜</td><td id="kg-100-n" class="mark-warn">△ 1周期</td><td id="kg-100-r" class="mark-warn">△ 1周期</td><td class="mark-go">〇 特攻</td></tr>
-                <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-success">★ ツッパ</td></tr>
-                <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-success">★ ツッパ</td></tr>
-                <tr><td>450G〜</td><td id="kg-450-n" class="mark-warn">△ 慎重</td><td class="mark-success">★ 極限</td><td class="mark-success">★ ツッパ</td></tr>
+                <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-star">★ ツッパ</td></tr>
+                <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-star">★ ツッパ</td></tr>
+                <tr><td>600G〜</td><td class="mark-go">〇 特攻</td><td class="mark-star">★ 極限</td><td class="mark-star">★ ツッパ</td></tr>
             </table>
         </div>
     </details>
@@ -529,51 +527,48 @@
         <summary>📜 海門 軍師の知恵袋</summary>
         <div class="accordion-content">
             <div class="bible-tabs">
-                <button class="tab-btn active" onclick="openBible(event, 'tab-zones-k')">周期/CZ</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-short-smoke-k')">短縮/黒煙</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-omikuji-k')">終了画面</button>
+                <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/CZ</button>
+                <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">短縮/黒煙</button>
+                <button class="tab-btn" onclick="openBible(event, 'tab-setting-k')">終了画面</button>
             </div>
-            <div id="tab-zones-k" class="tab-content active">
+            <div id="tab-cycle-k" class="tab-content active">
                 <label style="color:var(--accent);">▼ ST間 周期の期待度</label>
-                <p style="font-size:0.75em; color:#8b949e;">※1周期(150G強制), 2周期(300G強制)。</p>
                 <table class="guide-table" style="text-align:left;">
-                    <tr><th>周期 / 目安</th><th>恩恵・期待度</th></tr>
-                    <tr><td>1周期(100G)</td><td>期待度33%超。</td></tr>
-                    <tr><td>2周期(250G)</td><td>当選期待度 約77%!</td></tr>
+                    <tr><th>周期</th><th>恩恵・期待度</th></tr>
+                    <tr><td>1周期(150G)</td><td>期待度33%超。</td></tr>
+                    <tr><td>2周期(300G)</td><td>期待度 約77%!</td></tr>
                     <tr><td>4周期(596G)</td><td>短縮天井(ST濃厚)</td></tr>
                     <tr><td>6周期(996G)</td><td>通常天井(エピボ)</td></tr>
                 </table>
             </div>
-            <div id="tab-short-smoke-k" class="tab-content">
-                <label style="color:var(--warning);">▼ 短縮条件</label>
+            <div id="tab-smoke-k" class="tab-content">
+                <label style="color:var(--warning);">▼ 短縮条件 ＆ 黒煙</label>
                 <ul style="font-size:0.8em; color:#c9d1d9; line-height:1.6; padding-left:20px;">
-                    <li>設定変更(朝イチ)</li>
-                    <li>通常ST駆け抜け後</li>
-                    <li>景之ST終了後</li>
+                    <li>設定変更、通常ST駆け抜け、景之ST終了。</li>
+                    <li>黒煙大溢れは「裏・景之ST」濃厚。期待枚数3600枚！</li>
                 </ul>
             </div>
-            <div id="tab-omikuji-k" class="tab-content">
+            <div id="tab-setting-k" class="tab-content">
                 <label style="color:var(--success);">▼ 設定示唆</label>
                 <table class="guide-table" style="text-align:left;">
                     <tr><th>パターン</th><th>内容</th></tr>
-                    <tr><td>甲鉄城メンバー</td><td>高設定示唆</td></tr>
                     <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
-                    <tr><td>水着</td><td>設定6濃厚(5000G〜)</td></tr>
+                    <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
                 </table>
             </div>
         </div>
     </details>
 
     <details class="accordion">
-        <summary>🔍 海門 精密設定推測</summary>
+        <summary>🔍 海門 精密設定推測カウンター</summary>
         <div class="accordion-content">
-            <label>総回転数 (G) / 初当たり回数</label>
+            <label>総回転数 (G) / ST初当たり回数</label>
             <div style="display:flex;gap:8px; margin-bottom:10px;">
                 <input type="number" id="total_rot_k" placeholder="総回転数" oninput="updateKabaneriCounter(); updateUI();">
-                <input type="number" id="at_count_k" placeholder="初当回数" oninput="updateUI();">
+                <input type="number" id="at_count_k" placeholder="ST回数" oninput="updateUI();">
             </div>
             <div style="background:#0d1117; padding:12px; border-radius:8px; border: 1px solid #30363d; margin-bottom:10px; text-align:center;">
-                <span style="color:#e3b341; font-weight:bold; font-size:0.9em;">🔔 下段ベル</span>
+                <span style="color:#e3b341; font-weight:bold; font-size:0.9em;">🔔 共通ベル(下段ベル)</span>
                 <div id="prob_k_bell" style="color:var(--warning); font-weight:bold; margin:5px 0;">確率: ---</div>
                 <div style="display:flex; justify-content:center; align-items:center; gap:15px;">
                     <button class="counter-btn" onclick="changeKCounter('bell', -1)">-</button>
@@ -583,16 +578,16 @@
             </div>
             <select id="trophy_k" class="compact-select" onchange="updateUI();">
                 <option value="none">トロフィー示唆なし</option>
-                <option value="gold">金以上(設定4-5)</option>
-                <option value="rainbow">虹/キリン(設定6)</option>
+                <option value="gold">金以上(設定4-5確定)</option>
+                <option value="rainbow">虹/キリン(設定6確定)</option>
             </select>
-            <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px; width:100%;">AI推測実行</button>
+            <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px; width:100%;">AI推測プロトコルを実行</button>
             <div id="setting-result-k"></div>
         </div>
     </details>
 
     <div class="legal-footer">
-        ※独自解析データに基づく期待値シミュレーターであり、収益を保証するものではありません。<br>© 2026 Protocol ZERO
+        ※本アプリは独自解析データに基づく期待値シミュレーターであり、収益を保証するものではありません。<br>© 2026 Protocol ZERO
     </div>
 
 <script>
@@ -645,10 +640,10 @@ const _0xKabaneri = [
     "",
     "function getKabaneriStats() {",
     "    const kg = parseInt(document.getElementById('k_current_g').value) || 0;",
-    "    const kcycle = parseInt(document.getElementById('k_current_cycle').value) || 0;",
     "    const isReset = document.getElementById('k_is_reset').checked;",
     "    const isKage = document.getElementById('k_is_kageyuki').checked;",
-    "    const stateHint = document.getElementById('k_bg_state_and_pts').value;",
+    "    const kcycle = parseInt(document.getElementById('k_cycle').value) || 0;",
+    "    const stateHint = document.getElementById('k_state').value;",
     "    const time = parseInt(document.getElementById('time_slider').value);",
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
@@ -687,18 +682,19 @@ const _0xKabaneri = [
     "    ",
     "    let evKage = isKage ? 4500 : EV_NONE;",
     "    let evPts = (stateHint === 'pts_large') ? 5500 : EV_NONE;",
+    "    ",
     "    let evBg = EV_NONE;",
     "    if (stateHint === 'umato') { evBg = 4000; }",
     "    else if (stateHint === 'sakura') { evBg = 1500; }",
     "",
     "    let bonusEV = 0;",
     "    let bonusWage = 0;",
-    "    if (ai === 'super' || ai === 'omikuji_luck') {",
-    "        bonusEV += 3500;",
-    "        bonusWage += 4000;",
-    "    } else if (ai === 'chance' || ai === 'himaku_high' || ai === 'kiri_high') {",
-    "        bonusEV += 1200;",
-    "        bonusWage += 1500;",
+    "    if (ai === 'omikuji_luck') {",
+    "        bonusEV += 4000;",
+    "        bonusWage += 5000;",
+    "    } else if (ai === 'chance' || ai === 'himaku_high') {",
+    "        bonusEV += 1500;",
+    "        bonusWage += 2000;",
     "    }",
     "",
     "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evPts, evBg) + bonusEV;",
@@ -718,21 +714,23 @@ const _0xKabaneri = [
     "    let finalWage = baseWage + bonusWage;",
     "    ",
     "    if (time >= 18) {",
-    "        let loss = (time - 17) * 400;",
+    "        let loss = (time - 17) * 450;",
     "        finalEV -= loss;",
-    "        finalWage -= (time - 17) * 700;",
+    "        finalWage -= (time - 17) * 800;",
     "    }",
     "    if (inv === 'cash' && rate !== '5.0') {",
-    "        finalWage -= 2000;",
-    "        if (finalEV > 0) { finalEV = Math.floor(finalEV * 0.7); }",
+    "        finalWage -= 2500;",
+    "        if (finalEV > 0) { finalEV = Math.floor(finalEV * 0.65); }",
     "    }",
     "",
     "    let baseBorder = isShort ? 350 : 650;",
-    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large' || trophy === 'rainbow' || ai === 'super' || ai === 'omikuji_luck');",
+    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large' || trophy === 'rainbow' || ai === 'omikuji_luck');",
     "    ",
-    "    if (isAbsoluteGo) { baseBorder = 0; }",
-    "    else {",
-    "        if (time >= 19) { baseBorder += 50; }",
+    "    if (isAbsoluteGo) { ",
+    "        baseBorder = 0; ",
+    "    } else {",
+    "        if (time >= 20) { baseBorder += 100; }",
+    "        else if (time >= 18) { baseBorder += 50; }",
     "        if (inv === 'cash') { baseBorder += 50; }",
     "    }",
     "",
@@ -796,33 +794,38 @@ const _0xKabaneri = [
     "        }",
     "        ",
     "        if (!isSpecial && s.remainCeiling <= 150) {",
-    "            naviHtml += `<div class=\"navi-rule active\">① 【天井保護】当選までヤメ厳禁（ツッパ）。</div>`;",
+    "            naviHtml += `<div class=\"navi-rule active\">① 【天井保護】当選までヤメ厳禁。</div>`;",
     "        } else {",
-    "            naviHtml += `<div class=\"navi-rule\">① 【天井保護】当選までヤメ厳禁（ツッパ）。</div>`;",
+    "            naviHtml += `<div class=\"navi-rule\">① 【天井保護】当選までヤメ厳禁。</div>`;",
     "        }",
     "        ",
     "        if (!isSpecial && s.remainCeiling > 150) {",
-    "            naviHtml += `<div class=\"navi-rule active\">② 【動的ヤメ】前兆・高確・示唆背景なしを確認して即ヤメ。</div>`;",
+    "            naviHtml += `<div class=\"navi-rule active\">② 【動的ヤメ】前兆・背景示唆なしを確認して即ヤメ。</div>`;",
     "        } else {",
-    "            naviHtml += `<div class=\"navi-rule\">② 【動的ヤメ】前兆・高確・示唆背景なしを確認して即ヤメ。</div>`;",
+    "            naviHtml += `<div class=\"navi-rule\">② 【動的ヤメ】前兆・背景示唆なしを確認して即ヤメ。</div>`;",
     "        }",
     "    } else {",
     "        naviHtml = `<div class=\"navi-rule active\">② 【基本】前兆・高確なしを確認して即ヤメ。<br><span style=\"font-size:0.8em; color:var(--warning);\">（※特殊フォローは🔒VIP限定）</span></div>`;",
     "    }",
+    "    ",
     "    res += `<div class=\"alert alert-warning\" style=\"border-color:var(--kabaneri);\">🛑 ヤメ時ナビ：<br>${naviHtml}</div>`;",
     "    document.getElementById('result-area-k').innerHTML = res;",
     "}",
     "",
     "function updateGuideTable() {",
-    "    const isPenalty = (document.getElementById('invest_type').value === 'cash');",
+    "    const inv = document.getElementById('invest_type').value;",
+    "    const isPenalty = (inv === 'cash');",
     "    const n100 = document.getElementById('kg-100-n');",
     "    const n250 = document.getElementById('kg-250-n');",
+    "    const n450 = document.getElementById('kg-450-n');",
     "    if (isPenalty) {",
-    "        if (n100) n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
-    "        if (n250) n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        if (n100) { n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>'; }",
+    "        if (n250) { n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>'; }",
+    "        if (n450) { n450.innerHTML = '<span class=\"mark-warn\">△ 慎重</span>'; }",
     "    } else {",
-    "        if (n100) n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>';",
-    "        if (n250) n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>';",
+    "        if (n100) { n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>'; }",
+    "        if (n250) { n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>'; }",
+    "        if (n450) { n450.innerHTML = '<span class=\"mark-go\">〇 特攻</span>'; }",
     "    }",
     "}",
     "",
@@ -846,7 +849,7 @@ const _0xKabaneri = [
     "function updateKabaneriCounter() {",
     "    const bVal = document.getElementById('val_k_bell');",
     "    const bProb = document.getElementById('prob_k_bell');",
-    "    if (bVal) bVal.innerText = countKBell;",
+    "    if (bVal) { bVal.innerText = countKBell; }",
     "    const t = parseFloat(document.getElementById('total_rot_k').value) || 0;",
     "    if (bProb) {",
     "        if (countKBell > 0 && t > 0) {",
@@ -861,21 +864,37 @@ const _0xKabaneri = [
     "    const trophy = document.getElementById('trophy_k').value;",
     "    const t = parseFloat(document.getElementById('total_rot_k').value) || 0;",
     "    const a = parseFloat(document.getElementById('at_count_k').value) || 0;",
-    "    let m = ''; let cls = 'alert-info';",
+    "    let m = ''; ",
+    "    let cls = 'alert-info';",
+    "    ",
     "    if (!isVip) { ",
-    "        m = '【🔒VIP限定】精密AI診断。'; cls = 'alert-warning'; ",
+    "        m = '【🔒VIP限定】精密AI診断。ベル確率と初当たりを分析。'; ",
+    "        cls = 'alert-warning'; ",
     "    } else if (trophy === 'rainbow') { ",
-    "        m = '【設定6確定】全ツッパ！'; cls = 'alert-success'; ",
+    "        m = '【設定6確定】究極の挙動。閉店まで全ツッパ！'; ",
+    "        cls = 'alert-success'; ",
     "    } else if (trophy === 'gold') { ",
-    "        m = '【設定4以上】続行推奨。'; cls = 'alert-success'; ",
+    "        m = '【設定4以上確定】高設定。粘り強く続行推奨。'; ",
+    "        cls = 'alert-success'; ",
     "    } else if (t >= 1500) {",
-    "        if ((t/a) <= 231) { m = '【高設定濃厚】続行！'; cls = 'alert-success'; }",
-    "        else { m = '設定推測: 低設定域です。'; cls = 'alert-error'; }",
+    "        const prob = t / countKBell;",
+    "        if (prob <= 5.8 && (t/a) <= 230) {",
+    "            m = '【設定6濃厚】ベル・初当り共に完璧。ブン回し推奨。';",
+    "            cls = 'alert-success';",
+    "        } else if (prob <= 6.2) {",
+    "            m = '【高設定期待】ベル落ちは優秀。初当りを注視しつつ続行。';",
+    "            cls = 'alert-success';",
+    "        } else {",
+    "            m = '【低設定濃厚】挙動が弱いです。撤収を視野に。';",
+    "            cls = 'alert-error';",
+    "        }",
     "    } else { ",
-    "        m = 'サンプル不足です。'; ",
+    "        m = '試行回数不足(1500G以上推奨)。'; ",
     "    }",
     "    const resElem = document.getElementById('setting-result-k');",
-    "    if (resElem) resElem.innerHTML = `<div class=\"alert ${cls}\">🤖 AI軍師: ${m}</div>`;",
+    "    if (resElem) {",
+    "        resElem.innerHTML = `<div class=\"alert ${cls}\">🤖 AI軍師レポート:<br>${m}</div>`;",
+    "    }",
     "}",
     "",
     "window.checkVIPStatus = checkVIPStatus;",
@@ -889,8 +908,8 @@ const _0xKabaneri = [
     "window.executeKabaneriGuess = executeKabaneriGuess;"
 ];
 
-// F12解析阻害 ＆ 動的展開
-new Function(_0xKabaneri.join('\\n'))();
+// 起動実行プロトコル
+new Function(_0xKabaneri.join('\n'))();
 </script>
 </body>
 </html>
