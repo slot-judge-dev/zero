@@ -491,6 +491,8 @@ const _0xHokuto = [
     "            res += `<div class=\"alert alert-ceiling\" style=\"border-color:var(--success); background:rgba(63,185,80,0.2); color:#56d364;\">🔥 【絶対防衛】天国・本前兆濃厚！ヤメ厳禁、ST当選まで全ツッパせよ。${evDisp(s.ev)}</div>`;",
     "        } else if (s.abe >= 1100) {",
     "            res += `<div class=\"alert alert-ceiling\">👊 【天井到達圏内】当選までヤメ厳禁。${evDisp(s.ev)}<br><span style=\"text-decoration:underline;\">🚨 当選までヤメ厳禁。</span></div>`;",
+    "        } else if ((mode === 'shutter' || mode === 'lamp_100g_b') && s.abe >= 256 && s.abe < 400 && s.abe >= s.border) {",
+    "            res += `<div class=\"alert alert-warning\" style=\"border-color:var(--warning); background:rgba(210, 153, 34, 0.1); color:#e3b341;\">⚠️ 【モードB 特攻注意】最大896あべしまで連行されるリスクあり。期待値はプラスですが、時間と投資に余裕がなければ『256抜けでの撤収』も英断です。${evDisp(s.ev)}</div>`;",
     "        } else if (s.abe >= s.border) {",
     "            res += `<div class=\"alert alert-success\">🔥 【判定：GO】特攻せよ！${evDisp(s.ev)}</div>`;",
     "        } else {",
