@@ -87,7 +87,7 @@
             color: #8b949e; 
         }
         
-        input, select, textarea { 
+        input, select { 
             width: 100%; 
             padding: 12px; 
             margin-bottom: 12px; 
@@ -157,7 +157,6 @@
             border: 2px solid white; 
             animation: blink 0.8s infinite; 
             text-align: center; 
-            font-size: 1.1em; 
         }
         
         @keyframes blink { 
@@ -173,16 +172,6 @@
             text-align: center; 
             margin: 10px 0; 
             text-shadow: 0 0 20px rgba(255, 123, 114, 0.4); 
-        }
-        
-        .highlight-text { 
-            color: #f85149; 
-            font-weight: bold; 
-            font-size: 1.1em; 
-            text-decoration: underline; 
-            background: rgba(248, 81, 73, 0.1); 
-            padding: 2px 4px; 
-            border-radius: 4px; 
         }
         
         .navi-rule { 
@@ -210,7 +199,6 @@
             cursor:pointer; 
             font-weight:bold; 
             font-size:1.1em; 
-            box-shadow:none; 
         }
         
         .counter-btn.plus { 
@@ -227,16 +215,15 @@
         }
         
         .tab-btn { 
-            padding: 10px 8px; 
+            padding: 10px 15px; 
             background: #1b2128; 
             color: #8b949e; 
             border: none; 
             border-radius: 8px 8px 0 0; 
             cursor: pointer; 
-            font-size: 0.75em; 
+            font-size: 0.8em; 
             font-weight: bold; 
             transition: 0.3s; 
-            flex: 1; 
         }
         
         .tab-btn.active { 
@@ -248,40 +235,38 @@
         .tab-content { 
             display: none; 
             padding: 10px 0; 
-            animation: fadeIn 0.3s; 
         }
         
-        @keyframes fadeIn { 
-            from { opacity: 0; } 
-            to { opacity: 1; } 
+        .tab-content.active { 
+            display: block; 
         }
 
         .guide-table { 
             width: 100%; 
             border-collapse: collapse; 
-            margin-top: 10px; 
-            font-size: 0.8em; 
-            text-align: center; 
+            margin-top: 5px; 
+            font-size: 0.75em; 
+            text-align: left; 
         }
         
         .guide-table th { 
             background: #21262d; 
             color: #8b949e; 
-            padding: 8px 5px; 
+            padding: 10px 5px; 
             border: 1px solid #30363d; 
+            text-align: center; 
         }
         
         .guide-table td { 
-            padding: 10px 5px; 
+            padding: 12px 5px; 
             border: 1px solid #30363d; 
             background: #0d1117; 
-            transition: background-color 0.3s; 
+            line-height: 1.5; 
         }
         
         .mark-go { color: var(--success); font-weight: bold; }
         .mark-warn { color: var(--warning); font-weight: bold; }
         .mark-ng { color: #8b949e; }
-        .mark-star { color: #d29922; font-weight: bold; font-size: 1.1em; }
 
         .legal-footer { 
             position: fixed; 
@@ -299,7 +284,7 @@
             line-height: 1.4; 
         }
 
-        /* 転生2踏襲：UI改修スタイル (Tier S) */
+        /* Tier S / 段階的開示プロトコル */
         .authority-text { 
             font-size: 0.8em; 
             color: #8b949e; 
@@ -414,9 +399,9 @@
 <body>
 
     <div class="sticky-header">
-        <a href="index.html" class="back-btn">◀ ポータル</a>
+        <a href="index.html" class="back-btn">◀ ポータルへ戻る</a>
         <div class="header-title">🚂 カバネリ 海門決戦</div>
-        <div style="width: 70px;"></div>
+        <div style="width: 80px;"></div>
     </div>
 
     <div class="authority-text">
@@ -429,17 +414,17 @@
         
         <div style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #30363d; text-align: left;">
             <div class="grid-2">
-                <label style="margin:0; font-size:0.85em; color:var(--text); display:flex; align-items:center; gap:5px;">
-                    <input type="checkbox" id="k_is_reset" onchange="updateUI()" style="width:18px; height:18px;"> 🌅 朝イチ/駆け抜け後
+                <label style="margin:0; font-size:0.85em; color:var(--text); display:flex; align-items:center; gap:8px;">
+                    <input type="checkbox" id="k_is_reset" onchange="updateUI()" style="width:20px; height:20px; margin:0;"> 🌅 朝イチ/駆け抜け後
                 </label>
-                <label style="margin:0; font-size:0.85em; color:var(--text); display:flex; align-items:center; gap:5px;">
-                    <input type="checkbox" id="k_is_kageyuki" onchange="updateUI()" style="width:18px; height:18px;"> ⚠️ 景した後(ループ)
+                <label style="margin:0; font-size:0.85em; color:var(--text); display:flex; align-items:center; gap:8px;">
+                    <input type="checkbox" id="k_is_kageyuki" onchange="updateUI()" style="width:20px; height:20px; margin:0;"> ⚠️ 景した後(ループ)
                 </label>
             </div>
 
             <div class="grid-2" style="margin-top:10px; margin-bottom: 0;">
                 <div>
-                    <label style="font-size:0.7em;">現在の周期数</label>
+                    <label style="font-size:0.75em;">現在の周期数</label>
                     <select id="k_current_cycle" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
                         <option value="0">0周期目</option>
                         <option value="1">1周期目</option>
@@ -451,7 +436,7 @@
                     </select>
                 </div>
                 <div>
-                    <label style="font-size:0.7em;">背景/穢れ示唆</label>
+                    <label style="font-size:0.75em;">背景/穢れ示唆</label>
                     <select id="k_bg_state_and_pts" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
                         <option value="none">示唆なし</option>
                         <option value="sakura">桜背景(4周期以内大)</option>
@@ -487,7 +472,7 @@
     </div>
 
     <div id="free-notice" class="card" style="border: 1px solid #484f58; text-align:center; display:block;">
-        <p style="color:#8b949e; font-size:0.9em;">期待値(￥)と詳細なヤメ時ナビはロックされています。</p>
+        <p style="color:#8b949e; font-size:0.9em;">具体的な期待値(￥)と詳細なヤメ時ナビはロックされています。</p>
         <a href="index.html" style="color:var(--warning); text-decoration:none; font-weight:bold;">🔒 ポータルでパスワードを入力する</a>
     </div>
 
@@ -506,7 +491,7 @@
                     <option value="5.0">5.0枚 (等価)</option>
                     <option value="5.6">5.6枚</option>
                     <option value="6.0">6.0枚</option>
-                    <option value="other">その他</option>
+                    <option value="other">非等価 / その他</option>
                 </select>
             </div>
             <div>
@@ -517,24 +502,25 @@
                 </select>
             </div>
         </div>
+        
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
             <label style="margin:0; font-size:0.75em;">現在時刻 (閉店欠損)</label>
             <span id="time_val" style="color:white; font-weight:bold; font-size:0.9em;">15時</span>
         </div>
-        <input type="range" id="time_slider" min="9" max="23" value="15" oninput="document.getElementById('time_val').innerText = this.value + '時'; updateUI();" style="width:100%;">
+        <input type="range" id="time_slider" min="9" max="23" value="15" oninput="document.getElementById('time_val').innerText = this.value + '時'; updateUI();" style="margin-bottom:15px; width:100%;">
     </div>
 
     <details class="accordion">
         <summary>📋 海門 期待値カンペ</summary>
         <div class="accordion-content">
-            <p style="font-size:0.8em; color:#8b949e;">※環境連動。短縮＝リセット/駆け抜け/景後。</p>
+            <p style="font-size:0.8em; color:#8b949e; margin-top:0;">※環境連動。短縮＝リセット/駆け抜け/景後。</p>
             <table class="guide-table">
                 <tr><th>G数目安</th><th>通常天井</th><th>短縮天井</th><th>景之ST後</th></tr>
-                <tr><td>0〜20G</td><td class="mark-star">★ 追行</td><td class="mark-star">★ 追行</td><td class="mark-star">★ 追行</td></tr>
+                <tr><td>0〜20G</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td></tr>
                 <tr><td>100G〜</td><td id="kg-100-n" class="mark-warn">△ 1周期</td><td id="kg-100-r" class="mark-warn">△ 1周期</td><td class="mark-go">〇 特攻</td></tr>
-                <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-star">★ ツッパ</td></tr>
-                <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-star">★ ツッパ</td></tr>
-                <tr><td>450G〜</td><td id="kg-450-n" class="mark-warn">△ 慎重</td><td class="mark-star">★ 極限</td><td class="mark-star">★ ツッパ</td></tr>
+                <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-success">★ ツッパ</td></tr>
+                <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-success">★ ツッパ</td></tr>
+                <tr><td>450G〜</td><td id="kg-450-n" class="mark-warn">△ 慎重</td><td class="mark-success">★ 極限</td><td class="mark-success">★ ツッパ</td></tr>
             </table>
         </div>
     </details>
@@ -547,7 +533,7 @@
                 <button class="tab-btn" onclick="openBible(event, 'tab-short-smoke-k')">短縮/黒煙</button>
                 <button class="tab-btn" onclick="openBible(event, 'tab-omikuji-k')">終了画面</button>
             </div>
-            <div id="tab-zones-k" class="tab-content" style="display:block;">
+            <div id="tab-zones-k" class="tab-content active">
                 <label style="color:var(--accent);">▼ ST間 周期の期待度</label>
                 <p style="font-size:0.75em; color:#8b949e;">※1周期(150G強制), 2周期(300G強制)。</p>
                 <table class="guide-table" style="text-align:left;">
@@ -560,7 +546,7 @@
             </div>
             <div id="tab-short-smoke-k" class="tab-content">
                 <label style="color:var(--warning);">▼ 短縮条件</label>
-                <ul style="font-size:0.8em; color:#c9d1d9; line-height:1.6;">
+                <ul style="font-size:0.8em; color:#c9d1d9; line-height:1.6; padding-left:20px;">
                     <li>設定変更(朝イチ)</li>
                     <li>通常ST駆け抜け後</li>
                     <li>景之ST終了後</li>
@@ -586,7 +572,7 @@
                 <input type="number" id="total_rot_k" placeholder="総回転数" oninput="updateKabaneriCounter(); updateUI();">
                 <input type="number" id="at_count_k" placeholder="初当回数" oninput="updateUI();">
             </div>
-            <div style="background:#0d1117; padding:12px; border-radius:8px; border:1px solid #30363d; margin-bottom:10px; text-align:center;">
+            <div style="background:#0d1117; padding:12px; border-radius:8px; border: 1px solid #30363d; margin-bottom:10px; text-align:center;">
                 <span style="color:#e3b341; font-weight:bold; font-size:0.9em;">🔔 下段ベル</span>
                 <div id="prob_k_bell" style="color:var(--warning); font-weight:bold; margin:5px 0;">確率: ---</div>
                 <div style="display:flex; justify-content:center; align-items:center; gap:15px;">
@@ -622,7 +608,7 @@ const _0xKabaneri = [
     "",
     "function checkVIPStatus() {",
     "    const _s = String.fromCharCode(122, 101, 114, 111, 95, 118, 105, 112, 95, 115, 116, 97, 116, 117, 115);",
-    "    isVip = localStorage.getItem(_s) === 'true';",
+    "    isVip = (localStorage.getItem(_s) === 'true');",
     "    const vipSec = document.getElementById('vip-section');",
     "    const freeNot = document.getElementById('free-notice');",
     "    const adContainer = document.getElementById('ad-container');",
@@ -642,15 +628,18 @@ const _0xKabaneri = [
     "    let i, tabcontent, tablinks;",
     "    tabcontent = document.getElementsByClassName('tab-content');",
     "    for (i = 0; i < tabcontent.length; i++) {",
-    "        tabcontent[i].style.display = 'none';",
     "        tabcontent[i].classList.remove('active');",
+    "        tabcontent[i].style.display = 'none';",
     "    }",
     "    tablinks = document.getElementsByClassName('tab-btn');",
     "    for (i = 0; i < tablinks.length; i++) {",
     "        tablinks[i].classList.remove('active');",
     "    }",
-    "    document.getElementById(tabName).style.display = 'block';",
-    "    document.getElementById(tabName).classList.add('active');",
+    "    const target = document.getElementById(tabName);",
+    "    if (target) {",
+    "        target.style.display = 'block';",
+    "        target.classList.add('active');",
+    "    }",
     "    evt.currentTarget.classList.add('active');",
     "}",
     "",
@@ -671,7 +660,7 @@ const _0xKabaneri = [
     "        return { isTimeOver: true, time: time };",
     "    }",
     "",
-    "    const isShort = isReset || isKage;",
+    "    const isShort = (isReset || isKage);",
     "    const maxCeiling = isShort ? 596 : 996;",
     "    const maxCycle = isShort ? 4 : 6;",
     "    const remainCeiling = Math.max(0, maxCeiling - kg);",
@@ -680,21 +669,27 @@ const _0xKabaneri = [
     "    const EV_NONE = -600;",
     "    ",
     "    let evCeilN = EV_NONE;",
-    "    if (!isShort && kg >= 700) { evCeilN = 3556; }",
-    "    else if (!isShort && kg >= 650) { evCeilN = 2320; }",
-    "    else if (!isShort && kg >= 600) { evCeilN = 1381; }",
+    "    if (!isShort) {",
+    "        if (kg >= 700) { evCeilN = 3556; }",
+    "        else if (kg >= 650) { evCeilN = 2320; }",
+    "        else if (kg >= 600) { evCeilN = 1381; }",
+    "    }",
     "",
     "    let evCeilS = EV_NONE;",
-    "    if (isShort && kg >= 400) { evCeilS = 3923; }",
-    "    else if (isShort && kg >= 350) { evCeilS = 2345; }",
-    "    else if (isShort && kg >= 300) { evCeilS = 1169; }",
+    "    if (isShort) {",
+    "        if (kg >= 400) { evCeilS = 3923; }",
+    "        else if (kg >= 350) { evCeilS = 2345; }",
+    "        else if (kg >= 300) { evCeilS = 1169; }",
+    "    }",
     "",
     "    let evZone1 = (kg >= 100 && kg <= 150) ? 1081 : EV_NONE;",
     "    let evZone2 = (kg >= 250 && kg <= 300) ? 1068 : EV_NONE;",
     "    ",
     "    let evKage = isKage ? 4500 : EV_NONE;",
     "    let evPts = (stateHint === 'pts_large') ? 5500 : EV_NONE;",
-    "    let evBg = (stateHint === 'umato') ? 4000 : (stateHint === 'sakura' ? 1500 : EV_NONE);",
+    "    let evBg = EV_NONE;",
+    "    if (stateHint === 'umato') { evBg = 4000; }",
+    "    else if (stateHint === 'sakura') { evBg = 1500; }",
     "",
     "    let bonusEV = 0;",
     "    let bonusWage = 0;",
@@ -707,7 +702,8 @@ const _0xKabaneri = [
     "    }",
     "",
     "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evPts, evBg) + bonusEV;",
-    "    let baseWage = (kg >= 600 || (isShort && kg >= 300)) ? 4500 : 800;",
+    "    let baseWage = 800;",
+    "    if (kg >= 600 || (isShort && kg >= 300)) { baseWage = 4500; }",
     "    if (isKage || stateHint === 'pts_large') { baseWage = 6000; }",
     "",
     "    if (trophy === 'rainbow') {",
@@ -720,6 +716,7 @@ const _0xKabaneri = [
     "",
     "    let finalEV = baseEV;",
     "    let finalWage = baseWage + bonusWage;",
+    "    ",
     "    if (time >= 18) {",
     "        let loss = (time - 17) * 400;",
     "        finalEV -= loss;",
@@ -727,11 +724,11 @@ const _0xKabaneri = [
     "    }",
     "    if (inv === 'cash' && rate !== '5.0') {",
     "        finalWage -= 2000;",
-    "        if (finalEV > 0) { finalEV *= 0.7; }",
+    "        if (finalEV > 0) { finalEV = Math.floor(finalEV * 0.7); }",
     "    }",
     "",
     "    let baseBorder = isShort ? 350 : 650;",
-    "    let isAbsoluteGo = (isKage || stateHint === 'pts_large' || trophy === 'rainbow' || ai === 'super');",
+    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large' || trophy === 'rainbow' || ai === 'super' || ai === 'omikuji_luck');",
     "    ",
     "    if (isAbsoluteGo) { baseBorder = 0; }",
     "    else {",
@@ -740,8 +737,12 @@ const _0xKabaneri = [
     "    }",
     "",
     "    return {",
-    "        kg: kg, isShort: isShort, isKage: isKage, ptsLarge: (stateHint === 'pts_large'),",
-    "        bgUmato: (stateHint === 'umato'), bgSakura: (stateHint === 'sakura'),",
+    "        kg: kg, ",
+    "        isShort: isShort, ",
+    "        isKage: isKage, ",
+    "        ptsLarge: (stateHint === 'pts_large'),",
+    "        bgUmato: (stateHint === 'umato'), ",
+    "        bgSakura: (stateHint === 'sakura'),",
     "        border: Math.max(0, baseBorder + adj),",
     "        ev: Math.floor(finalEV),",
     "        wage: Math.floor(finalWage),",
@@ -760,7 +761,13 @@ const _0xKabaneri = [
     "        return;",
     "    }",
     "",
-    "    let displayEV = isVip ? `￥${s.ev}前後` : `<span style=\"background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;\">【🔒VIP限定】</span>`;",
+    "    let displayEV = \"\";",
+    "    if (isVip) {",
+    "        displayEV = `￥${s.ev}前後`;",
+    "    } else {",
+    "        displayEV = `<span style=\"background:#484f58; color:#484f58; border-radius:4px; padding:0 5px;\">【🔒VIP限定】</span>`;",
+    "    }",
+    "",
     "    const evDisp = `<br><span style=\"font-size:1.1em; font-weight:bold; color:var(--success);\">💰期待値: ${displayEV}</span><br><span style=\"font-size:0.85em; color:#8b949e;\">🎯天井まで残り: <b>${s.remainCeiling}G / ${s.remainCycle}周期</b></span>`;",
     "",
     "    if (s.ptsLarge) {",
@@ -782,9 +789,23 @@ const _0xKabaneri = [
     "    let naviHtml = \"\";",
     "    if (isVip) {",
     "        const isSpecial = (s.ptsLarge || s.isKage || s.bgUmato);",
-    "        naviHtml += `<div class=\"navi-rule ${isSpecial ? 'active' : ''}\">★ 【特殊恩恵】当選まで絶対にヤメ厳禁。</div>`;",
-    "        naviHtml += `<div class=\"navi-rule ${(!isSpecial && s.remainCeiling <= 150) ? 'active' : ''}\">① 【天井保護】当選までヤメ厳禁（ツッパ）。</div>`;",
-    "        naviHtml += `<div class=\"navi-rule ${(!isSpecial && s.remainCeiling > 150) ? 'active' : ''}\">② 【動的ヤメ】前兆・高確・示唆背景なしを確認して即ヤメ。</div>`;",
+    "        if (isSpecial) {",
+    "            naviHtml += `<div class=\"navi-rule active\">★ 【特殊恩恵】当選まで絶対にヤメ厳禁。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">★ 【特殊恩恵】当選まで絶対にヤメ厳禁。</div>`;",
+    "        }",
+    "        ",
+    "        if (!isSpecial && s.remainCeiling <= 150) {",
+    "            naviHtml += `<div class=\"navi-rule active\">① 【天井保護】当選までヤメ厳禁（ツッパ）。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">① 【天井保護】当選までヤメ厳禁（ツッパ）。</div>`;",
+    "        }",
+    "        ",
+    "        if (!isSpecial && s.remainCeiling > 150) {",
+    "            naviHtml += `<div class=\"navi-rule active\">② 【動的ヤメ】前兆・高確・示唆背景なしを確認して即ヤメ。</div>`;",
+    "        } else {",
+    "            naviHtml += `<div class=\"navi-rule\">② 【動的ヤメ】前兆・高確・示唆背景なしを確認して即ヤメ。</div>`;",
+    "        }",
     "    } else {",
     "        naviHtml = `<div class=\"navi-rule active\">② 【基本】前兆・高確なしを確認して即ヤメ。<br><span style=\"font-size:0.8em; color:var(--warning);\">（※特殊フォローは🔒VIP限定）</span></div>`;",
     "    }",
@@ -794,8 +815,15 @@ const _0xKabaneri = [
     "",
     "function updateGuideTable() {",
     "    const isPenalty = (document.getElementById('invest_type').value === 'cash');",
-    "    document.getElementById('kg-100-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ 1周期</span>';",
-    "    document.getElementById('kg-250-n').innerHTML = isPenalty ? '<span class=\"mark-ng\">✕ スルー</span>' : '<span class=\"mark-warn\">△ 2周期</span>';",
+    "    const n100 = document.getElementById('kg-100-n');",
+    "    const n250 = document.getElementById('kg-250-n');",
+    "    if (isPenalty) {",
+    "        if (n100) n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        if (n250) n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "    } else {",
+    "        if (n100) n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>';",
+    "        if (n250) n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>';",
+    "    }",
     "}",
     "",
     "function updateUI() {",
@@ -803,8 +831,10 @@ const _0xKabaneri = [
     "    if (isVip) {",
     "        const stats = getKabaneriStats();",
     "        const wageElem = document.getElementById('wage-display-k');",
-    "        wageElem.innerText = `想定時給: ￥${stats.wage}`;",
-    "        wageElem.style.color = (stats.wage >= 0) ? 'var(--success)' : 'var(--danger)';",
+    "        if (wageElem) {",
+    "            wageElem.innerText = `想定時給: ￥${stats.wage}`;",
+    "            wageElem.style.color = (stats.wage >= 0) ? 'var(--success)' : 'var(--danger)';",
+    "        }",
     "    }",
     "}",
     "",
@@ -814,12 +844,16 @@ const _0xKabaneri = [
     "}",
     "",
     "function updateKabaneriCounter() {",
-    "    document.getElementById('val_k_bell').innerText = countKBell;",
+    "    const bVal = document.getElementById('val_k_bell');",
+    "    const bProb = document.getElementById('prob_k_bell');",
+    "    if (bVal) bVal.innerText = countKBell;",
     "    const t = parseFloat(document.getElementById('total_rot_k').value) || 0;",
-    "    if (countKBell > 0 && t > 0) {",
-    "        document.getElementById('prob_k_bell').innerText = `確率: 1/${(t / countKBell).toFixed(1)}`;",
-    "    } else {",
-    "        document.getElementById('prob_k_bell').innerText = '確率: ---';",
+    "    if (bProb) {",
+    "        if (countKBell > 0 && t > 0) {",
+    "            bProb.innerText = `確率: 1/${(t / countKBell).toFixed(1)}`;",
+    "        } else {",
+    "            bProb.innerText = '確率: ---';",
+    "        }",
     "    }",
     "}",
     "",
@@ -828,12 +862,20 @@ const _0xKabaneri = [
     "    const t = parseFloat(document.getElementById('total_rot_k').value) || 0;",
     "    const a = parseFloat(document.getElementById('at_count_k').value) || 0;",
     "    let m = ''; let cls = 'alert-info';",
-    "    if (!isVip) { m = '【🔒VIP限定】精密AI診断。'; cls = 'alert-warning'; }",
-    "    else if (trophy === 'rainbow') { m = '【設定6確定】全ツッパ！'; cls = 'alert-success'; }",
-    "    else if (trophy === 'gold') { m = '【設定4以上】続行推奨。'; cls = 'alert-success'; }",
-    "    else if (t >= 1500 && (t/a) <= 231) { m = '【高設定濃厚】続行！'; cls = 'alert-success'; }",
-    "    else { m = 'サンプル不足、または低設定域。'; cls = 'alert-error'; }",
-    "    document.getElementById('setting-result-k').innerHTML = `<div class=\"alert ${cls}\">🤖 AI軍師: ${m}</div>`;",
+    "    if (!isVip) { ",
+    "        m = '【🔒VIP限定】精密AI診断。'; cls = 'alert-warning'; ",
+    "    } else if (trophy === 'rainbow') { ",
+    "        m = '【設定6確定】全ツッパ！'; cls = 'alert-success'; ",
+    "    } else if (trophy === 'gold') { ",
+    "        m = '【設定4以上】続行推奨。'; cls = 'alert-success'; ",
+    "    } else if (t >= 1500) {",
+    "        if ((t/a) <= 231) { m = '【高設定濃厚】続行！'; cls = 'alert-success'; }",
+    "        else { m = '設定推測: 低設定域です。'; cls = 'alert-error'; }",
+    "    } else { ",
+    "        m = 'サンプル不足です。'; ",
+    "    }",
+    "    const resElem = document.getElementById('setting-result-k');",
+    "    if (resElem) resElem.innerHTML = `<div class=\"alert ${cls}\">🤖 AI軍師: ${m}</div>`;",
     "}",
     "",
     "window.checkVIPStatus = checkVIPStatus;",
@@ -847,6 +889,7 @@ const _0xKabaneri = [
     "window.executeKabaneriGuess = executeKabaneriGuess;"
 ];
 
+// F12解析阻害 ＆ 動的展開
 new Function(_0xKabaneri.join('\\n'))();
 </script>
 </body>
