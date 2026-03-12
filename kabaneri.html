@@ -462,8 +462,10 @@
             <label style="color:var(--warning);">🤖 AI Bro コンサルレポート</label>
             <select id="k_ai_consult" class="compact-select" style="width:100%;" onchange="updateUI()">
                 <option value="none">選択なし</option>
-                <option value="omikuji_luck">【おみくじ】輪廻の果報(当選濃厚)</option>
+                <option value="omikuji_luck">【おみくじ】輪廻の果報/六根清浄(当選濃厚)</option>
+                <option value="super">防衛区域(本前兆濃厚)</option>
                 <option value="himaku_high">【皮膜レベル】Lv.3〜4(天井間近)</option>
+                <option value="kiri_high">【キリ番】無名寝転び/桜(期待度高)</option>
                 <option value="chance">チャンス目 直後(期待度大)</option>
                 <option value="weak">ざわざわのみ(フェイク)</option>
             </select>
@@ -513,8 +515,9 @@
         <summary>📋 海門 期待値カンペ</summary>
         <div class="accordion-content">
             <p style="font-size:0.8em; color:#8b949e; margin-top:0;">※短縮＝リセット/ST駆け抜け/景之後。</p>
-            <table class="guide-table">
+            <table class="guide-table" style="text-align:center;">
                 <tr><th>G数目安</th><th>通常天井</th><th>短縮天井</th><th>景之ST後</th></tr>
+                <tr><td>0〜20G</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td></tr>
                 <tr><td>100G〜</td><td id="kg-100-n" class="mark-warn">△ 1周期</td><td id="kg-100-r" class="mark-warn">△ 1周期</td><td class="mark-go">〇 特攻</td></tr>
                 <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-star">★ ツッパ</td></tr>
                 <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-star">★ ツッパ</td></tr>
@@ -529,7 +532,7 @@
             <div class="bible-tabs">
                 <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/CZ</button>
                 <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">黒煙(穢れ)</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-setting-k')">終了画面</button>
+                <button class="tab-btn" onclick="openBible(event, 'tab-setting-k')">設定示唆</button>
             </div>
             
             <div id="tab-cycle-k" class="tab-content active">
@@ -554,9 +557,10 @@
             </div>
             
             <div id="tab-setting-k" class="tab-content">
-                <label style="color:var(--success);">▼ 設定示唆</label>
+                <label style="color:var(--success);">▼ 終了画面・設定示唆</label>
                 <table class="guide-table" style="text-align:center;">
                     <tr><th>パターン</th><th>内容</th></tr>
+                    <tr><td>甲鉄城メンバー</td><td>高設定示唆</td></tr>
                     <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
                     <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
                 </table>
@@ -657,6 +661,9 @@ const _0xKabaneri = [
     "    const time = parseInt(document.getElementById('time_slider').value);",
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
+    "    const ai = isVip ? document.getElementById('k_ai_consult').value : 'none';",
+    "    const adj = isVip ? parseInt(document.getElementById('border_adj_k').value) : 0;",
+    "    const trophy = document.getElementById('trophy_k').value;",
     "    ",
     "    const _s = String.fromCharCode(122, 101, 114, 111, 95, 118, 105, 112, 95, 115, 116, 97, 116, 117, 115);",
     "    isVip = (localStorage.getItem(_s) === 'true');",
@@ -728,7 +735,17 @@ const _0xKabaneri = [
     "        evBg = 1500;",
     "    }",
     "",
-    "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evPts, evBg);",
+    "    let bonusEV = 0;",
+    "    let bonusWage = 0;",
+    "    if (ai === 'super' || ai === 'omikuji_luck') {",
+    "        bonusEV += 4000;",
+    "        bonusWage += 5000;",
+    "    } else if (ai === 'chance' || ai === 'himaku_high' || ai === 'kiri_high') {",
+    "        bonusEV += 1500;",
+    "        bonusWage += 2000;",
+    "    }",
+    "",
+    "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evPts, evBg) + bonusEV;",
     "    ",
     "    let baseWage = 800;",
     "    if (kg >= 600 || (isShort && kg >= 300)) {",
@@ -741,8 +758,16 @@ const _0xKabaneri = [
     "        baseWage = 15000;",
     "    }",
     "",
+    "    if (trophy === 'rainbow') {",
+    "        baseWage = Math.max(baseWage, 8500);",
+    "        baseEV = Math.max(baseEV, 7000);",
+    "    } else if (trophy === 'gold') {",
+    "        baseWage = Math.max(baseWage, 5000);",
+    "        baseEV = Math.max(baseEV, 3500);",
+    "    }",
+    "",
     "    let finalEV = baseEV;",
-    "    let finalWage = baseWage;",
+    "    let finalWage = baseWage + bonusWage;",
     "    ",
     "    if (time >= 18) {",
     "        const timePenalty = (time - 17) * 400;",
@@ -762,9 +787,13 @@ const _0xKabaneri = [
     "        baseBorder = 350;",
     "    }",
     "    ",
-    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large');",
+    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large' || trophy === 'rainbow' || ai === 'super' || ai === 'omikuji_luck');",
     "    if (isAbsoluteGo) {",
     "        baseBorder = 0;",
+    "    } else {",
+    "        if (time >= 20) { baseBorder += 100; }",
+    "        else if (time >= 18) { baseBorder += 50; }",
+    "        if (inv === 'cash' && rate !== '5.0') { baseBorder += 50; }",
     "    }",
     "",
     "    return {",
@@ -774,7 +803,7 @@ const _0xKabaneri = [
     "        ptsLarge: (stateHint === 'pts_large'),",
     "        bgUmato: (stateHint === 'umato'),",
     "        bgSakura: (stateHint === 'sakura'),",
-    "        border: baseBorder,",
+    "        border: Math.max(0, baseBorder + adj),",
     "        ev: Math.floor(finalEV),",
     "        wage: Math.floor(finalWage),",
     "        remainCeiling: remainCeiling,",
@@ -851,7 +880,8 @@ const _0xKabaneri = [
     "",
     "function updateGuideTable() {",
     "    const inv = document.getElementById('invest_type').value;",
-    "    const isPenalty = (inv === 'cash');",
+    "    const rate = document.getElementById('rate').value;",
+    "    const isPenalty = (inv === 'cash' && rate !== '5.0');",
     "    const n100 = document.getElementById('kg-100-n');",
     "    const n250 = document.getElementById('kg-250-n');",
     "    ",
