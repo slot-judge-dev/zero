@@ -323,6 +323,14 @@
             padding-left: 10px; 
             background: rgba(231, 76, 60, 0.1); 
         }
+        
+        .navi-rule.lamp-active {
+            color: var(--warning);
+            font-weight: bold;
+            border-left: 4px solid var(--warning);
+            padding-left: 10px;
+            background: rgba(241, 196, 15, 0.1);
+        }
 
         /* カウンターボタン用 */
         .counter-btn { 
@@ -351,15 +359,16 @@
         }
         
         .tab-btn { 
-            padding: 10px 15px; 
+            padding: 10px 12px; 
             background: var(--military-dark); 
             color: #a0aec0; 
             border: none; 
             border-radius: 4px 4px 0 0; 
             cursor: pointer; 
-            font-size: 0.8em; 
+            font-size: 0.75em; 
             font-weight: bold; 
             transition: 0.3s; 
+            white-space: nowrap;
         }
         
         .tab-btn.active { 
@@ -427,6 +436,10 @@
         <div style="width: 80px;"></div>
     </div>
 
+    <div class="authority-text">
+        Protocol ZERO - 「勝つ」ためではない。<span>「負けない」</span>ためのAI投資判断。
+    </div>
+
     <div class="card hero-section">
         <label for="k_current_g" style="color: #a0aec0;">現在のST間ゲーム数 (G)</label>
         <input type="number" id="k_current_g" class="hero-input" value="0" oninput="updateUI()">
@@ -439,24 +452,44 @@
             <button onclick="adjustG(100)" class="quick-btn">+100</button>
         </div>
 
-        <details class="accordion" style="margin-bottom: 15px; border-color: var(--border);">
+        <details class="accordion" style="margin-bottom: 15px; border-color: var(--border);" open>
             <summary style="background: var(--military-dark); color: var(--warning); font-size: 0.9em;">
-                ⚠️ 特殊条件を展開 (短縮・黒煙・皮膜)
+                ⚠️ 特殊条件を展開 (短縮・黒煙・示唆など)
             </summary>
             <div class="accordion-content" style="text-align: left;">
                 <label style="display:flex; align-items:center; gap:10px; color:#fff;">
                     <input type="checkbox" id="k_is_kakenuke" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    ST駆け抜け後 (天井短縮)
+                    ST駆け抜け後 (短縮＆エピボ恩恵)
                 </label>
                 <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
                     <input type="checkbox" id="k_is_blacksmoke" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
                     🔥 黒煙示唆(大) 確認済 (裏景之期待)
                 </label>
                 <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
+                    <input type="checkbox" id="k_is_sensu" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
+                    🪭 扇子法則崩れ (青扇子+ハズレ等/黒煙極)
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
+                    <input type="checkbox" id="k_is_kuji" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
+                    🎫 輪廻クジ「果報/六根清浄」
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
+                    <input type="checkbox" id="k_is_umato" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
+                    🏯 海門城背景 (本前兆/上位ST期待)
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
+                    <input type="checkbox" id="k_is_sakura" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
+                    🌸 桜アイキャッチ/無名③ (早め当選期待大)
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
                     <input type="checkbox" id="k_is_himaku" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
                     皮膜レベル高(赤セリフ等) (天井間近)
                 </label>
-                <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
+                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
+                    <input type="checkbox" id="k_is_lamp" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
+                    💡 ST後ランプ発光中 (CZまで続行)
+                </label>
+                <hr style="border: 0; border-top: 1px dashed var(--border); margin: 15px 0;">
                 <label style="display:flex; align-items:center; gap:10px; color:#a0aec0;">
                     <input type="checkbox" id="k_is_reset" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
                     朝イチ(設定変更)
@@ -465,6 +498,19 @@
                     <input type="checkbox" id="k_is_kageyuki" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
                     景之ST終了後(ループ)
                 </label>
+                
+                <div style="margin-top:15px;">
+                    <label style="font-size:0.75em; color:#a0aec0;">現在の周期数 (手動補正用)</label>
+                    <select id="k_cycle" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
+                        <option value="0">自動(G数依存)</option>
+                        <option value="1">1周期</option>
+                        <option value="2">2周期</option>
+                        <option value="3">3周期</option>
+                        <option value="4">4周期(短縮)</option>
+                        <option value="5">5周期</option>
+                        <option value="6">6周期(通常)</option>
+                    </select>
+                </div>
             </div>
         </details>
 
@@ -512,10 +558,7 @@
             <label style="color:var(--warning);">🤖 VIP: AI Bro コンサルレポート</label>
             <select id="k_ai_consult" onchange="updateUI()">
                 <option value="none">選択なし</option>
-                <option value="omikuji_luck">【おみくじ】輪廻の果報/六根清浄(当選濃厚)</option>
                 <option value="super">防衛区域(本前兆濃厚)</option>
-                <option value="himaku_high">【皮膜レベル】Lv.3〜4(天井間近)</option>
-                <option value="kiri_high">【キリ番】無名寝転び/桜(期待度高)</option>
                 <option value="chance">チャンス目 直後(期待度大)</option>
                 <option value="weak">ざわざわのみ(フェイク)</option>
             </select>
@@ -540,9 +583,10 @@
         <summary>📜 海門 軍師の知恵袋</summary>
         <div class="accordion-content">
             <div class="bible-tabs">
-                <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/CZ</button>
+                <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/短縮</button>
                 <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">黒煙(穢れ)</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-setting-k')">設定示唆</button>
+                <button class="tab-btn" onclick="openBible(event, 'tab-eyecatch-k')">ｱイｷｬｯﾁ</button>
+                <button class="tab-btn" onclick="openBible(event, 'tab-sensu-k')">扇子法則</button>
             </div>
             
             <div id="tab-cycle-k" class="tab-content active">
@@ -554,26 +598,47 @@
                     <tr><td>4周期(596G)</td><td>短縮天井(ST濃厚)</td></tr>
                     <tr><td>6周期(996G)</td><td>通常天井(エピボ)</td></tr>
                 </table>
-            </div>
-            
-            <div id="tab-smoke-k" class="tab-content">
-                <label style="color:var(--warning);">▼ 黒煙ポイント蓄積・解放の法則</label>
+                <label style="color:var(--warning); margin-top:10px;">▼ 短縮条件</label>
                 <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9;">
-                    <li><b>【蓄積契機】</b>: 設定変更時(初期MAXあり)、CZ失敗、駿城失敗、ST駆け抜け、天井到達。</li>
-                    <li><b>【蓄積示唆】</b>: 画面右下の吸い込みエフェクト。<b>大なら次回初当たりまでツッパ推奨！</b></li>
-                    <li><b>【解放条件】</b>: MAX到達後の「次回初当たり(駿城/エピボ問わず)」。7図柄入賞時に「専用の煙エフェクト」発生で解放確定。</li>
-                    <li><b>【解放恩恵】</b>: 海門回想、真・景之ST、または期待3600枚の<b>裏・景之ST</b>直撃！<br><span style="color:var(--accent);">※1日1回は解放が期待できる高頻度仕様！黒煙大を見逃すな！</span></li>
+                    <li>設定変更(朝イチ)</li>
+                    <li>通常ST駆け抜け後</li>
+                    <li>景之ST終了後</li>
                 </ul>
             </div>
             
-            <div id="tab-setting-k" class="tab-content">
-                <label style="color:var(--warning);">▼ 終了画面・設定示唆</label>
+            <div id="tab-smoke-k" class="tab-content">
+                <label style="color:var(--accent);">▼ 黒煙ポイント蓄積・解放の法則</label>
+                <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9;">
+                    <li><b>【蓄積契機】</b>: 有利区間移行時(初期MAXあり)、CZ失敗、駿城失敗、ST駆け抜け、天井到達。</li>
+                    <li><b>【蓄積示唆】</b>: 画面右下の吸い込みエフェクト。<b>大なら次回初当たりまでツッパ推奨！</b></li>
+                    <li><b>【解放条件】</b>: MAX到達後の「次回初当たり(駿城/エピボ問わず)」。7図柄入賞時に「専用の煙エフェクト」発生で解放確定。</li>
+                    <li><b>【解放恩恵】</b>: 海門回想、真・景之ST、または期待3600枚の<b>裏・景之ST</b>直撃！<br><span style="color:var(--warning);">※1日1回は解放が期待できる高頻度仕様！</span></li>
+                </ul>
+            </div>
+
+            <div id="tab-eyecatch-k" class="tab-content">
+                <label style="color:var(--success);">▼ アイキャッチ・終了画面 示唆</label>
                 <table class="guide-table">
                     <tr><th>パターン</th><th>内容</th></tr>
+                    <tr><td>侑那/鰍/菖蒲</td><td>デフォルト</td></tr>
+                    <tr><td>無名②</td><td>期待度・中</td></tr>
+                    <tr><td style="color:var(--accent); font-weight:bold;">無名③ / 桜</td><td>期待度・高</td></tr>
                     <tr><td>甲鉄城メンバー</td><td>高設定示唆</td></tr>
                     <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
                     <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
                 </table>
+            </div>
+
+            <div id="tab-sensu-k" class="tab-content">
+                <label style="color:var(--warning);">▼ 扇子演出の法則崩れ</label>
+                <p style="font-size:0.8em; line-height:1.6; color:#c9d1d9;">
+                    扇子演出はリプレイ or チャンス目対応。<br>
+                    <b>【状態法則】</b>前兆中対応役ハズレで本前兆の期待度大幅UP。<br>
+                    <b>【法則崩れ（超重要）】</b><br>
+                    ・非前兆中 <b>白扇子＋ハズレ</b> ➔ 黒煙り示唆(強)<br>
+                    ・非前兆中 <b>青扇子＋ハズレ</b> ➔ <span style="color:var(--accent); font-weight:bold;">黒煙り示唆(極) = 解放間近!!</span><br>
+                    見逃し厳禁の絶対特攻フラグです！
+                </p>
             </div>
         </div>
     </details>
@@ -595,12 +660,12 @@
                     <button class="counter-btn plus" onclick="changeKCounter('bell', 1)">+</button>
                 </div>
             </div>
-            <select id="trophy_k" onchange="updateUI();">
+            <select id="trophy_k" class="compact-select" onchange="updateUI();">
                 <option value="none">トロフィー示唆なし</option>
                 <option value="gold">金以上(設定4-5確定)</option>
                 <option value="rainbow">虹/キリン(設定6確定)</option>
             </select>
-            <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px; width:100%; border:none; padding:15px; color:white; font-weight:bold; border-radius:4px;">AI推測プロトコルを実行</button>
+            <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px; width:100%; border:none; padding:15px; color:white; font-weight:bold; border-radius:4px; letter-spacing:1px;">AI推測プロトコルを実行</button>
             <div id="setting-result-k"></div>
         </div>
     </details>
@@ -698,8 +763,14 @@ const _0xKabaneri = [
     "    const isKage = document.getElementById('k_is_kageyuki').checked;",
     "    const isKakenuke = document.getElementById('k_is_kakenuke').checked;",
     "    const isBlackSmoke = document.getElementById('k_is_blacksmoke').checked;",
+    "    const isSensu = document.getElementById('k_is_sensu').checked;",
+    "    const isKuji = document.getElementById('k_is_kuji').checked;",
+    "    const isUmato = document.getElementById('k_is_umato').checked;",
+    "    const isSakura = document.getElementById('k_is_sakura').checked;",
     "    const isHimaku = document.getElementById('k_is_himaku').checked;",
+    "    const isLamp = document.getElementById('k_is_lamp').checked;",
     "    ",
+    "    let kcycle = parseInt(document.getElementById('k_cycle').value) || 0;",
     "    const time = parseInt(document.getElementById('time_slider').value);",
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
@@ -725,11 +796,17 @@ const _0xKabaneri = [
     "    }",
     "    ",
     "    let maxCeiling = 996;",
+    "    let maxCycle = 6;",
     "    if (isShort) {",
     "        maxCeiling = 596;",
+    "        maxCycle = 4;",
     "    }",
     "    ",
+    "    if (kcycle === 0) {",
+    "        kcycle = Math.floor(kg / 150) + 1;",
+    "    }",
     "    const remainCeiling = Math.max(0, maxCeiling - kg);",
+    "    const remainCycle = Math.max(0, maxCycle - kcycle);",
     "",
     "    const EV_NONE = -600;",
     "    ",
@@ -745,6 +822,10 @@ const _0xKabaneri = [
     "    }",
     "",
     "    let evCeilS = EV_NONE;",
+    "    let shortBonus = 0;",
+    "    if (isKakenuke || isKage) {",
+    "        shortBonus = 800;",
+    "    }",
     "    if (isShort) {",
     "        if (kg >= 400) {",
     "            evCeilS = 3923;",
@@ -753,16 +834,21 @@ const _0xKabaneri = [
     "        } else if (kg >= 300) {",
     "            evCeilS = 1169;",
     "        }",
+    "        if (evCeilS !== EV_NONE) {",
+    "            evCeilS += shortBonus;",
+    "        }",
     "    }",
     "",
     "    let evZone1 = EV_NONE;",
     "    if (kg >= 100 && kg <= 150) {",
     "        evZone1 = 1081;",
+    "        if (isShort) { evZone1 += shortBonus; }",
     "    }",
     "    ",
     "    let evZone2 = EV_NONE;",
     "    if (kg >= 250 && kg <= 300) {",
     "        evZone2 = 1068;",
+    "        if (isShort) { evZone2 += shortBonus; }",
     "    }",
     "    ",
     "    let evKage = EV_NONE;",
@@ -774,6 +860,26 @@ const _0xKabaneri = [
     "    if (isBlackSmoke) {",
     "        evBlackSmoke = 10000;",
     "    }",
+    "    ",
+    "    let evSensu = EV_NONE;",
+    "    if (isSensu) {",
+    "        evSensu = 12000;",
+    "    }",
+    "    ",
+    "    let evKuji = EV_NONE;",
+    "    if (isKuji) {",
+    "        evKuji = 8000;",
+    "    }",
+    "",
+    "    let evUmato = EV_NONE;",
+    "    if (isUmato) {",
+    "        evUmato = 5000;",
+    "    }",
+    "    ",
+    "    let evSakura = EV_NONE;",
+    "    if (isSakura) {",
+    "        evSakura = 2000;",
+    "    }",
     "",
     "    let evHimaku = EV_NONE;",
     "    if (isHimaku) {",
@@ -782,30 +888,24 @@ const _0xKabaneri = [
     "",
     "    let bonusEV = 0;",
     "    let bonusWage = 0;",
-    "    if (ai === 'omikuji_luck') {",
-    "        bonusEV += 4000;",
-    "        bonusWage += 5000;",
-    "    } else if (ai === 'super') {",
+    "    if (ai === 'super') {",
     "        bonusEV += 3500;",
     "        bonusWage += 4000;",
-    "    } else if (ai === 'chance' || ai === 'himaku_high' || ai === 'kiri_high') {",
+    "    } else if (ai === 'chance') {",
     "        bonusEV += 1500;",
     "        bonusWage += 2000;",
     "    }",
     "",
-    "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evBlackSmoke, evHimaku) + bonusEV;",
+    "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evBlackSmoke, evSensu, evKuji, evUmato, evSakura, evHimaku) + bonusEV;",
     "    ",
     "    let baseWage = 800;",
-    "    if (kg >= 600) {",
+    "    if (kg >= 600 || (isShort && kg >= 300)) {",
     "        baseWage = 4500;",
     "    }",
-    "    if (isShort && kg >= 300) {",
-    "        baseWage = 4500;",
-    "    }",
-    "    if (isKage || isHimaku) {",
+    "    if (isKage || isHimaku || isUmato || isSakura || isKuji) {",
     "        baseWage = 6000;",
     "    }",
-    "    if (isBlackSmoke) {",
+    "    if (isBlackSmoke || isSensu) {",
     "        baseWage = 15000;",
     "    }",
     "",
@@ -841,7 +941,7 @@ const _0xKabaneri = [
     "    }",
     "    ",
     "    let isAbsoluteGo = false;",
-    "    if (isKage || isBlackSmoke || isHimaku || trophy === 'rainbow' || ai === 'super' || ai === 'omikuji_luck') {",
+    "    if (isKage || isBlackSmoke || isSensu || isKuji || isUmato || isHimaku || trophy === 'rainbow' || ai === 'super') {",
     "        isAbsoluteGo = true;",
     "    }",
     "    ",
@@ -872,12 +972,18 @@ const _0xKabaneri = [
     "        kg: kg,",
     "        isShort: isShort,",
     "        isBlackSmoke: isBlackSmoke,",
+    "        isSensu: isSensu,",
+    "        isKuji: isKuji,",
+    "        isUmato: isUmato,",
+    "        isSakura: isSakura,",
     "        isHimaku: isHimaku,",
     "        isKage: isKage,",
+    "        isLamp: isLamp,",
     "        border: finalBorder,",
     "        ev: Math.floor(finalEV),",
     "        wage: Math.floor(finalWage),",
     "        remainCeiling: remainCeiling,",
+    "        remainCycle: remainCycle,",
     "        isTimeOver: false",
     "    };",
     "}",
@@ -895,12 +1001,16 @@ const _0xKabaneri = [
     "    const ratingHtml = `<div class=\"rating-stars\">${getRatingStar(s.ev)}</div>`;",
     "    let basicJudgeHtml = ``;",
     "    ",
-    "    if (s.isBlackSmoke) {",
-    "        basicJudgeHtml = `<div class=\"alert alert-ceiling\">🔥 【絶対防衛：裏景之】<br>黒煙大を確認。期待枚数3600枚の裏景之ST濃厚！当選まで全ツッパ。</div>`;",
+    "    if (s.isBlackSmoke || s.isSensu) {",
+    "        basicJudgeHtml = `<div class=\"alert alert-ceiling\">🔥 【絶対防衛：裏景之】<br>黒煙(大/極)を確認。期待枚数3600枚の裏景之ST濃厚！当選まで全ツッパ。</div>`;",
+    "    } else if (s.isKuji) {",
+    "        basicJudgeHtml = `<div class=\"alert alert-success\" style=\"border-color:var(--success);\">🎫 【輪廻クジ】<br>ボーナス/ST濃厚。当該周期当選まで全ツッパ。</div>`;",
+    "    } else if (s.isUmato) {",
+    "        basicJudgeHtml = `<div class=\"alert alert-success\" style=\"border-color:var(--success);\">🏯 【海門城背景】<br>実質上位ST以上の期待大。特攻一択。</div>`;",
     "    } else if (s.isKage) {",
     "        basicJudgeHtml = `<div class=\"alert alert-warning\">⚠️ 【景之ループ】<br>短縮天井＆ループ濃厚状態。ヤメ厳禁。</div>`;",
-    "    } else if (s.isHimaku) {",
-    "        basicJudgeHtml = `<div class=\"alert alert-success\">🎯 【皮膜レベル高】<br>天井間近。初当たりまで特攻。</div>`;",
+    "    } else if (s.isSakura || s.isHimaku) {",
+    "        basicJudgeHtml = `<div class=\"alert alert-success\" style=\"border-color:var(--success);\">🎯 【示唆発生】<br>早めの当選期待大/天井間近。初当たりまで特攻。</div>`;",
     "    } else if (s.kg >= s.border) {",
     "        let ceilStr = '通常';",
     "        if (s.isShort) { ceilStr = '短縮'; }",
@@ -935,12 +1045,16 @@ const _0xKabaneri = [
     "        if (s.wage >= 0) { colorClass = 'var(--success)'; }",
     "        let fullHtml = `<div style=\"margin-top:15px; border:1px solid var(--border); border-radius:4px; padding:15px; background:var(--military-dark);\">`;",
     "        fullHtml += `<div class=\"live-wage\" style=\"color:${colorClass};\">想定時給: ￥${s.wage}</div>`;",
-    "        fullHtml += `<div style=\"font-size:0.85em; color:#a0aec0; text-align:center; margin-bottom:15px;\">🎯 天井まで残り: <b>${s.remainCeiling}G</b></div>`;",
+    "        fullHtml += `<div style=\"font-size:0.85em; color:#a0aec0; text-align:center; margin-bottom:15px;\">🎯 天井まで残り: <b>${s.remainCeiling}G / ${s.remainCycle}周期</b></div>`;",
     "        ",
     "        let naviHtml = \"\";",
     "        let isSpecial = false;",
-    "        if (s.isBlackSmoke || s.isKage || s.isHimaku) {",
+    "        if (s.isBlackSmoke || s.isSensu || s.isKage || s.isHimaku || s.isKuji || s.isUmato) {",
     "            isSpecial = true;",
+    "        }",
+    "        ",
+    "        if (s.isLamp) {",
+    "            naviHtml += `<div class=\"navi-rule lamp-active\">★ 【ランプ発光中】CZ当選まで必ず打つこと。</div>`;",
     "        }",
     "        ",
     "        if (isSpecial) {",
@@ -955,10 +1069,20 @@ const _0xKabaneri = [
     "            naviHtml += `<div class=\"navi-rule\">① 【天井保護】当選までヤメ厳禁。</div>`;",
     "        }",
     "        ",
+    "        const inv = document.getElementById('invest_type').value;",
+    "        const rate = document.getElementById('rate').value;",
     "        if (!isSpecial && s.remainCeiling > 150) {",
-    "            naviHtml += `<div class=\"navi-rule active\">② 【動的ヤメ】前兆・背景示唆なしを確認して即ヤメ。</div>`;",
+    "            if (s.isShort) {",
+    "                if (inv === 'medal' || rate === '5.0') {",
+    "                    naviHtml += `<div class=\"navi-rule active\">② 【1周期フォロー】等価/持ちメダルなら150G抜けまで様子見有効。</div>`;",
+    "                } else {",
+    "                    naviHtml += `<div class=\"navi-rule active\">② 【即ヤメ寄り】現金投資時は1周期フォローの期待値低下。即ヤメも視野に。</div>`;",
+    "                }",
+    "            } else {",
+    "                naviHtml += `<div class=\"navi-rule active\">② 【動的ヤメ】ボーナス後、G数と前兆・示唆なしを確認して即ヤメ。</div>`;",
+    "            }",
     "        } else {",
-    "            naviHtml += `<div class=\"navi-rule\">② 【動的ヤメ】前兆・背景示唆なしを確認して即ヤメ。</div>`;",
+    "            naviHtml += `<div class=\"navi-rule\">② 【動的ヤメ】ボーナス後、G数と前兆・示唆なしを確認して即ヤメ。</div>`;",
     "        }",
     "        ",
     "        fullHtml += `<div style=\"border-top:1px solid var(--border); padding-top:10px;\"><span style=\"color:var(--warning); font-weight:bold;\">🛑 ヤメ時ナビ</span><br>${naviHtml}</div>`;",
@@ -975,12 +1099,21 @@ const _0xKabaneri = [
     "    const isPenalty = (inv === 'cash' && rate !== '5.0');",
     "    const n100 = document.getElementById('kg-100-n');",
     "    const n250 = document.getElementById('kg-250-n');",
+    "    ",
     "    if (isPenalty) {",
-    "        if (n100) { n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>'; }",
-    "        if (n250) { n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>'; }",
+    "        if (n100) {",
+    "            n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        }",
+    "        if (n250) {",
+    "            n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        }",
     "    } else {",
-    "        if (n100) { n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>'; }",
-    "        if (n250) { n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>'; }",
+    "        if (n100) {",
+    "            n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>';",
+    "        }",
+    "        if (n250) {",
+    "            n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>';",
+    "        }",
     "    }",
     "}",
     "",
@@ -1067,6 +1200,7 @@ const _0xKabaneri = [
     "window.openBible = openBible;",
     "window.adjustG = adjustG;",
     "window.executeKabaneriAnalysis = executeKabaneriAnalysis;",
+    "window.updateGuideTable = updateGuideTable;",
     "window.updateUI = updateUI;",
     "window.changeKCounter = changeKCounter;",
     "window.updateKabaneriCounter = updateKabaneriCounter;",
