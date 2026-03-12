@@ -262,7 +262,6 @@
             border: 1px solid #30363d; 
             background: #0d1117; 
             line-height: 1.5; 
-            text-align: center;
         }
         
         .mark-go { color: var(--success); font-weight: bold; }
@@ -286,7 +285,7 @@
             line-height: 1.4; 
         }
 
-        /* Tier S / UI 階層化 */
+        /* Tier S / UI階層化 */
         .authority-text { 
             font-size: 0.8em; 
             color: #8b949e; 
@@ -502,6 +501,7 @@
                 </select>
             </div>
         </div>
+        
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
             <label style="margin:0; font-size:0.75em;">現在時刻 (閉店欠損)</label>
             <span id="time_val" style="color:white; font-weight:bold; font-size:0.9em;">15時</span>
@@ -528,12 +528,13 @@
         <div class="accordion-content">
             <div class="bible-tabs">
                 <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/CZ</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">短縮/黒煙</button>
+                <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">黒煙(穢れ)</button>
                 <button class="tab-btn" onclick="openBible(event, 'tab-setting-k')">終了画面</button>
             </div>
+            
             <div id="tab-cycle-k" class="tab-content active">
                 <label style="color:var(--accent);">▼ ST間 周期の期待度</label>
-                <table class="guide-table" style="text-align:left;">
+                <table class="guide-table" style="text-align:center;">
                     <tr><th>周期</th><th>恩恵・期待度</th></tr>
                     <tr><td>1周期(150G)</td><td>期待度33%超。</td></tr>
                     <tr><td>2周期(300G)</td><td>期待度 約77%!</td></tr>
@@ -541,16 +542,20 @@
                     <tr><td>6周期(996G)</td><td>通常天井(エピボ)</td></tr>
                 </table>
             </div>
+            
             <div id="tab-smoke-k" class="tab-content">
-                <label style="color:var(--warning);">▼ 短縮条件 ＆ 黒煙</label>
+                <label style="color:var(--warning);">▼ 黒煙ポイント蓄積・解放の法則</label>
                 <ul style="font-size:0.8em; color:#c9d1d9; line-height:1.6; padding-left:20px;">
-                    <li>設定変更、通常ST駆け抜け、景之ST終了。</li>
-                    <li>黒煙大溢れは「裏・景之ST」濃厚。期待枚数3600枚！</li>
+                    <li><b>【蓄積契機】</b>: 設定変更時(初期MAX振り分けあり)、CZ失敗時、駿城ボーナス失敗時、ST駆け抜け時、ゲーム数/周期天井到達時。連チャンせずハマるほど蓄積優遇。</li>
+                    <li><b>【蓄積示唆】</b>: 画面右下の吸い込みエフェクト。<b>大なら次回初当たりまでツッパ推奨！</b></li>
+                    <li><b>【解放条件】</b>: MAX到達後の「次回初当たり(駿城/エピボ問わず)」。7図柄入賞時に「専用の煙エフェクト」発生で解放確定。</li>
+                    <li><b>【恩恵】</b>: 海門回想(景之ST以上)、真・景之ST、裏・景之ST(期待枚数3600枚超)のいずれかへ直撃。<br><span style="color:var(--kabaneri);">※1日1回は解放が期待できる高頻度仕様！黒煙大演出を見逃すな！</span></li>
                 </ul>
             </div>
+            
             <div id="tab-setting-k" class="tab-content">
                 <label style="color:var(--success);">▼ 設定示唆</label>
-                <table class="guide-table" style="text-align:left;">
+                <table class="guide-table" style="text-align:center;">
                     <tr><th>パターン</th><th>内容</th></tr>
                     <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
                     <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
@@ -606,16 +611,21 @@ const _0xKabaneri = [
     "    isVip = (localStorage.getItem(_s) === 'true');",
     "    const vipSec = document.getElementById('vip-section');",
     "    const freeNot = document.getElementById('free-notice');",
-    "    const adContainer = document.getElementById('ad-container');",
-    "",
+    "    ",
     "    if (isVip) {",
-    "        if (vipSec) { vipSec.style.display = 'block'; }",
-    "        if (freeNot) { freeNot.style.display = 'none'; }",
-    "        if (adContainer) { adContainer.style.display = 'none'; }",
+    "        if (vipSec) {",
+    "            vipSec.style.display = 'block';",
+    "        }",
+    "        if (freeNot) {",
+    "            freeNot.style.display = 'none';",
+    "        }",
     "    } else {",
-    "        if (vipSec) { vipSec.style.display = 'none'; }",
-    "        if (freeNot) { freeNot.style.display = 'block'; }",
-    "        if (adContainer) { adContainer.style.display = 'block'; }",
+    "        if (vipSec) {",
+    "            vipSec.style.display = 'none';",
+    "        }",
+    "        if (freeNot) {",
+    "            freeNot.style.display = 'block';",
+    "        }",
     "    }",
     "}",
     "",
@@ -647,17 +657,23 @@ const _0xKabaneri = [
     "    const time = parseInt(document.getElementById('time_slider').value);",
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
-    "    const ai = isVip ? document.getElementById('k_ai_consult').value : 'none';",
-    "    const adj = isVip ? parseInt(document.getElementById('border_adj_k').value) : 0;",
-    "    const trophy = document.getElementById('trophy_k').value;",
-    "",
+    "    ",
+    "    const _s = String.fromCharCode(122, 101, 114, 111, 95, 118, 105, 112, 95, 115, 116, 97, 116, 117, 115);",
+    "    isVip = (localStorage.getItem(_s) === 'true');",
+    "    ",
     "    if (time >= 22) {",
     "        return { isTimeOver: true, time: time };",
     "    }",
     "",
     "    const isShort = (isReset || isKage);",
-    "    const maxCeiling = isShort ? 596 : 996;",
-    "    const maxCycle = isShort ? 4 : 6;",
+    "    let maxCeiling = 996;",
+    "    let maxCycle = 6;",
+    "    ",
+    "    if (isShort) {",
+    "        maxCeiling = 596;",
+    "        maxCycle = 4;",
+    "    }",
+    "    ",
     "    const remainCeiling = Math.max(0, maxCeiling - kg);",
     "    const remainCycle = Math.max(0, maxCycle - kcycle);",
     "",
@@ -665,83 +681,100 @@ const _0xKabaneri = [
     "    ",
     "    let evCeilN = EV_NONE;",
     "    if (!isShort) {",
-    "        if (kg >= 700) { evCeilN = 3556; }",
-    "        else if (kg >= 650) { evCeilN = 2320; }",
-    "        else if (kg >= 600) { evCeilN = 1381; }",
+    "        if (kg >= 700) {",
+    "            evCeilN = 3556;",
+    "        } else if (kg >= 650) {",
+    "            evCeilN = 2320;",
+    "        } else if (kg >= 600) {",
+    "            evCeilN = 1381;",
+    "        }",
     "    }",
     "",
     "    let evCeilS = EV_NONE;",
     "    if (isShort) {",
-    "        if (kg >= 400) { evCeilS = 3923; }",
-    "        else if (kg >= 350) { evCeilS = 2345; }",
-    "        else if (kg >= 300) { evCeilS = 1169; }",
+    "        if (kg >= 400) {",
+    "            evCeilS = 3923;",
+    "        } else if (kg >= 350) {",
+    "            evCeilS = 2345;",
+    "        } else if (kg >= 300) {",
+    "            evCeilS = 1169;",
+    "        }",
     "    }",
     "",
-    "    let evZone1 = (kg >= 100 && kg <= 150) ? 1081 : EV_NONE;",
-    "    let evZone2 = (kg >= 250 && kg <= 300) ? 1068 : EV_NONE;",
+    "    let evZone1 = EV_NONE;",
+    "    if (kg >= 100 && kg <= 150) {",
+    "        evZone1 = 1081;",
+    "    }",
     "    ",
-    "    let evKage = isKage ? 4500 : EV_NONE;",
-    "    let evPts = (stateHint === 'pts_large') ? 5500 : EV_NONE;",
+    "    let evZone2 = EV_NONE;",
+    "    if (kg >= 250 && kg <= 300) {",
+    "        evZone2 = 1068;",
+    "    }",
+    "    ",
+    "    let evKage = EV_NONE;",
+    "    if (isKage) {",
+    "        evKage = 4500;",
+    "    }",
+    "    ",
+    "    let evPts = EV_NONE;",
+    "    if (stateHint === 'pts_large') {",
+    "        evPts = 10000;",
+    "    }",
     "    ",
     "    let evBg = EV_NONE;",
-    "    if (stateHint === 'umato') { evBg = 4000; }",
-    "    else if (stateHint === 'sakura') { evBg = 1500; }",
-    "",
-    "    let bonusEV = 0;",
-    "    let bonusWage = 0;",
-    "    if (ai === 'omikuji_luck') {",
-    "        bonusEV += 4000;",
-    "        bonusWage += 5000;",
-    "    } else if (ai === 'chance' || ai === 'himaku_high') {",
-    "        bonusEV += 1500;",
-    "        bonusWage += 2000;",
+    "    if (stateHint === 'umato') {",
+    "        evBg = 4000;",
+    "    } else if (stateHint === 'sakura') {",
+    "        evBg = 1500;",
     "    }",
     "",
-    "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evPts, evBg) + bonusEV;",
+    "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evPts, evBg);",
+    "    ",
     "    let baseWage = 800;",
-    "    if (kg >= 600 || (isShort && kg >= 300)) { baseWage = 4500; }",
-    "    if (isKage || stateHint === 'pts_large') { baseWage = 6000; }",
-    "",
-    "    if (trophy === 'rainbow') {",
-    "        baseWage = Math.max(baseWage, 8500);",
-    "        baseEV = Math.max(baseEV, 7000);",
-    "    } else if (trophy === 'gold') {",
-    "        baseWage = Math.max(baseWage, 5000);",
-    "        baseEV = Math.max(baseEV, 3500);",
+    "    if (kg >= 600 || (isShort && kg >= 300)) {",
+    "        baseWage = 4500;",
+    "    }",
+    "    if (isKage) {",
+    "        baseWage = 6000;",
+    "    }",
+    "    if (stateHint === 'pts_large') {",
+    "        baseWage = 15000;",
     "    }",
     "",
     "    let finalEV = baseEV;",
-    "    let finalWage = baseWage + bonusWage;",
+    "    let finalWage = baseWage;",
     "    ",
     "    if (time >= 18) {",
-    "        let loss = (time - 17) * 450;",
-    "        finalEV -= loss;",
-    "        finalWage -= (time - 17) * 800;",
+    "        const timePenalty = (time - 17) * 400;",
+    "        finalEV -= timePenalty;",
+    "        finalWage -= (time - 17) * 700;",
     "    }",
+    "    ",
     "    if (inv === 'cash' && rate !== '5.0') {",
-    "        finalWage -= 2500;",
-    "        if (finalEV > 0) { finalEV = Math.floor(finalEV * 0.65); }",
+    "        finalWage -= 2000;",
+    "        if (finalEV > 0) {",
+    "            finalEV = Math.floor(finalEV * 0.7);",
+    "        }",
     "    }",
     "",
-    "    let baseBorder = isShort ? 350 : 650;",
-    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large' || trophy === 'rainbow' || ai === 'omikuji_luck');",
+    "    let baseBorder = 650;",
+    "    if (isShort) {",
+    "        baseBorder = 350;",
+    "    }",
     "    ",
-    "    if (isAbsoluteGo) { ",
-    "        baseBorder = 0; ",
-    "    } else {",
-    "        if (time >= 20) { baseBorder += 100; }",
-    "        else if (time >= 18) { baseBorder += 50; }",
-    "        if (inv === 'cash') { baseBorder += 50; }",
+    "    const isAbsoluteGo = (isKage || stateHint === 'pts_large');",
+    "    if (isAbsoluteGo) {",
+    "        baseBorder = 0;",
     "    }",
     "",
     "    return {",
-    "        kg: kg, ",
-    "        isShort: isShort, ",
-    "        isKage: isKage, ",
+    "        kg: kg,",
+    "        isShort: isShort,",
+    "        isKage: isKage,",
     "        ptsLarge: (stateHint === 'pts_large'),",
-    "        bgUmato: (stateHint === 'umato'), ",
+    "        bgUmato: (stateHint === 'umato'),",
     "        bgSakura: (stateHint === 'sakura'),",
-    "        border: Math.max(0, baseBorder + adj),",
+    "        border: baseBorder,",
     "        ev: Math.floor(finalEV),",
     "        wage: Math.floor(finalWage),",
     "        remainCeiling: remainCeiling,",
@@ -775,7 +808,11 @@ const _0xKabaneri = [
     "    } else if (s.bgUmato) {",
     "        res += `<div class=\"alert alert-success\">🏯 【海門城背景】<br>実質上位ST以上の期待大。特攻一択。${evDisp}</div>`;",
     "    } else if (s.kg >= s.border) {",
-    "        res += `<div class=\"alert alert-success\">🔥 【判定：GO】<br>${s.isShort ? '短縮' : '通常'}天井狙い特攻せよ！${evDisp}</div>`;",
+    "        if (s.isShort) {",
+    "            res += `<div class=\"alert alert-success\">🔥 【判定：GO】<br>短縮天井狙い特攻せよ！${evDisp}</div>`;",
+    "        } else {",
+    "            res += `<div class=\"alert alert-success\">🔥 【判定：GO】<br>通常天井狙い特攻せよ！${evDisp}</div>`;",
+    "        }",
     "    } else if (s.kg >= 100 && s.kg <= 150) {",
     "        res += `<div class=\"alert alert-info\">⚡ 【1周期目 狙い】<br>ゾーン抜け（150G）まで前兆確認。${evDisp}</div>`;",
     "    } else if (s.kg >= 250 && s.kg <= 300) {",
@@ -817,15 +854,21 @@ const _0xKabaneri = [
     "    const isPenalty = (inv === 'cash');",
     "    const n100 = document.getElementById('kg-100-n');",
     "    const n250 = document.getElementById('kg-250-n');",
-    "    const n450 = document.getElementById('kg-450-n');",
+    "    ",
     "    if (isPenalty) {",
-    "        if (n100) { n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>'; }",
-    "        if (n250) { n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>'; }",
-    "        if (n450) { n450.innerHTML = '<span class=\"mark-warn\">△ 慎重</span>'; }",
+    "        if (n100) {",
+    "            n100.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        }",
+    "        if (n250) {",
+    "            n250.innerHTML = '<span class=\"mark-ng\">✕ スルー</span>';",
+    "        }",
     "    } else {",
-    "        if (n100) { n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>'; }",
-    "        if (n250) { n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>'; }",
-    "        if (n450) { n450.innerHTML = '<span class=\"mark-go\">〇 特攻</span>'; }",
+    "        if (n100) {",
+    "            n100.innerHTML = '<span class=\"mark-warn\">△ 1周期</span>';",
+    "        }",
+    "        if (n250) {",
+    "            n250.innerHTML = '<span class=\"mark-warn\">△ 2周期</span>';",
+    "        }",
     "    }",
     "}",
     "",
@@ -836,20 +879,30 @@ const _0xKabaneri = [
     "        const wageElem = document.getElementById('wage-display-k');",
     "        if (wageElem) {",
     "            wageElem.innerText = `想定時給: ￥${stats.wage}`;",
-    "            wageElem.style.color = (stats.wage >= 0) ? 'var(--success)' : 'var(--danger)';",
+    "            if (stats.wage >= 0) {",
+    "                wageElem.style.color = 'var(--success)';",
+    "            } else {",
+    "                wageElem.style.color = 'var(--danger)';",
+    "            }",
     "        }",
     "    }",
     "}",
     "",
     "function changeKCounter(type, val) {",
-    "    if (type === 'bell') { countKBell = Math.max(0, countKBell + val); }",
+    "    if (type === 'bell') {",
+    "        countKBell = Math.max(0, countKBell + val);",
+    "    }",
     "    updateKabaneriCounter();",
     "}",
     "",
     "function updateKabaneriCounter() {",
     "    const bVal = document.getElementById('val_k_bell');",
     "    const bProb = document.getElementById('prob_k_bell');",
-    "    if (bVal) { bVal.innerText = countKBell; }",
+    "    ",
+    "    if (bVal) {",
+    "        bVal.innerText = countKBell;",
+    "    }",
+    "    ",
     "    const t = parseFloat(document.getElementById('total_rot_k').value) || 0;",
     "    if (bProb) {",
     "        if (countKBell > 0 && t > 0) {",
@@ -864,18 +917,18 @@ const _0xKabaneri = [
     "    const trophy = document.getElementById('trophy_k').value;",
     "    const t = parseFloat(document.getElementById('total_rot_k').value) || 0;",
     "    const a = parseFloat(document.getElementById('at_count_k').value) || 0;",
-    "    let m = ''; ",
+    "    let m = '';",
     "    let cls = 'alert-info';",
     "    ",
-    "    if (!isVip) { ",
-    "        m = '【🔒VIP限定】精密AI診断。ベル確率と初当たりを分析。'; ",
-    "        cls = 'alert-warning'; ",
-    "    } else if (trophy === 'rainbow') { ",
-    "        m = '【設定6確定】究極の挙動。閉店まで全ツッパ！'; ",
-    "        cls = 'alert-success'; ",
-    "    } else if (trophy === 'gold') { ",
-    "        m = '【設定4以上確定】高設定。粘り強く続行推奨。'; ",
-    "        cls = 'alert-success'; ",
+    "    if (!isVip) {",
+    "        m = '【🔒VIP限定】精密AI診断。ベル確率と初当たりを分析します。';",
+    "        cls = 'alert-warning';",
+    "    } else if (trophy === 'rainbow') {",
+    "        m = '【設定6確定】究極の挙動。閉店まで全ツッパ！';",
+    "        cls = 'alert-success';",
+    "    } else if (trophy === 'gold') {",
+    "        m = '【設定4以上確定】高設定域です。粘り強く続行を推奨。';",
+    "        cls = 'alert-success';",
     "    } else if (t >= 1500) {",
     "        const prob = t / countKBell;",
     "        if (prob <= 5.8 && (t/a) <= 230) {",
@@ -888,9 +941,10 @@ const _0xKabaneri = [
     "            m = '【低設定濃厚】挙動が弱いです。撤収を視野に。';",
     "            cls = 'alert-error';",
     "        }",
-    "    } else { ",
-    "        m = '試行回数不足(1500G以上推奨)。'; ",
+    "    } else {",
+    "        m = '試行回数不足(1500G以上推奨)です。';",
     "    }",
+    "    ",
     "    const resElem = document.getElementById('setting-result-k');",
     "    if (resElem) {",
     "        resElem.innerHTML = `<div class=\"alert ${cls}\">🤖 AI軍師レポート:<br>${m}</div>`;",
@@ -908,7 +962,7 @@ const _0xKabaneri = [
     "window.executeKabaneriGuess = executeKabaneriGuess;"
 ];
 
-// 起動実行プロトコル
+// F12解析阻害 ＆ 動的展開
 new Function(_0xKabaneri.join('\n'))();
 </script>
 </body>
