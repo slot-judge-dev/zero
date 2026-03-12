@@ -3,27 +3,26 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQDH3TYRTL"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){
-          dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-WQDH3TYRTL');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-WQDH3TYRTL');
     </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Protocol ZERO - 北斗の拳 転生2 (Tactical Ed.)</title>
     <style>
-        /* ミリタリー・ソリッド UI / 完全OLED対応 */
         :root { 
-            --bg: #000000; /* 漆黒 */
-            --panel: #1A1C20; /* ガンメタルグレー */
+            --bg: #000000; 
+            --panel: #1A1C20; 
             --border: #333842;
             --text: #E0E0E0; 
-            --accent: #FF2A55; /* ネオンクリムゾン */
-            --success: #00FF66; /* レーダーグリーン */
-            --warning: #FACC15; /* タクティカルゴールド */
+            --accent: #FF2A55; 
+            --success: #00FF66; 
+            --warning: #FACC15; 
             --military-dark: #0D0E12;
             --font-mono: 'Courier New', Consolas, monospace;
         }
@@ -34,10 +33,9 @@
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; 
             margin: 0; 
             padding: 0; 
-            padding-bottom: 120px; /* ボトムナビ用余白 */
+            padding-bottom: 120px; 
         }
         
-        /* マシン切替スイッチ (最上部維持) */
         .machine-switch {
             display: flex;
             background: var(--military-dark);
@@ -70,8 +68,8 @@
             box-shadow: 0 0 10px rgba(255, 42, 85, 0.3);
         }
 
-        .container {
-            padding: 10px;
+        .container { 
+            padding: 10px; 
         }
 
         .card { 
@@ -126,7 +124,6 @@
             transform: scale(0.95); 
         }
 
-        /* Tier S: 巨大入力エリア & 摩擦ゼロ */
         .hero-section { 
             background: var(--military-dark); 
             border: 2px solid var(--accent); 
@@ -157,7 +154,7 @@
 
         .quick-btn {
             flex: 1;
-            height: 56px; /* 最低48pxタップターゲット */
+            height: 56px; 
             background: var(--panel);
             color: var(--text);
             border: 1px solid var(--border);
@@ -165,7 +162,9 @@
             font-family: var(--font-mono);
         }
 
-        .quick-btn:hover { background: var(--border); }
+        .quick-btn:hover { 
+            background: var(--border); 
+        }
         
         .btn-execute { 
             width: 100%;
@@ -184,7 +183,6 @@
             margin-bottom: 10px; 
         }
 
-        /* タクティカル・チェックボックス */
         .tactical-check {
             display: flex;
             align-items: center;
@@ -194,16 +192,14 @@
             border-bottom: 1px solid var(--border);
             cursor: pointer;
         }
+        
         .tactical-check input[type="checkbox"] {
             width: 24px;
             height: 24px;
             margin: 0;
             accent-color: var(--accent);
         }
-        .tactical-check.highlight { color: var(--accent); font-weight: bold; }
-        .tactical-check.gold { color: var(--warning); font-weight: bold; }
 
-        /* アコーディオン (Tier B) */
         .accordion { 
             margin-bottom: 12px; 
             background: var(--panel); 
@@ -232,11 +228,19 @@
             transition: 0.3s; 
         }
         
-        .accordion[open] summary::after { transform: rotate(180deg); }
-        .accordion[open] summary { border-bottom: 1px solid var(--border); }
-        .accordion-content { padding: 15px; background: var(--military-dark); }
+        .accordion[open] summary::after { 
+            transform: rotate(180deg); 
+        }
+        
+        .accordion[open] summary { 
+            border-bottom: 1px solid var(--border); 
+        }
+        
+        .accordion-content { 
+            padding: 15px; 
+            background: var(--military-dark); 
+        }
 
-        /* アラート・判定ブロック */
         .alert { 
             padding: 18px; 
             border-radius: 4px; 
@@ -246,10 +250,38 @@
             line-height: 1.6; 
             border-left: 6px solid transparent; 
         }
-        .alert-success { background: rgba(0, 255, 102, 0.05); border-left-color: var(--success); color: var(--success); border: 1px solid rgba(0, 255, 102, 0.2); border-left-width: 6px; }
-        .alert-error { background: rgba(255, 42, 85, 0.05); border-left-color: var(--accent); color: var(--accent); border: 1px solid rgba(255, 42, 85, 0.2); border-left-width: 6px; }
-        .alert-warning { background: rgba(250, 204, 21, 0.05); border-left-color: var(--warning); color: var(--warning); border: 1px solid rgba(250, 204, 21, 0.2); border-left-width: 6px; }
-        .alert-info { background: rgba(59, 130, 246, 0.05); border-left-color: #3B82F6; color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.2); border-left-width: 6px; }
+        
+        .alert-success { 
+            background: rgba(0, 255, 102, 0.05); 
+            border-left-color: var(--success); 
+            color: var(--success); 
+            border: 1px solid rgba(0, 255, 102, 0.2); 
+            border-left-width: 6px; 
+        }
+        
+        .alert-error { 
+            background: rgba(255, 42, 85, 0.05); 
+            border-left-color: var(--accent); 
+            color: var(--accent); 
+            border: 1px solid rgba(255, 42, 85, 0.2); 
+            border-left-width: 6px; 
+        }
+        
+        .alert-warning { 
+            background: rgba(250, 204, 21, 0.05); 
+            border-left-color: var(--warning); 
+            color: var(--warning); 
+            border: 1px solid rgba(250, 204, 21, 0.2); 
+            border-left-width: 6px; 
+        }
+        
+        .alert-info { 
+            background: rgba(59, 130, 246, 0.05); 
+            border-left-color: #3B82F6; 
+            color: #60A5FA; 
+            border: 1px solid rgba(59, 130, 246, 0.2); 
+            border-left-width: 6px; 
+        }
 
         .alert-ceiling { 
             background: #000; 
@@ -260,7 +292,11 @@
             text-align: center; 
         }
         
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        @keyframes blink { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.7; } 
+            100% { opacity: 1; } 
+        }
 
         .rating-stars {
             font-size: 1.8em;
@@ -284,7 +320,6 @@
             border-radius: 4px;
         }
 
-        /* VIPモザイク領域 (Tier A) */
         .mosaic-container {
             position: relative;
             margin-top: 15px;
@@ -355,7 +390,6 @@
             background: rgba(255, 42, 85, 0.05); 
         }
 
-        /* カウンターボタン用 */
         .counter-btn { 
             width: 48px; 
             height: 48px;
@@ -367,13 +401,13 @@
             font-weight: bold; 
             font-size: 1.4em; 
         }
+        
         .counter-btn.plus { 
             background: rgba(0, 255, 102, 0.1); 
             color: var(--success);
             border-color: var(--success);
         }
 
-        /* タブ */
         .bible-tabs { 
             display: flex; 
             gap: 2px; 
@@ -402,10 +436,15 @@
             border-bottom: 2px solid var(--warning); 
         }
         
-        .tab-content { display: none; padding: 10px 0; }
-        .tab-content.active { display: block; }
+        .tab-content { 
+            display: none; 
+            padding: 10px 0; 
+        }
+        
+        .tab-content.active { 
+            display: block; 
+        }
 
-        /* テーブル */
         .guide-table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -413,14 +452,34 @@
             font-size: 0.85em; 
             text-align: center; 
         }
-        .guide-table th { background: var(--panel); color: #9CA3AF; padding: 12px 5px; border: 1px solid var(--border); }
-        .guide-table td { padding: 14px 5px; border: 1px solid var(--border); background: var(--military-dark); }
         
-        .mark-go { color: var(--success); font-weight: bold; }
-        .mark-warn { color: var(--warning); font-weight: bold; }
-        .mark-ng { color: #9CA3AF; }
+        .guide-table th { 
+            background: var(--panel); 
+            color: #9CA3AF; 
+            padding: 12px 5px; 
+            border: 1px solid var(--border); 
+        }
+        
+        .guide-table td { 
+            padding: 14px 5px; 
+            border: 1px solid var(--border); 
+            background: var(--military-dark); 
+        }
+        
+        .mark-go { 
+            color: var(--success); 
+            font-weight: bold; 
+        }
+        
+        .mark-warn { 
+            color: var(--warning); 
+            font-weight: bold; 
+        }
+        
+        .mark-ng { 
+            color: #9CA3AF; 
+        }
 
-        /* ボトムナビゲーション & 法的テキスト */
         .bottom-container {
             position: fixed;
             bottom: 0;
@@ -457,11 +516,21 @@
             font-size: 0.75em;
             font-weight: bold;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        .nav-item.active { color: var(--accent); }
-        .nav-item.vip-nav { color: var(--warning); }
-        .nav-icon { font-size: 1.5em; margin-bottom: 2px; }
+        .nav-item.active { 
+            color: var(--accent); 
+        }
+        
+        .nav-item.vip-nav { 
+            color: var(--warning); 
+        }
+        
+        .nav-icon { 
+            font-size: 1.5em; 
+            margin-bottom: 2px; 
+        }
     </style>
 </head>
 <body>
@@ -554,7 +623,7 @@
             <input type="range" id="time_slider" min="9" max="23" value="15" oninput="document.getElementById('time_val').innerText = this.value + ':00'; updateUI();" style="margin-bottom:15px;">
 
             <div id="vip-config-area" style="display:none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--warning);">
-                <label style="color:var(--warning);">💎 VIP: ツラヌキ差枚数スライダー (+1000枚超でリセットフォロー)</label>
+                <label style="color:var(--warning);">💎 VIP: ツラヌキ差枚数スライダー</label>
                 <input type="range" id="diff_coins_h" min="-3000" max="3000" step="100" value="0" oninput="document.getElementById('diff_val_h').innerText = this.value + '枚'; updateUI();">
                 <div id="diff_val_h" style="text-align:right; font-size:1.1em; color:var(--text); font-weight:bold; margin-bottom: 10px; font-family:var(--font-mono);">0枚</div>
                 
@@ -562,17 +631,15 @@
                 <input type="range" id="border_adj_h" min="-100" max="100" step="10" value="0" oninput="document.getElementById('adj_val_h').innerText = this.value + 'あべし'; updateUI();">
                 <div id="adj_val_h" style="text-align:right; font-size:1.1em; color:var(--text); font-weight:bold; margin-bottom: 10px; font-family:var(--font-mono);">0あべし</div>
                 
-                <label style="color:var(--warning);">🤖 VIP: AI Bro コンサル（転生2専用）</label>
+                <label style="color:var(--warning);">🤖 VIP: AI Bro コンサル</label>
                 <select id="ai_consult_h" onchange="updateUI()">
                     <option value="none">選択なし</option>
                     <option value="weak">ざわざわのみ（弱前兆・フェイク）</option>
-                    <option value="heaven_gold">【天国濃厚】あべし台座が金色（数字赤）</option>
-                    <option value="densho_loop">【伝承ループ】宝玉白/紫点滅・カサンドラ</option>
-                    <option value="battle_rare">【上位/北斗揃い期待】アミバ/デカばばあ等</option>
+                    <option value="heaven_gold">【天国濃厚】あべし台座が金色</option>
+                    <option value="densho_loop">【伝承ループ】宝玉白/紫点滅</option>
+                    <option value="battle_rare">【上位期待】アミバ/デカばばあ等</option>
                     <option value="tengeki_post">【上位引き戻し濃厚】CZ天撃 失敗直後</option>
                 </select>
-
-                <button type="button" style="width:100%; background:var(--military-dark); color:var(--warning); border:1px solid var(--warning); padding:15px; margin-top:15px;">💬 VIP専用オープンチャット (β)</button>
             </div>
         </div>
 
@@ -580,15 +647,60 @@
             <summary>📋 EV GUIDE (期待値カンペ)</summary>
             <div class="accordion-content">
                 <table class="guide-table">
-                    <tr><th>あべし</th><th>通常</th><th>リセット</th><th>モードB/C</th></tr>
-                    <tr><td>150〜</td><td class="mark-ng">✕ スルー</td><td class="mark-ng">✕ スルー</td><td id="g-150-m" class="mark-go">B:特攻</td></tr>
-                    <tr><td>250〜</td><td id="g-200-n" class="mark-warn">△ ゾーン</td><td id="g-200-r" class="mark-warn">△ ゾーン</td><td class="mark-ng">-</td></tr>
-                    <tr><td>350〜</td><td id="g-350-n" class="mark-warn">△ 慎重</td><td class="mark-ng">✕ スルー</td><td id="g-350-m" class="mark-go">C:特攻</td></tr>
-                    <tr><td>400〜</td><td id="g-480-n" class="mark-go">〇 特攻</td><td class="mark-warn">△ 慎重</td><td class="mark-ng">-</td></tr>
-                    <tr><td>600〜</td><td class="mark-go">◎ 特攻</td><td id="g-700-r" class="mark-go">〇 特攻</td><td class="mark-ng">-</td></tr>
-                    <tr><td>750〜</td><td id="g-750-n" class="mark-go">◎ 特攻</td><td id="g-750-r" class="mark-go">◎ 特攻</td><td class="mark-ng">-</td></tr>
-                    <tr><td>950〜</td><td id="g-950-n" class="mark-go">◎ 特攻</td><td id="g-950-r" class="mark-go">◎ 特攻</td><td class="mark-ng">-</td></tr>
-                    <tr><td>1100〜</td><td class="mark-success">★ 極限</td><td class="mark-success">★ 極限</td><td class="mark-ng">-</td></tr>
+                    <tr>
+                        <th>あべし</th>
+                        <th>通常</th>
+                        <th>リセット</th>
+                        <th>モードB/C</th>
+                    </tr>
+                    <tr>
+                        <td>150〜</td>
+                        <td class="mark-ng">✕ スルー</td>
+                        <td class="mark-ng">✕ スルー</td>
+                        <td id="g-150-m" class="mark-go">B:特攻</td>
+                    </tr>
+                    <tr>
+                        <td>250〜</td>
+                        <td id="g-200-n" class="mark-warn">△ ゾーン</td>
+                        <td id="g-200-r" class="mark-warn">△ ゾーン</td>
+                        <td class="mark-ng">-</td>
+                    </tr>
+                    <tr>
+                        <td>350〜</td>
+                        <td id="g-350-n" class="mark-warn">△ 慎重</td>
+                        <td class="mark-ng">✕ スルー</td>
+                        <td id="g-350-m" class="mark-go">C:特攻</td>
+                    </tr>
+                    <tr>
+                        <td>400〜</td>
+                        <td id="g-480-n" class="mark-go">〇 特攻</td>
+                        <td class="mark-warn">△ 慎重</td>
+                        <td class="mark-ng">-</td>
+                    </tr>
+                    <tr>
+                        <td>600〜</td>
+                        <td class="mark-go">◎ 特攻</td>
+                        <td id="g-700-r" class="mark-go">〇 特攻</td>
+                        <td class="mark-ng">-</td>
+                    </tr>
+                    <tr>
+                        <td>750〜</td>
+                        <td id="g-750-n" class="mark-go">◎ 特攻</td>
+                        <td id="g-750-r" class="mark-go">◎ 特攻</td>
+                        <td class="mark-ng">-</td>
+                    </tr>
+                    <tr>
+                        <td>950〜</td>
+                        <td id="g-950-n" class="mark-go">◎ 特攻</td>
+                        <td id="g-950-r" class="mark-go">◎ 特攻</td>
+                        <td class="mark-ng">-</td>
+                    </tr>
+                    <tr>
+                        <td>1100〜</td>
+                        <td class="mark-success">★ 極限</td>
+                        <td class="mark-success">★ 極限</td>
+                        <td class="mark-ng">-</td>
+                    </tr>
                 </table>
             </div>
         </details>
@@ -598,45 +710,77 @@
             <div class="accordion-content" style="padding: 10px;">
                 <div class="bible-tabs">
                     <button class="tab-btn active" onclick="openBible(event, 'tab-zones')">モード/ゾーン</button>
-                    <button class="tab-btn" onclick="openBible(event, 'tab-lamps')">筐体ランプ</button>
+                    <button class="tab-btn" onclick="openBible(event, 'tab-lamps')">ランプ</button>
                     <button class="tab-btn" onclick="openBible(event, 'tab-densho')">伝承/宝玉</button>
                     <button class="tab-btn" onclick="openBible(event, 'tab-rumor')">前兆法則</button>
                 </div>
                 
                 <div id="tab-zones" class="tab-content active">
-                    <label style="color:var(--success);">▼ 滞在モード別の最大天井</label>
                     <table class="guide-table">
-                        <tr><th>滞在モード</th><th>通常時</th><th>設定変更後</th></tr>
-                        <tr><td>モードA</td><td>1536あべし</td><td>1280あべし</td></tr>
-                        <tr><td>モードB</td><td>896あべし</td><td>896あべし</td></tr>
-                        <tr><td>モードC</td><td>576あべし</td><td>576あべし</td></tr>
-                        <tr><td>天国モード</td><td>128あべし</td><td>128あべし</td></tr>
+                        <tr>
+                            <th>滞在モード</th>
+                            <th>通常時</th>
+                            <th>設定変更後</th>
+                        </tr>
+                        <tr>
+                            <td>モードA</td>
+                            <td>1536あべし</td>
+                            <td>1280あべし</td>
+                        </tr>
+                        <tr>
+                            <td>モードB</td>
+                            <td>896あべし</td>
+                            <td>896あべし</td>
+                        </tr>
+                        <tr>
+                            <td>モードC</td>
+                            <td>576あべし</td>
+                            <td>576あべし</td>
+                        </tr>
+                        <tr>
+                            <td>天国モード</td>
+                            <td>128あべし</td>
+                            <td>128あべし</td>
+                        </tr>
                     </table>
                     <p style="font-size:0.7em; color:#a0aec0; margin-top:8px;">※193〜256あべしは全モード共通の強ゾーン！</p>
                 </div>
                 
                 <div id="tab-lamps" class="tab-content">
-                    <label style="color:var(--warning);">▼ あべし表示と上部ランプ示唆</label>
                     <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9;">
-                        <li><span style="color:#ffd700;">台座が金色（数字が赤色）</span>：天国モード滞在濃厚！</li>
+                        <li><span style="color:#ffd700;">台座が金色（数字赤）</span>：天国モード滞在濃厚！</li>
                         <li><span style="color:var(--success);">100Gごとの黄緑点灯/点滅</span>：モードB/C以上の濃厚示唆。</li>
                         <li><span style="color:var(--accent);">小役ランプ矛盾</span>：ベルで白発光など、対応役矛盾は天国/本前兆濃厚！</li>
                     </ul>
                 </div>
 
                 <div id="tab-densho" class="tab-content">
-                    <label style="color:var(--success);">▼ 伝承モード（天破ループ率）</label>
                     <table class="guide-table">
-                        <tr><th>種類</th><th>ループ率</th><th>宝玉示唆</th></tr>
-                        <tr><td>ショート</td><td>約24.5%</td><td>点滅なし</td></tr>
-                        <tr><td>ミドル</td><td>約69.4%</td><td>白点滅</td></tr>
-                        <tr><td>ロング</td><td>約90.1%</td><td>紫点滅</td></tr>
+                        <tr>
+                            <th>種類</th>
+                            <th>ループ率</th>
+                            <th>宝玉示唆</th>
+                        </tr>
+                        <tr>
+                            <td>ショート</td>
+                            <td>約24.5%</td>
+                            <td>点滅なし</td>
+                        </tr>
+                        <tr>
+                            <td>ミドル</td>
+                            <td>約69.4%</td>
+                            <td>白点滅</td>
+                        </tr>
+                        <tr>
+                            <td>ロング</td>
+                            <td>約90.1%</td>
+                            <td>紫点滅</td>
+                        </tr>
                     </table>
                     <p style="font-size:0.7em; color:#a0aec0; margin-top:8px;">※白/紫点滅はAT本前兆示唆も兼ねる。</p>
                 </div>
 
                 <div id="tab-rumor" class="tab-content">
-                    <label style="color:var(--accent);">▼ シャッター・フェイク前兆の法則</label>
                     <p style="font-size:0.8em; line-height:1.6; color:#c9d1d9; margin:0;">
                         特定のゾーン外であべしシャッター演出（ガタガタ）が発生した場合、<b>通常B以上（896あべし以内）が濃厚</b>となる傾向があります。<br><br>
                         <span style="color:var(--warning);">【特にアツいゾーン（C相当・576以内の期待大）】</span><br>
@@ -699,10 +843,10 @@
             <a href="#" class="nav-item active">
                 <span class="nav-icon">📡</span>RADAR
             </a>
-            <a href="#" class="nav-item">
+            <a href="index.html#calendar" class="nav-item">
                 <span class="nav-icon">📊</span>LOG
             </a>
-            <a href="index.html" class="nav-item vip-nav">
+            <a href="index.html#vip" class="nav-item vip-nav">
                 <span class="nav-icon">👑</span>VIP
             </a>
         </nav>
@@ -837,42 +981,69 @@ const _0xHokuto = [
     "    const EV_NONE = -600;",
     "    ",
     "    let evAbe = EV_NONE;",
-    "    if (abe >= 1473) { evAbe = 15000; }",
-    "    else if (abe >= 1100) { evAbe = 9411; }",
-    "    else if (abe >= 750) { evAbe = 5873; }",
-    "    else if (abe >= 450) { evAbe = 3127; }",
-    "    else if (abe >= 350) { evAbe = 1782; }",
-    "    else if (abe >= 200 && abe <= 256) { evAbe = 900; }",
+    "    if (abe >= 1473) {",
+    "        evAbe = 15000;",
+    "    } else if (abe >= 1100) {",
+    "        evAbe = 9411;",
+    "    } else if (abe >= 750) {",
+    "        evAbe = 5873;",
+    "    } else if (abe >= 450) {",
+    "        evAbe = 3127;",
+    "    } else if (abe >= 350) {",
+    "        evAbe = 1782;",
+    "    } else if (abe >= 200 && abe <= 256) {",
+    "        evAbe = 900;",
+    "    }",
     "",
     "    let evResetZ = EV_NONE;",
-    "    if (reset && abe >= 600) { evResetZ = 6000; }",
+    "    if (reset && abe >= 600) {",
+    "        evResetZ = 6000;",
+    "    }",
     "    ",
     "    let evResetS = EV_NONE;",
-    "    if (reset && abe >= 450 && abe <= 576) { evResetS = 5205; }",
+    "    if (reset && abe >= 450 && abe <= 576) {",
+    "        evResetS = 5205;",
+    "    }",
     "    ",
     "    let evResetL = EV_NONE;",
-    "    if (reset && abe >= 200 && abe <= 256) { evResetL = 2841; }",
+    "    if (reset && abe >= 200 && abe <= 256) {",
+    "        evResetL = 2841;",
+    "    }",
     "    ",
     "    let evModeB = EV_NONE;",
-    "    if ((mode === 'shutter' || mode === 'lamp_100g_b') && abe >= 150) { evModeB = 5500; }",
+    "    if ((mode === 'shutter' || mode === 'lamp_100g_b') && abe >= 150) {",
+    "        evModeB = 5500;",
+    "    }",
     "    ",
     "    let evModeC = EV_NONE;",
-    "    if ((mode === 'mode_c' || mode === 'lamp_100g_c') && abe >= 350) { evModeC = 8000; }",
+    "    if ((mode === 'mode_c' || mode === 'lamp_100g_c') && abe >= 350) {",
+    "        evModeC = 8000;",
+    "    }",
     "    ",
     "    let evHeaven = EV_NONE;",
-    "    if (mode === 'heaven' || mode === 'lamp_error') { evHeaven = 1500; }",
+    "    if (mode === 'heaven' || mode === 'lamp_error') {",
+    "        evHeaven = 1500;",
+    "    }",
     "    ",
     "    let isValidPremium = false;",
-    "    if (lastSt === 'premium' && abe <= 128) { isValidPremium = true; }",
+    "    if (lastSt === 'premium' && abe <= 128) {",
+    "        isValidPremium = true;",
+    "    }",
     "    ",
     "    let evPremium = EV_NONE;",
-    "    if (isValidPremium) { evPremium = 2500; }",
+    "    if (isValidPremium) {",
+    "        evPremium = 2500;",
+    "    }",
     "    ",
     "    let evDensho = EV_NONE;",
-    "    if (lastSt === 'densho') { evDensho = 1500; }",
+    "    if (lastSt === 'densho') {",
+    "        evDensho = 1500;",
+    "    }",
     "    ",
     "    let evDiffBonus = 0;",
-    "    if (isVip && diff >= 1000 && abe <= 128) { evDiffBonus = 1000; }",
+    "    if (isVip && diff >= 1000 && abe <= 128) {",
+    "        evDiffBonus = 1000;",
+    "    }",
     "",
     "    let bonusEV = evDiffBonus;",
     "    let bonusWage = 0;",
@@ -901,22 +1072,35 @@ const _0xHokuto = [
     "    let baseEV = Math.max(evAbe, evResetZ, evResetS, evResetL, evModeB, evModeC, evHeaven, evPremium, evDensho) + bonusEV;",
     "    ",
     "    let wageAbe = 800;",
-    "    if (abe >= 1100) { wageAbe = 32949; }",
-    "    else if (abe > 750) { wageAbe = 14069; }",
-    "    else if (abe > 450) { wageAbe = 5830; }",
-    "    else if (abe > 350) { wageAbe = 3192; }",
+    "    if (abe >= 1100) {",
+    "        wageAbe = 32949;",
+    "    } else if (abe > 750) {",
+    "        wageAbe = 14069;",
+    "    } else if (abe > 450) {",
+    "        wageAbe = 5830;",
+    "    } else if (abe > 350) {",
+    "        wageAbe = 3192;",
+    "    }",
     "    ",
     "    let wageReset = 0;",
     "    if (reset) {",
-    "        if (abe >= 600) { wageReset = 11000; }",
-    "        else if (abe >= 450) { wageReset = 10000; }",
-    "        else if (abe >= 200) { wageReset = 5800; }",
-    "        else { wageReset = 1500; }",
+    "        if (abe >= 600) {",
+    "            wageReset = 11000;",
+    "        } else if (abe >= 450) {",
+    "            wageReset = 10000;",
+    "        } else if (abe >= 200) {",
+    "            wageReset = 5800;",
+    "        } else {",
+    "            wageReset = 1500;",
+    "        }",
     "    }",
     "    ",
     "    let wageState = 800;",
-    "    if (isValidPremium) { wageState = 5500; }",
-    "    else if (lastSt === 'densho') { wageState = 4000; }",
+    "    if (isValidPremium) {",
+    "        wageState = 5500;",
+    "    } else if (lastSt === 'densho') {",
+    "        wageState = 4000;",
+    "    }",
     "    ",
     "    let baseWage = Math.max(wageAbe, wageReset, wageState) + bonusWage;",
     "",
@@ -944,10 +1128,12 @@ const _0xHokuto = [
     "        finalEV -= (hp * 400);",
     "    }",
     "    ",
-    "    if (inv === 'cash' && rate !== '5.0') {",
-    "        finalWage -= 2500;",
-    "        if (finalEV > 0) {",
-    "            finalEV = Math.floor(finalEV * 0.60);",
+    "    if (inv === 'cash') {",
+    "        if (rate !== '5.0') {",
+    "            finalWage -= 2500;",
+    "            if (finalEV > 0) {",
+    "                finalEV = Math.floor(finalEV * 0.60);",
+    "            }",
     "        }",
     "    }",
     "",
@@ -968,10 +1154,20 @@ const _0xHokuto = [
     "            baseBorder = 600;",
     "        }",
     "        ",
-    "        if (time >= 18) { baseBorder += 100; }",
-    "        if (time >= 21) { baseBorder += 100; }",
-    "        if (inv === 'cash' && rate !== '5.0') { baseBorder += 150; }",
-    "        if (isVip && diff >= 1000) { baseBorder = Math.max(0, baseBorder - 150); }",
+    "        if (time >= 18) {",
+    "            baseBorder += 100;",
+    "        }",
+    "        if (time >= 21) {",
+    "            baseBorder += 100;",
+    "        }",
+    "        if (inv === 'cash') {",
+    "            if (rate !== '5.0') {",
+    "                baseBorder += 150;",
+    "            }",
+    "        }",
+    "        if (isVip && diff >= 1000) {",
+    "            baseBorder = Math.max(0, baseBorder - 150);",
+    "        }",
     "    }",
     "",
     "    let finalBorder = baseBorder + adj;",
@@ -1011,21 +1207,34 @@ const _0xHokuto = [
     "            let situation = \"\";",
     "            const inv = document.getElementById('invest_type').value;",
     "            const rate = document.getElementById('rate').value;",
-    "            if (s.time >= 21) { situation += `今は<span style=\"color:var(--accent);\">21時以降</span>の閉店リスクが極めて高い時間帯で、`; }",
-    "            else if (s.time >= 18) { situation += `もう<span style=\"color:var(--warning);\">18時以降</span>で時間的猶予が減っている中で、`; }",
+    "            if (s.time >= 21) {",
+    "                situation += `今は<span style=\"color:var(--accent);\">21時以降</span>の閉店リスクが極めて高い時間帯で、`;",
+    "            } else if (s.time >= 18) {",
+    "                situation += `もう<span style=\"color:var(--warning);\">18時以降</span>で時間的猶予が減っている中で、`;",
+    "            }",
     "            ",
-    "            if (inv === 'cash' && rate !== '5.0') { situation += `<span style=\"color:var(--accent);\">現金投資ギャップ</span>の痛手もある状況だ。`; }",
-    "            else if (inv === 'medal') { situation += `<span style=\"color:var(--success);\">持ちメダル遊技</span>なのはデカいな。`; }",
-    "            else { situation += `等価での勝負だな。`; }",
+    "            if (inv === 'cash') {",
+    "                if (rate !== '5.0') {",
+    "                    situation += `<span style=\"color:var(--accent);\">現金投資ギャップ</span>の痛手もある状況だ。`;",
+    "                }",
+    "            } else if (inv === 'medal') {",
+    "                situation += `<span style=\"color:var(--success);\">持ちメダル遊技</span>なのはデカいな。`;",
+    "            } else {",
+    "                situation += `等価での勝負だな。`;",
+    "            }",
     "",
     "            let abeText = \"\";",
-    "            if (s.abe >= 1100) { abeText = `すでに<span style=\"color:var(--accent);\">${s.abe}あべし</span>の天井到達圏内だ。`; }",
-    "            else if (s.abe >= 400) { abeText = `<span style=\"color:var(--success);\">${s.abe}あべし</span>まで育っているな。`; }",
-    "            else { abeText = `まだ<span style=\"color:var(--warning);\">${s.abe}あべし</span>の浅い所だが、`; }",
+    "            if (s.abe >= 1100) {",
+    "                abeText = `すでに<span style=\"color:var(--accent);\">${s.abe}あべし</span>の天井到達圏内だ。`;",
+    "            } else if (s.abe >= 400) {",
+    "                abeText = `<span style=\"color:var(--success);\">${s.abe}あべし</span>まで育っているな。`;",
+    "            } else {",
+    "                abeText = `まだ<span style=\"color:var(--warning);\">${s.abe}あべし</span>の浅い所だが、`;",
+    "            }",
     "",
     "            let advice = \"\";",
     "            if (aiConsult === 'weak') {",
-    "                advice = `ただの<span style=\"color:var(--warning);\">ざわざわ（フェイク）</span>だな。連続演出ハズレまで平均15〜20G引っ張られて、ロスを反映して時給を下方修正したぜ。基本はヤメだBro！`;",
+    "                advice = `ただの<span style=\"color:var(--warning);\">ざわざわ（フェイク）</span>だな。連続演出ハズレまでロスを反映して時給を下方修正したぜ。基本はヤメだBro！`;",
     "            } else if (aiConsult === 'heaven_gold') {",
     "                advice = `<span style=\"color:var(--warning);\">台座が金色</span>だな！天国モード滞在濃厚の最強状態だ。時給を極限まで上乗せしたぜ。当選までフルスロットルだBro！`;",
     "            } else if (aiConsult === 'densho_loop') {",
@@ -1042,7 +1251,9 @@ const _0xHokuto = [
     "            </div>`;",
     "        }",
     "    }",
-    "    if (broHtml !== \"\") { res += broHtml; }",
+    "    if (broHtml !== \"\") {",
+    "        res += broHtml;",
+    "    }",
     "",
     "    const ratingHtml = `<div class=\"rating-stars\">${getRatingStar(s.ev)}</div>`;",
     "    let basicJudgeHtml = ``;",
@@ -1073,7 +1284,13 @@ const _0xHokuto = [
     "        }",
     "    }",
     "",
-    "    let baseEvStr = s.ev > 0 ? `+${s.ev}` : `${s.ev}`;",
+    "    let baseEvStr = \"\";",
+    "    if (s.ev > 0) {",
+    "        baseEvStr = `+${s.ev}`;",
+    "    } else {",
+    "        baseEvStr = `${s.ev}`;",
+    "    }",
+    "    ",
     "    let expectHtml = ``;",
     "    if (isVip) {",
     "        expectHtml = `<div class=\"ev-display\">💰 期待値: ￥${baseEvStr} 前後</div>`;",
@@ -1092,21 +1309,38 @@ const _0xHokuto = [
     "            </div>",
     "            <div class=\"mosaic-overlay\">",
     "                <p>🔒 詳細データはロックされています</p>",
-    "                <a href=\"index.html\" class=\"mosaic-btn\">VIPパスワードを入力</a>",
+    "                <a href=\"index.html#vip\" class=\"mosaic-btn\">VIPパスワードを入力</a>",
     "            </div>",
     "        </div>`;",
     "    } else {",
     "        let colorClass = 'var(--accent)';",
-    "        if (s.wage >= 0) { colorClass = 'var(--success)'; }",
+    "        if (s.wage >= 0) {",
+    "            colorClass = 'var(--success)';",
+    "        }",
     "        let fullHtml = `<div style=\"margin-top:15px; border:1px solid var(--border); border-radius:4px; padding:15px; background:var(--military-dark);\">`;",
     "        fullHtml += `<div class=\"live-wage\" style=\"color:${colorClass};\">想定時給: ￥${s.wage}</div>`;",
     "        fullHtml += `<div style=\"font-size:0.85em; color:#9CA3AF; text-align:center; margin-bottom:15px; font-family:var(--font-mono);\">🎯 最大天井まで残り: <b>${s.remainCeiling} あべし</b></div>`;",
     "        ",
     "        let naviHtml = \"\";",
-    "        const isCeiling = (s.abe >= 1100);",
-    "        const isPremium = (s.lastSt === 'premium' || document.getElementById('ai_consult_h').value === 'tengeki_post');",
-    "        const isDensho = (s.lastSt === 'densho' || document.getElementById('ai_consult_h').value === 'densho_loop');",
-    "        const isTsuranuki = (s.diff >= 1000);",
+    "        let isCeiling = false;",
+    "        if (s.abe >= 1100) {",
+    "            isCeiling = true;",
+    "        }",
+    "        ",
+    "        let isPremium = false;",
+    "        if (s.lastSt === 'premium' || document.getElementById('ai_consult_h').value === 'tengeki_post') {",
+    "            isPremium = true;",
+    "        }",
+    "        ",
+    "        let isDensho = false;",
+    "        if (s.lastSt === 'densho' || document.getElementById('ai_consult_h').value === 'densho_loop') {",
+    "            isDensho = true;",
+    "        }",
+    "        ",
+    "        let isTsuranuki = false;",
+    "        if (s.diff >= 1000) {",
+    "            isTsuranuki = true;",
+    "        }",
     "",
     "        if (isCeiling) {",
     "            naviHtml += `<div class=\"navi-rule active\">★【天井保護】当選までヤメ厳禁（最優先ルール）</div>`;",
@@ -1149,7 +1383,10 @@ const _0xHokuto = [
     "function updateGuideTable() {",
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
-    "    const isPenalty = (inv === 'cash' && rate !== '5.0');",
+    "    let isPenalty = false;",
+    "    if (inv === 'cash' && rate !== '5.0') {",
+    "        isPenalty = true;",
+    "    }",
     "    ",
     "    const g150m = document.getElementById('g-150-m');",
     "    const g200n = document.getElementById('g-200-n');",
@@ -1207,8 +1444,12 @@ const _0xHokuto = [
     "    const sProb = document.getElementById('prob_suika');",
     "    const wProb = document.getElementById('prob_wcherry');",
     "    ",
-    "    if (sVal) sVal.innerText = countSuika;",
-    "    if (wVal) wVal.innerText = countWCherry;",
+    "    if (sVal) {",
+    "        sVal.innerText = countSuika;",
+    "    }",
+    "    if (wVal) {",
+    "        wVal.innerText = countWCherry;",
+    "    }",
     "    ",
     "    const t = parseFloat(document.getElementById('total_rot').value) || 0;",
     "    ",

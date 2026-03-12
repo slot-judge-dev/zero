@@ -3,12 +3,12 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQDH3TYRTL"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){
-          dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-WQDH3TYRTL');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-WQDH3TYRTL');
     </script>
 
     <meta charset="UTF-8">
@@ -17,13 +17,13 @@
     <style>
         /* ミリタリー・ソリッド UI / 完全OLED対応 */
         :root { 
-            --bg: #000000; /* 漆黒 */
-            --panel: #1A1C20; /* ガンメタルグレー */
+            --bg: #000000; 
+            --panel: #1A1C20; 
             --border: #333842;
             --text: #E0E0E0; 
-            --accent: #FF2A55; /* ネオンクリムゾン */
-            --success: #00FF66; /* レーダーグリーン */
-            --warning: #FACC15; /* タクティカルゴールド */
+            --accent: #FF2A55; 
+            --success: #00FF66; 
+            --warning: #FACC15; 
             --military-dark: #0D0E12;
             --font-mono: 'Courier New', Consolas, monospace;
         }
@@ -34,10 +34,9 @@
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; 
             margin: 0; 
             padding: 0; 
-            padding-bottom: 120px; /* ボトムナビ用余白 */
+            padding-bottom: 120px; 
         }
         
-        /* マシン切替スイッチ (最上部維持) */
         .machine-switch {
             display: flex;
             background: var(--military-dark);
@@ -70,8 +69,8 @@
             box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
         }
 
-        .container {
-            padding: 10px;
+        .container { 
+            padding: 10px; 
         }
 
         .card { 
@@ -126,7 +125,6 @@
             transform: scale(0.95); 
         }
 
-        /* Tier S: 巨大入力エリア & 摩擦ゼロ */
         .hero-section { 
             background: var(--military-dark); 
             border: 2px solid var(--success); 
@@ -157,7 +155,7 @@
 
         .quick-btn {
             flex: 1;
-            height: 56px; /* 最低48pxタップターゲット */
+            height: 56px; 
             background: var(--panel);
             color: var(--text);
             border: 1px solid var(--border);
@@ -165,7 +163,9 @@
             font-family: var(--font-mono);
         }
 
-        .quick-btn:hover { background: var(--border); }
+        .quick-btn:hover { 
+            background: var(--border); 
+        }
         
         .btn-execute { 
             width: 100%;
@@ -184,7 +184,6 @@
             margin-bottom: 10px; 
         }
 
-        /* タクティカル・チェックボックス */
         .tactical-check {
             display: flex;
             align-items: center;
@@ -194,16 +193,24 @@
             border-bottom: 1px solid var(--border);
             cursor: pointer;
         }
+        
         .tactical-check input[type="checkbox"] {
             width: 24px;
             height: 24px;
             margin: 0;
             accent-color: var(--success);
         }
-        .tactical-check.highlight { color: var(--accent); font-weight: bold; }
-        .tactical-check.gold { color: var(--warning); font-weight: bold; }
+        
+        .tactical-check.highlight { 
+            color: var(--accent); 
+            font-weight: bold; 
+        }
+        
+        .tactical-check.gold { 
+            color: var(--warning); 
+            font-weight: bold; 
+        }
 
-        /* アコーディオン (Tier B) */
         .accordion { 
             margin-bottom: 12px; 
             background: var(--panel); 
@@ -232,11 +239,19 @@
             transition: 0.3s; 
         }
         
-        .accordion[open] summary::after { transform: rotate(180deg); }
-        .accordion[open] summary { border-bottom: 1px solid var(--border); }
-        .accordion-content { padding: 15px; background: var(--military-dark); }
+        .accordion[open] summary::after { 
+            transform: rotate(180deg); 
+        }
+        
+        .accordion[open] summary { 
+            border-bottom: 1px solid var(--border); 
+        }
+        
+        .accordion-content { 
+            padding: 15px; 
+            background: var(--military-dark); 
+        }
 
-        /* アラート・判定ブロック */
         .alert { 
             padding: 18px; 
             border-radius: 4px; 
@@ -246,10 +261,38 @@
             line-height: 1.6; 
             border-left: 6px solid transparent; 
         }
-        .alert-success { background: rgba(0, 255, 102, 0.05); border-left-color: var(--success); color: var(--success); border: 1px solid rgba(0, 255, 102, 0.2); border-left-width: 6px; }
-        .alert-error { background: rgba(255, 42, 85, 0.05); border-left-color: var(--accent); color: var(--accent); border: 1px solid rgba(255, 42, 85, 0.2); border-left-width: 6px; }
-        .alert-warning { background: rgba(250, 204, 21, 0.05); border-left-color: var(--warning); color: var(--warning); border: 1px solid rgba(250, 204, 21, 0.2); border-left-width: 6px; }
-        .alert-info { background: rgba(59, 130, 246, 0.05); border-left-color: #3B82F6; color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.2); border-left-width: 6px; }
+        
+        .alert-success { 
+            background: rgba(0, 255, 102, 0.05); 
+            border-left-color: var(--success); 
+            color: var(--success); 
+            border: 1px solid rgba(0, 255, 102, 0.2); 
+            border-left-width: 6px; 
+        }
+        
+        .alert-error { 
+            background: rgba(255, 42, 85, 0.05); 
+            border-left-color: var(--accent); 
+            color: var(--accent); 
+            border: 1px solid rgba(255, 42, 85, 0.2); 
+            border-left-width: 6px; 
+        }
+        
+        .alert-warning { 
+            background: rgba(250, 204, 21, 0.05); 
+            border-left-color: var(--warning); 
+            color: var(--warning); 
+            border: 1px solid rgba(250, 204, 21, 0.2); 
+            border-left-width: 6px; 
+        }
+        
+        .alert-info { 
+            background: rgba(59, 130, 246, 0.05); 
+            border-left-color: #3B82F6; 
+            color: #60A5FA; 
+            border: 1px solid rgba(59, 130, 246, 0.2); 
+            border-left-width: 6px; 
+        }
 
         .alert-ceiling { 
             background: #000; 
@@ -260,7 +303,11 @@
             text-align: center; 
         }
         
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        @keyframes blink { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.7; } 
+            100% { opacity: 1; } 
+        }
 
         .rating-stars {
             font-size: 1.8em;
@@ -284,7 +331,6 @@
             border-radius: 4px;
         }
 
-        /* VIPモザイク領域 (Tier A) */
         .mosaic-container {
             position: relative;
             margin-top: 15px;
@@ -363,7 +409,6 @@
             background: rgba(250, 204, 21, 0.05);
         }
 
-        /* カウンターボタン用 */
         .counter-btn { 
             width: 48px; 
             height: 48px;
@@ -375,13 +420,13 @@
             font-weight: bold; 
             font-size: 1.4em; 
         }
+        
         .counter-btn.plus { 
             background: rgba(0, 255, 102, 0.1); 
             color: var(--success);
             border-color: var(--success);
         }
 
-        /* タブ */
         .bible-tabs { 
             display: flex; 
             gap: 2px; 
@@ -410,10 +455,15 @@
             border-bottom: 2px solid var(--warning); 
         }
         
-        .tab-content { display: none; padding: 10px 0; }
-        .tab-content.active { display: block; }
+        .tab-content { 
+            display: none; 
+            padding: 10px 0; 
+        }
+        
+        .tab-content.active { 
+            display: block; 
+        }
 
-        /* テーブル */
         .guide-table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -421,15 +471,39 @@
             font-size: 0.85em; 
             text-align: center; 
         }
-        .guide-table th { background: var(--panel); color: #9CA3AF; padding: 12px 5px; border: 1px solid var(--border); }
-        .guide-table td { padding: 14px 5px; border: 1px solid var(--border); background: var(--military-dark); }
         
-        .mark-go { color: var(--success); font-weight: bold; }
-        .mark-warn { color: var(--warning); font-weight: bold; }
-        .mark-ng { color: #9CA3AF; }
-        .mark-star { color: var(--accent); font-weight: bold; }
+        .guide-table th { 
+            background: var(--panel); 
+            color: #9CA3AF; 
+            padding: 12px 5px; 
+            border: 1px solid var(--border); 
+        }
+        
+        .guide-table td { 
+            padding: 14px 5px; 
+            border: 1px solid var(--border); 
+            background: var(--military-dark); 
+        }
+        
+        .mark-go { 
+            color: var(--success); 
+            font-weight: bold; 
+        }
+        
+        .mark-warn { 
+            color: var(--warning); 
+            font-weight: bold; 
+        }
+        
+        .mark-ng { 
+            color: #9CA3AF; 
+        }
+        
+        .mark-star { 
+            color: var(--accent); 
+            font-weight: bold; 
+        }
 
-        /* ボトムナビゲーション & 法的テキスト */
         .bottom-container {
             position: fixed;
             bottom: 0;
@@ -439,7 +513,7 @@
         }
 
         .legal-footer { 
-            background: rgba(11, 12, 16, 0.9); 
+            background: rgba(11, 12, 16, 0.95); 
             padding: 6px; 
             font-size: 0.6em; 
             color: #666; 
@@ -466,11 +540,21 @@
             font-size: 0.75em;
             font-weight: bold;
             transition: 0.3s;
+            cursor: pointer;
         }
 
-        .nav-item.active { color: var(--success); }
-        .nav-item.vip-nav { color: var(--warning); }
-        .nav-icon { font-size: 1.5em; margin-bottom: 2px; }
+        .nav-item.active { 
+            color: var(--success); 
+        }
+        
+        .nav-item.vip-nav { 
+            color: var(--warning); 
+        }
+        
+        .nav-icon { 
+            font-size: 1.5em; 
+            margin-bottom: 2px; 
+        }
     </style>
 </head>
 <body>
@@ -608,8 +692,6 @@
                     <option value="chance">チャンス目 直後(期待度大)</option>
                     <option value="weak">ざわざわのみ(フェイク)</option>
                 </select>
-
-                <button type="button" style="width:100%; background:var(--military-dark); color:var(--warning); border:1px solid var(--warning); padding:15px; margin-top:15px;">💬 VIP専用オープンチャット (β)</button>
             </div>
         </div>
 
@@ -617,12 +699,42 @@
             <summary>📋 EV GUIDE (期待値カンペ)</summary>
             <div class="accordion-content">
                 <table class="guide-table">
-                    <tr><th>G数目安</th><th>通常</th><th>短縮(駆/景)</th><th>景之ST後</th></tr>
-                    <tr><td>0〜20G</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td></tr>
-                    <tr><td>100G〜</td><td id="kg-100-n" class="mark-warn">△ 1周期</td><td id="kg-100-r" class="mark-warn">△ 1周期</td><td class="mark-go">〇 特攻</td></tr>
-                    <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-star">★ ツッパ</td></tr>
-                    <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-star">★ ツッパ</td></tr>
-                    <tr><td>600G〜</td><td class="mark-go">〇 特攻</td><td class="mark-star">★ 極限</td><td class="mark-star">★ ツッパ</td></tr>
+                    <tr>
+                        <th>G数目安</th>
+                        <th>通常</th>
+                        <th>短縮(駆/景)</th>
+                        <th>景之ST後</th>
+                    </tr>
+                    <tr>
+                        <td>0〜20G</td>
+                        <td class="mark-success">★ 追行</td>
+                        <td class="mark-success">★ 追行</td>
+                        <td class="mark-success">★ 追行</td>
+                    </tr>
+                    <tr>
+                        <td>100G〜</td>
+                        <td id="kg-100-n" class="mark-warn">△ 1周期</td>
+                        <td id="kg-100-r" class="mark-warn">△ 1周期</td>
+                        <td class="mark-go">〇 特攻</td>
+                    </tr>
+                    <tr>
+                        <td>250G〜</td>
+                        <td id="kg-250-n" class="mark-warn">△ 2周期</td>
+                        <td id="kg-250-r" class="mark-go">〇 2周期</td>
+                        <td class="mark-star">★ ツッパ</td>
+                    </tr>
+                    <tr>
+                        <td>350G〜</td>
+                        <td class="mark-ng">✕ スルー</td>
+                        <td id="kg-350-r" class="mark-go">◎ 特攻</td>
+                        <td class="mark-star">★ ツッパ</td>
+                    </tr>
+                    <tr>
+                        <td>600G〜</td>
+                        <td class="mark-go">〇 特攻</td>
+                        <td class="mark-star">★ 極限</td>
+                        <td class="mark-star">★ ツッパ</td>
+                    </tr>
                 </table>
             </div>
         </details>
@@ -639,11 +751,26 @@
                 
                 <div id="tab-cycle-k" class="tab-content active">
                     <table class="guide-table">
-                        <tr><th>周期</th><th>恩恵・期待度</th></tr>
-                        <tr><td>1周期(150G)</td><td>期待度33%超。</td></tr>
-                        <tr><td>2周期(300G)</td><td>期待度 約77%!</td></tr>
-                        <tr><td>4周期(596G)</td><td>短縮天井(ST濃厚)</td></tr>
-                        <tr><td>6周期(996G)</td><td>通常天井(エピボ)</td></tr>
+                        <tr>
+                            <th>周期</th>
+                            <th>恩恵・期待度</th>
+                        </tr>
+                        <tr>
+                            <td>1周期(150G)</td>
+                            <td>期待度33%超。</td>
+                        </tr>
+                        <tr>
+                            <td>2周期(300G)</td>
+                            <td>期待度 約77%!</td>
+                        </tr>
+                        <tr>
+                            <td>4周期(596G)</td>
+                            <td>短縮天井(ST濃厚)</td>
+                        </tr>
+                        <tr>
+                            <td>6周期(996G)</td>
+                            <td>通常天井(エピボ)</td>
+                        </tr>
                     </table>
                     <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9; margin-top:10px;">
                         <li><b>短縮条件</b>: 設定変更、ST駆け抜け、景之ST終了後。</li>
@@ -661,13 +788,34 @@
 
                 <div id="tab-eyecatch-k" class="tab-content">
                     <table class="guide-table">
-                        <tr><th>パターン</th><th>内容</th></tr>
-                        <tr><td>侑那/鰍/菖蒲</td><td>デフォルト</td></tr>
-                        <tr><td>無名②</td><td>期待度・中</td></tr>
-                        <tr><td style="color:var(--accent); font-weight:bold;">無名③ / 桜</td><td>期待度・高</td></tr>
-                        <tr><td>甲鉄城メンバー</td><td>高設定示唆</td></tr>
-                        <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
-                        <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
+                        <tr>
+                            <th>パターン</th>
+                            <th>内容</th>
+                        </tr>
+                        <tr>
+                            <td>侑那/鰍/菖蒲</td>
+                            <td>デフォルト</td>
+                        </tr>
+                        <tr>
+                            <td>無名②</td>
+                            <td>期待度・中</td>
+                        </tr>
+                        <tr>
+                            <td style="color:var(--accent); font-weight:bold;">無名③ / 桜</td>
+                            <td>期待度・高</td>
+                        </tr>
+                        <tr>
+                            <td>甲鉄城メンバー</td>
+                            <td>高設定示唆</td>
+                        </tr>
+                        <tr>
+                            <td>無名＆菖蒲</td>
+                            <td>設定6確定</td>
+                        </tr>
+                        <tr>
+                            <td>水着画面</td>
+                            <td>5000G以降なら設定6濃厚</td>
+                        </tr>
                     </table>
                 </div>
 
@@ -705,7 +853,7 @@
                     <option value="gold">金以上(設定4-5確定)</option>
                     <option value="rainbow">虹/キリン(設定6確定)</option>
                 </select>
-                <button type="button" onclick="executeKabaneriGuess()" style="background:var(--success); width:100%; color:#000; padding:15px; font-size:1.1em;">SCAN EXECUTE</button>
+                <button type="button" onclick="executeKabaneriGuess()" style="background:var(--success); width:100%; color:#000; padding:15px; font-size:1.1em; margin-top:10px;">SCAN EXECUTE</button>
                 <div id="setting-result-k"></div>
             </div>
         </details>
@@ -722,10 +870,10 @@
             <a href="#" class="nav-item active">
                 <span class="nav-icon">📡</span>RADAR
             </a>
-            <a href="#" class="nav-item">
+            <a href="index.html#calendar" class="nav-item">
                 <span class="nav-icon">📊</span>LOG
             </a>
-            <a href="index.html" class="nav-item vip-nav">
+            <a href="index.html#vip" class="nav-item vip-nav">
                 <span class="nav-icon">👑</span>VIP
             </a>
         </nav>
@@ -802,15 +950,15 @@ const _0xKabaneri = [
     "",
     "function getRatingStar(ev) {",
     "    if (ev >= 5000) {",
-    "        return '★★★★★';",
+    "        return '★★★★★ (Sランク)';",
     "    } else if (ev >= 2000) {",
-    "        return '★★★★☆';",
+    "        return '★★★★☆ (Aランク)';",
     "    } else if (ev >= 500) {",
-    "        return '★★★☆☆';",
+    "        return '★★★☆☆ (Bランク)';",
     "    } else if (ev > -500) {",
-    "        return '★★☆☆☆';",
+    "        return '★★☆☆☆ (Cランク)';",
     "    } else {",
-    "        return '★☆☆☆☆';",
+    "        return '★☆☆☆☆ (Dランク)';",
     "    }",
     "}",
     "",
@@ -899,13 +1047,17 @@ const _0xKabaneri = [
     "    let evZone1 = EV_NONE;",
     "    if (kg >= 100 && kg <= 150) {",
     "        evZone1 = 1081;",
-    "        if (isShort) { evZone1 += shortBonus; }",
+    "        if (isShort) {",
+    "            evZone1 += shortBonus;",
+    "        }",
     "    }",
     "    ",
     "    let evZone2 = EV_NONE;",
     "    if (kg >= 250 && kg <= 300) {",
     "        evZone2 = 1068;",
-    "        if (isShort) { evZone2 += shortBonus; }",
+    "        if (isShort) {",
+    "            evZone2 += shortBonus;",
+    "        }",
     "    }",
     "    ",
     "    let evKage = EV_NONE;",
@@ -956,7 +1108,10 @@ const _0xKabaneri = [
     "    let baseEV = Math.max(evCeilN, evCeilS, evZone1, evZone2, evKage, evBlackSmoke, evSensu, evKuji, evUmato, evSakura, evHimaku) + bonusEV;",
     "    ",
     "    let baseWage = 800;",
-    "    if (kg >= 600 || (isShort && kg >= 300)) {",
+    "    if (kg >= 600) {",
+    "        baseWage = 4500;",
+    "    }",
+    "    if (isShort && kg >= 300) {",
     "        baseWage = 4500;",
     "    }",
     "    if (isKage || isHimaku || isUmato || isSakura || isKuji) {",
@@ -998,7 +1153,7 @@ const _0xKabaneri = [
     "    }",
     "    ",
     "    let isAbsoluteGo = false;",
-    "    if (isKage || isBlackSmoke || isSensu || isKuji || isUmato || isHimaku || trophy === 'rainbow' || ai === 'super') {",
+    "    if (isKage || isBlackSmoke || isSensu || isKuji || isUmato || isSakura || isHimaku || trophy === 'rainbow' || ai === 'super') {",
     "        isAbsoluteGo = true;",
     "    }",
     "    ",
@@ -1072,7 +1227,9 @@ const _0xKabaneri = [
     "        basicJudgeHtml = `<div class=\"alert alert-success\">🎯 【示唆発生】<br>早めの当選期待大/天井間近。初当たりまで特攻。</div>`;",
     "    } else if (s.kg >= s.border) {",
     "        let ceilStr = '通常';",
-    "        if (s.isShort) { ceilStr = '短縮'; }",
+    "        if (s.isShort) {",
+    "            ceilStr = '短縮';",
+    "        }",
     "        basicJudgeHtml = `<div class=\"alert alert-success\">🔥 【判定：GO】<br>${ceilStr}天井狙い特攻せよ！</div>`;",
     "    } else if (s.kg >= 100 && s.kg <= 150) {",
     "        basicJudgeHtml = `<div class=\"alert alert-info\">⚡ 【1周期目 狙い】<br>ゾーン抜けまで前兆確認。</div>`;",
@@ -1082,7 +1239,13 @@ const _0xKabaneri = [
     "        basicJudgeHtml = `<div class=\"alert alert-error\">❄️ 【判定：撤収】<br>期待値不足。目安: <b>${s.border}G</b></div>`;",
     "    }",
     "",
-    "    let baseEvStr = s.ev > 0 ? `+${s.ev}` : `${s.ev}`;",
+    "    let baseEvStr = \"\";",
+    "    if (s.ev > 0) {",
+    "        baseEvStr = `+${s.ev}`;",
+    "    } else {",
+    "        baseEvStr = `${s.ev}`;",
+    "    }",
+    "    ",
     "    let expectHtml = ``;",
     "    if (isVip) {",
     "        expectHtml = `<div class=\"ev-display\">💰 期待値: ￥${baseEvStr} 前後</div>`;",
@@ -1101,12 +1264,14 @@ const _0xKabaneri = [
     "            </div>",
     "            <div class=\"mosaic-overlay\">",
     "                <p>🔒 詳細データはロックされています</p>",
-    "                <a href=\"index.html\" class=\"mosaic-btn\">VIPパスワードを入力</a>",
+    "                <a href=\"index.html#vip\" class=\"mosaic-btn\">VIPパスワードを入力</a>",
     "            </div>",
     "        </div>`;",
     "    } else {",
-    "        let colorClass = 'var(--danger)';",
-    "        if (s.wage >= 0) { colorClass = 'var(--success)'; }",
+    "        let colorClass = 'var(--accent)';",
+    "        if (s.wage >= 0) {",
+    "            colorClass = 'var(--success)';",
+    "        }",
     "        let fullHtml = `<div style=\"margin-top:15px; border:1px solid var(--border); border-radius:4px; padding:15px; background:var(--military-dark);\">`;",
     "        fullHtml += `<div class=\"live-wage\" style=\"color:${colorClass};\">想定時給: ￥${s.wage}</div>`;",
     "        fullHtml += `<div style=\"font-size:0.85em; color:#9CA3AF; text-align:center; margin-bottom:15px; font-family:var(--font-mono);\">🎯 天井まで残り: <b>${s.remainCeiling}G / ${s.remainCycle}周期</b></div>`;",
@@ -1158,7 +1323,11 @@ const _0xKabaneri = [
     "function updateGuideTable() {",
     "    const inv = document.getElementById('invest_type').value;",
     "    const rate = document.getElementById('rate').value;",
-    "    const isPenalty = (inv === 'cash' && rate !== '5.0');",
+    "    let isPenalty = false;",
+    "    if (inv === 'cash' && rate !== '5.0') {",
+    "        isPenalty = true;",
+    "    }",
+    "    ",
     "    const n100 = document.getElementById('kg-100-n');",
     "    const n250 = document.getElementById('kg-250-n');",
     "    ",
