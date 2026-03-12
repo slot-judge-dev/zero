@@ -15,55 +15,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Protocol ZERO - カバネリ 海門決戦 (Tactical Ed.)</title>
     <style>
-        /* ミリタリー・ソリッド UI 定義 */
+        /* ミリタリー・ソリッド UI / 完全OLED対応 */
         :root { 
-            --bg: #0b0c10; 
-            --panel: #1f2833; 
-            --border: #2c3e50;
-            --text: #c9d1d9; 
-            --accent: #e74c3c; /* 警告レッド */
-            --success: #4CAF50; /* 安全グリーン */
-            --warning: #f1c40f; /* VIPゴールド */
-            --military-dark: #111a22;
+            --bg: #000000; /* 漆黒 */
+            --panel: #1A1C20; /* ガンメタルグレー */
+            --border: #333842;
+            --text: #E0E0E0; 
+            --accent: #FF2A55; /* ネオンクリムゾン */
+            --success: #00FF66; /* レーダーグリーン */
+            --warning: #FACC15; /* タクティカルゴールド */
+            --military-dark: #0D0E12;
+            --font-mono: 'Courier New', Consolas, monospace;
         }
         
         body { 
             background: var(--bg); 
             color: var(--text); 
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; 
             margin: 0; 
-            padding: 10px; 
-            padding-bottom: 160px; 
+            padding: 0; 
+            padding-bottom: 120px; /* ボトムナビ用余白 */
         }
         
-        .sticky-header { 
-            position: sticky; 
-            top: 0; 
-            background: var(--bg); 
-            z-index: 1000; 
-            padding: 12px 0; 
-            border-bottom: 2px solid var(--border); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+        /* マシン切替スイッチ (最上部維持) */
+        .machine-switch {
+            display: flex;
+            background: var(--military-dark);
+            border-bottom: 2px solid var(--border);
+            padding: 8px;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        
-        .back-btn { 
-            background: var(--military-dark); 
-            color: var(--text); 
-            text-decoration: none; 
-            padding: 8px 12px; 
-            border-radius: 4px; 
-            font-size: 0.9em; 
-            border: 1px solid var(--border); 
+
+        .switch-btn {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            background: var(--panel);
+            color: #888;
+            text-decoration: none;
             font-weight: bold;
+            font-size: 0.9em;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
         }
-        
-        .header-title { 
-            font-size: 1.1em; 
-            color: var(--text); 
-            font-weight: bold; 
-            letter-spacing: 1px;
+
+        .switch-btn.active {
+            background: var(--success);
+            color: #000;
+            border-color: var(--success);
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+        }
+
+        .container {
+            padding: 10px;
         }
 
         .card { 
@@ -72,7 +80,6 @@
             border-radius: 4px; 
             margin-bottom: 12px; 
             border: 1px solid var(--border); 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.5); 
         }
         
         h3 { 
@@ -80,8 +87,9 @@
             margin-bottom: 12px; 
             font-size: 1.1em; 
             color: #ffffff; 
-            border-bottom: 1px solid var(--border); 
+            border-bottom: 1px dashed var(--border); 
             padding-bottom: 8px; 
+            letter-spacing: 1px;
         }
         
         label { 
@@ -89,12 +97,12 @@
             margin-bottom: 6px; 
             font-size: 0.85em; 
             font-weight: bold; 
-            color: #a0aec0; 
+            color: #9CA3AF; 
         }
         
         input[type="number"], select, input[type="range"] { 
             width: 100%; 
-            padding: 12px; 
+            padding: 14px; 
             margin-bottom: 12px; 
             border-radius: 4px; 
             border: 1px solid var(--border); 
@@ -103,6 +111,7 @@
             box-sizing: border-box; 
             font-size: 1em; 
             appearance: none;
+            font-family: var(--font-mono);
         }
         
         button { 
@@ -114,59 +123,58 @@
         }
         
         button:active { 
-            transform: scale(0.98); 
+            transform: scale(0.95); 
         }
 
-        /* Tier S: 巨大入力エリア */
+        /* Tier S: 巨大入力エリア & 摩擦ゼロ */
         .hero-section { 
             background: var(--military-dark); 
-            border: 2px solid var(--border); 
+            border: 2px solid var(--success); 
             padding: 20px 15px; 
             text-align: center; 
             margin-bottom: 12px; 
+            position: relative;
         }
         
         .hero-input { 
-            font-size: 3.2em !important; 
+            font-size: 3.5em !important; 
             text-align: center; 
             font-weight: bold; 
             height: 90px; 
-            margin: 10px 0 5px 0; 
+            margin: 10px 0 15px 0; 
             color: var(--success) !important; 
             background: #000 !important; 
-            border: 3px solid var(--border) !important; 
+            border: 2px solid var(--border) !important; 
             letter-spacing: 2px;
         }
 
-        /* 摩擦ゼロ: クイック増減ボタン */
         .quick-btn-group {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             margin-bottom: 15px;
             justify-content: space-between;
         }
 
         .quick-btn {
             flex: 1;
-            padding: 12px 0;
+            height: 56px; /* 最低48pxタップターゲット */
             background: var(--panel);
             color: var(--text);
             border: 1px solid var(--border);
-            font-size: 1.1em;
+            font-size: 1.2em;
+            font-family: var(--font-mono);
         }
 
-        .quick-btn:hover {
-            background: var(--border);
-        }
+        .quick-btn:hover { background: var(--border); }
         
         .btn-execute { 
             width: 100%;
+            height: 64px;
             background: var(--accent); 
             color: white; 
-            font-size: 1.3em; 
-            padding: 20px; 
-            letter-spacing: 2px; 
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            font-size: 1.4em; 
+            letter-spacing: 3px; 
+            text-transform: uppercase;
         }
 
         .grid-2 { 
@@ -175,6 +183,25 @@
             gap: 10px; 
             margin-bottom: 10px; 
         }
+
+        /* タクティカル・チェックボックス */
+        .tactical-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #E0E0E0;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .tactical-check input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin: 0;
+            accent-color: var(--success);
+        }
+        .tactical-check.highlight { color: var(--accent); font-weight: bold; }
+        .tactical-check.gold { color: var(--warning); font-weight: bold; }
 
         /* アコーディオン (Tier B) */
         .accordion { 
@@ -186,7 +213,7 @@
         }
         
         .accordion summary { 
-            padding: 15px; 
+            padding: 16px; 
             font-weight: bold; 
             font-size: 1em; 
             color: white; 
@@ -201,67 +228,67 @@
         .accordion summary::after { 
             content: "▼"; 
             font-size: 0.8em; 
-            color: #a0aec0; 
+            color: #9CA3AF; 
             transition: 0.3s; 
         }
         
-        .accordion[open] summary::after { 
-            transform: rotate(180deg); 
-        }
-        
-        .accordion[open] summary { 
-            border-bottom: 1px solid var(--border); 
-        }
-        
-        .accordion-content { 
-            padding: 15px; 
-            background: var(--military-dark); 
-        }
+        .accordion[open] summary::after { transform: rotate(180deg); }
+        .accordion[open] summary { border-bottom: 1px solid var(--border); }
+        .accordion-content { padding: 15px; background: var(--military-dark); }
 
         /* アラート・判定ブロック */
         .alert { 
-            padding: 16px; 
+            padding: 18px; 
             border-radius: 4px; 
             margin-top: 12px; 
             font-weight: bold; 
-            font-size: 1.05em; 
+            font-size: 1.1em; 
             line-height: 1.6; 
             border-left: 6px solid transparent; 
         }
-        .alert-success { background: rgba(76, 175, 80, 0.1); border-left-color: var(--success); color: var(--success); }
-        .alert-error { background: rgba(231, 76, 60, 0.1); border-left-color: var(--accent); color: var(--accent); }
-        .alert-warning { background: rgba(241, 196, 15, 0.1); border-left-color: var(--warning); color: var(--warning); }
-        .alert-info { background: rgba(88, 166, 255, 0.1); border-left-color: var(--accent); color: #79c0ff; }
+        .alert-success { background: rgba(0, 255, 102, 0.05); border-left-color: var(--success); color: var(--success); border: 1px solid rgba(0, 255, 102, 0.2); border-left-width: 6px; }
+        .alert-error { background: rgba(255, 42, 85, 0.05); border-left-color: var(--accent); color: var(--accent); border: 1px solid rgba(255, 42, 85, 0.2); border-left-width: 6px; }
+        .alert-warning { background: rgba(250, 204, 21, 0.05); border-left-color: var(--warning); color: var(--warning); border: 1px solid rgba(250, 204, 21, 0.2); border-left-width: 6px; }
+        .alert-info { background: rgba(59, 130, 246, 0.05); border-left-color: #3B82F6; color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.2); border-left-width: 6px; }
 
         .alert-ceiling { 
             background: #000; 
             color: white; 
-            border: 2px solid white; 
-            border-left-color: var(--accent);
-            animation: blink 0.8s infinite; 
+            border: 1px solid var(--accent); 
+            border-left-width: 6px;
+            animation: blink 1s infinite; 
             text-align: center; 
         }
         
-        @keyframes blink { 
-            0% { opacity: 1; } 
-            50% { opacity: 0.6; } 
-            100% { opacity: 1; } 
-        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
         .rating-stars {
-            font-size: 1.5em;
+            font-size: 1.8em;
             color: var(--warning);
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             text-align: center;
-            margin: 10px 0;
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+            margin: 15px 0;
+            text-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
         }
 
-        /* モザイク・ロック領域 (Tier A) */
+        .ev-display {
+            text-align: center; 
+            font-size: 1.3em; 
+            font-weight: bold; 
+            color: var(--text); 
+            margin-top: 15px;
+            font-family: var(--font-mono);
+            background: var(--military-dark);
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        /* VIPモザイク領域 (Tier A) */
         .mosaic-container {
             position: relative;
             margin-top: 15px;
-            padding: 15px;
+            padding: 20px;
             border: 1px solid var(--border);
             border-radius: 4px;
             background: var(--military-dark);
@@ -269,8 +296,8 @@
         }
 
         .mosaic-content {
-            filter: blur(6px);
-            opacity: 0.4;
+            filter: blur(8px);
+            opacity: 0.3;
             pointer-events: none;
             user-select: none;
         }
@@ -288,84 +315,90 @@
         .mosaic-overlay p {
             color: var(--warning);
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            letter-spacing: 1px;
         }
 
         .mosaic-btn {
             background: var(--warning);
             color: #000;
-            padding: 10px 20px;
+            padding: 14px 24px;
             text-decoration: none;
             font-weight: bold;
             border-radius: 4px;
             display: inline-block;
+            font-size: 1.1em;
         }
 
         .live-wage { 
-            font-size: 2.2em; 
+            font-size: 2.5em; 
             font-weight: bold; 
             color: var(--success); 
             text-align: center; 
-            margin: 10px 0; 
+            margin: 15px 0; 
+            font-family: var(--font-mono);
         }
 
         .navi-rule { 
-            font-size: 0.95em; 
-            padding: 10px 0; 
+            font-size: 1em; 
+            padding: 12px 0; 
             border-bottom: 1px solid var(--border); 
-            color: #a0aec0; 
+            color: #9CA3AF; 
         }
         
         .navi-rule.active { 
             color: #fff; 
             font-weight: bold; 
             border-left: 4px solid var(--accent); 
-            padding-left: 10px; 
-            background: rgba(231, 76, 60, 0.1); 
+            padding-left: 12px; 
+            background: rgba(255, 42, 85, 0.05); 
         }
         
         .navi-rule.lamp-active {
             color: var(--warning);
             font-weight: bold;
             border-left: 4px solid var(--warning);
-            padding-left: 10px;
-            background: rgba(241, 196, 15, 0.1);
+            padding-left: 12px;
+            background: rgba(250, 204, 21, 0.05);
         }
 
         /* カウンターボタン用 */
         .counter-btn { 
-            width:40px; 
-            padding:8px 0; 
-            background:var(--panel); 
-            color:white; 
-            border:1px solid var(--border); 
-            border-radius:4px; 
-            cursor:pointer; 
-            font-weight:bold; 
-            font-size:1.2em; 
+            width: 48px; 
+            height: 48px;
+            background: var(--panel); 
+            color: white; 
+            border: 1px solid var(--border); 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1.4em; 
         }
         .counter-btn.plus { 
-            background: var(--success); 
+            background: rgba(0, 255, 102, 0.1); 
+            color: var(--success);
             border-color: var(--success);
         }
 
+        /* タブ */
         .bible-tabs { 
             display: flex; 
-            gap: 4px; 
-            margin-bottom: 12px; 
+            gap: 2px; 
+            margin-bottom: 15px; 
             border-bottom: 1px solid var(--border); 
             overflow-x: auto; 
             white-space: nowrap; 
         }
         
         .tab-btn { 
-            padding: 10px 12px; 
+            padding: 12px 14px; 
             background: var(--military-dark); 
-            color: #a0aec0; 
+            color: #9CA3AF; 
             border: none; 
             border-radius: 4px 4px 0 0; 
             cursor: pointer; 
-            font-size: 0.75em; 
+            font-size: 0.85em; 
             font-weight: bold; 
             transition: 0.3s; 
             white-space: nowrap;
@@ -377,301 +410,325 @@
             border-bottom: 2px solid var(--warning); 
         }
         
-        .tab-content { 
-            display: none; 
-            padding: 10px 0; 
-        }
-        
-        .tab-content.active { 
-            display: block; 
-        }
+        .tab-content { display: none; padding: 10px 0; }
+        .tab-content.active { display: block; }
 
+        /* テーブル */
         .guide-table { 
             width: 100%; 
             border-collapse: collapse; 
             margin-top: 5px; 
-            font-size: 0.8em; 
+            font-size: 0.85em; 
             text-align: center; 
         }
-        
-        .guide-table th { 
-            background: var(--panel); 
-            color: #a0aec0; 
-            padding: 10px 5px; 
-            border: 1px solid var(--border); 
-        }
-        
-        .guide-table td { 
-            padding: 12px 5px; 
-            border: 1px solid var(--border); 
-            background: var(--military-dark); 
-        }
+        .guide-table th { background: var(--panel); color: #9CA3AF; padding: 12px 5px; border: 1px solid var(--border); }
+        .guide-table td { padding: 14px 5px; border: 1px solid var(--border); background: var(--military-dark); }
         
         .mark-go { color: var(--success); font-weight: bold; }
         .mark-warn { color: var(--warning); font-weight: bold; }
-        .mark-ng { color: #a0aec0; }
+        .mark-ng { color: #9CA3AF; }
         .mark-star { color: var(--accent); font-weight: bold; }
 
+        /* ボトムナビゲーション & 法的テキスト */
+        .bottom-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
+        }
+
         .legal-footer { 
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            background: rgba(11, 12, 16, 0.95); 
-            padding: 12px; 
-            font-size: 0.65em; 
+            background: rgba(11, 12, 16, 0.9); 
+            padding: 6px; 
+            font-size: 0.6em; 
             color: #666; 
             text-align: center; 
             border-top: 1px solid var(--border); 
-            z-index: 2000; 
             pointer-events: none; 
         }
+
+        .bottom-nav {
+            display: flex;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            height: 60px;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.75em;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-item.active { color: var(--success); }
+        .nav-item.vip-nav { color: var(--warning); }
+        .nav-icon { font-size: 1.5em; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
-    <div class="sticky-header">
-        <a href="index.html" class="back-btn">◀ TACTICAL MENU</a>
-        <div class="header-title">🛡️ カバネリ 海門決戦 (Zero-Sec)</div>
-        <div style="width: 80px;"></div>
+    <div class="machine-switch">
+        <a href="hokuto.html" class="switch-btn">👊 北斗転生2</a>
+        <a href="kabaneri.html" class="switch-btn active">🚂 カバネリ海門</a>
     </div>
 
-    <div class="authority-text">
-        Protocol ZERO - 「勝つ」ためではない。<span>「負けない」</span>ためのAI投資判断。
-    </div>
-
-    <div class="card hero-section">
-        <label for="k_current_g" style="color: #a0aec0;">現在のST間ゲーム数 (G)</label>
-        <input type="number" id="k_current_g" class="hero-input" value="0" oninput="updateUI()">
-        
-        <div class="quick-btn-group">
-            <button onclick="adjustG(-50)" class="quick-btn">-50</button>
-            <button onclick="adjustG(-10)" class="quick-btn">-10</button>
-            <button onclick="adjustG(10)" class="quick-btn">+10</button>
-            <button onclick="adjustG(50)" class="quick-btn">+50</button>
-            <button onclick="adjustG(100)" class="quick-btn">+100</button>
+    <div class="container">
+        <div style="font-size: 0.8em; color: #9CA3AF; text-align: center; margin: 15px 5px; font-weight: bold;">
+            Protocol ZERO - 「勝つ」ためではない。<span style="color: var(--accent);">「負けない」</span>ためのAI投資判断。
         </div>
 
-        <details class="accordion" style="margin-bottom: 15px; border-color: var(--border);" open>
-            <summary style="background: var(--military-dark); color: var(--warning); font-size: 0.9em;">
-                ⚠️ 特殊条件を展開 (短縮・黒煙・示唆など)
-            </summary>
-            <div class="accordion-content" style="text-align: left;">
-                <label style="display:flex; align-items:center; gap:10px; color:#fff;">
-                    <input type="checkbox" id="k_is_kakenuke" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    ST駆け抜け後 (短縮＆エピボ恩恵)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_blacksmoke" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    🔥 黒煙示唆(大) 確認済 (裏景之期待)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_sensu" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    🪭 扇子法則崩れ (青扇子+ハズレ等/黒煙極)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_kuji" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    🎫 輪廻クジ「果報/六根清浄」
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_umato" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    🏯 海門城背景 (本前兆/上位ST期待)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_sakura" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    🌸 桜アイキャッチ/無名③ (早め当選期待大)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_himaku" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    皮膜レベル高(赤セリフ等) (天井間近)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#fff; margin-top:10px;">
-                    <input type="checkbox" id="k_is_lamp" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    💡 ST後ランプ発光中 (CZまで続行)
-                </label>
-                <hr style="border: 0; border-top: 1px dashed var(--border); margin: 15px 0;">
-                <label style="display:flex; align-items:center; gap:10px; color:#a0aec0;">
-                    <input type="checkbox" id="k_is_reset" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    朝イチ(設定変更)
-                </label>
-                <label style="display:flex; align-items:center; gap:10px; color:#a0aec0; margin-top:10px;">
-                    <input type="checkbox" id="k_is_kageyuki" onchange="updateUI()" style="width:20px; height:20px; margin:0;">
-                    景之ST終了後(ループ)
-                </label>
-                
-                <div style="margin-top:15px;">
-                    <label style="font-size:0.75em; color:#a0aec0;">現在の周期数 (手動補正用)</label>
-                    <select id="k_cycle" class="compact-select" style="width:100%; margin-bottom:0;" onchange="updateUI()">
-                        <option value="0">自動(G数依存)</option>
-                        <option value="1">1周期</option>
-                        <option value="2">2周期</option>
-                        <option value="3">3周期</option>
-                        <option value="4">4周期(短縮)</option>
-                        <option value="5">5周期</option>
-                        <option value="6">6周期(通常)</option>
+        <div class="card hero-section">
+            <label for="k_current_g" style="color: var(--success);">TARGET G-COUNT</label>
+            <input type="number" id="k_current_g" class="hero-input" value="0" oninput="updateUI()">
+            
+            <div class="quick-btn-group">
+                <button type="button" onclick="adjustG(-100)" class="quick-btn">-100</button>
+                <button type="button" onclick="adjustG(-10)" class="quick-btn">-10</button>
+                <button type="button" onclick="adjustG(10)" class="quick-btn">+10</button>
+                <button type="button" onclick="adjustG(100)" class="quick-btn">+100</button>
+            </div>
+
+            <details class="accordion" style="margin-bottom: 15px; border-color: var(--border);" open>
+                <summary style="background: var(--military-dark); color: var(--warning); font-size: 0.9em;">
+                    [+] TACTICAL CONDITIONS (短縮/示唆)
+                </summary>
+                <div class="accordion-content">
+                    <label class="tactical-check">
+                        <input type="checkbox" id="k_is_kakenuke" onchange="updateUI()">
+                        <span>ST駆け抜け後 (短縮＆エピボ恩恵)</span>
+                    </label>
+                    <label class="tactical-check highlight">
+                        <input type="checkbox" id="k_is_blacksmoke" onchange="updateUI()">
+                        <span>🔥 黒煙示唆(大) 確認済 (裏景之期待)</span>
+                    </label>
+                    <label class="tactical-check highlight">
+                        <input type="checkbox" id="k_is_sensu" onchange="updateUI()">
+                        <span>🪭 扇子法則崩れ (青扇子+ハズレ等)</span>
+                    </label>
+                    <label class="tactical-check gold">
+                        <input type="checkbox" id="k_is_kuji" onchange="updateUI()">
+                        <span>🎫 輪廻クジ「果報/六根清浄」</span>
+                    </label>
+                    <label class="tactical-check">
+                        <input type="checkbox" id="k_is_umato" onchange="updateUI()">
+                        <span>🏯 海門城背景 (本前兆/上位ST期待)</span>
+                    </label>
+                    <label class="tactical-check">
+                        <input type="checkbox" id="k_is_sakura" onchange="updateUI()">
+                        <span>🌸 桜アイキャッチ/無名③</span>
+                    </label>
+                    <label class="tactical-check">
+                        <input type="checkbox" id="k_is_himaku" onchange="updateUI()">
+                        <span>皮膜レベル高(赤セリフ等)</span>
+                    </label>
+                    <label class="tactical-check gold" style="border-bottom: none;">
+                        <input type="checkbox" id="k_is_lamp" onchange="updateUI()">
+                        <span>💡 ST後ランプ発光中 (CZまで続行)</span>
+                    </label>
+                    
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: 15px 0;">
+                    
+                    <label class="tactical-check" style="color: #9CA3AF;">
+                        <input type="checkbox" id="k_is_reset" onchange="updateUI()">
+                        <span>朝イチ(設定変更)</span>
+                    </label>
+                    <label class="tactical-check" style="color: #9CA3AF; border-bottom: none;">
+                        <input type="checkbox" id="k_is_kageyuki" onchange="updateUI()">
+                        <span>景之ST終了後(ループ)</span>
+                    </label>
+                    
+                    <div style="margin-top:15px;">
+                        <label>現在の周期数 (手動補正)</label>
+                        <select id="k_cycle" onchange="updateUI()">
+                            <option value="0">自動算出(G数依存)</option>
+                            <option value="1">1周期</option>
+                            <option value="2">2周期</option>
+                            <option value="3">3周期</option>
+                            <option value="4">4周期(短縮天井)</option>
+                            <option value="5">5周期</option>
+                            <option value="6">6周期(通常天井)</option>
+                        </select>
+                    </div>
+                </div>
+            </details>
+
+            <button type="button" onclick="executeKabaneriAnalysis()" class="btn-execute">EXECUTE</button>
+        </div>
+
+        <div id="result-area-k"></div>
+
+        <div class="card compact-section">
+            <h3>⚙️ ENVIRONMENT & VIP CONFIG</h3>
+            <div class="grid-2">
+                <div>
+                    <label>交換率</label>
+                    <select id="rate" onchange="updateUI()">
+                        <option value="5.0">5.0枚 (等価)</option>
+                        <option value="5.6">5.6枚</option>
+                        <option value="6.0">6.0枚</option>
+                        <option value="other">非等価 / その他</option>
                     </select>
+                </div>
+                <div>
+                    <label>投資方法</label>
+                    <select id="invest_type" onchange="updateUI()">
+                        <option value="medal">持ちメダル</option>
+                        <option value="cash">現金投資</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                <label style="margin:0;">現在時刻 (閉店欠損)</label>
+                <span id="time_val" style="color:white; font-weight:bold; font-family:var(--font-mono);">15:00</span>
+            </div>
+            <input type="range" id="time_slider" min="9" max="23" value="15" oninput="document.getElementById('time_val').innerText = this.value + ':00'; updateUI();" style="margin-bottom:15px;">
+
+            <div id="vip-config-area" style="display:none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--warning);">
+                <label style="color:var(--warning);">💎 VIP: 差枚数スライダー (+1000枚超で優遇)</label>
+                <input type="range" id="diff_coins_k" min="-3000" max="3000" step="100" value="0" oninput="document.getElementById('diff_val_k').innerText = this.value + '枚'; updateUI();">
+                <div id="diff_val_k" style="text-align:right; font-size:1.1em; color:var(--text); font-weight:bold; margin-bottom: 10px; font-family:var(--font-mono);">0枚</div>
+                
+                <label style="color:var(--warning);">💎 VIP: ボーダー手動調整 (±100G)</label>
+                <input type="range" id="border_adj_k" min="-100" max="100" step="10" value="0" oninput="document.getElementById('adj_val_k').innerText = this.value + 'G'; updateUI();">
+                <div id="adj_val_k" style="text-align:right; font-size:1.1em; color:var(--text); font-weight:bold; margin-bottom: 10px; font-family:var(--font-mono);">0G</div>
+                
+                <label style="color:var(--warning);">🤖 VIP: AI Bro コンサル</label>
+                <select id="k_ai_consult" onchange="updateUI()">
+                    <option value="none">選択なし</option>
+                    <option value="super">防衛区域(本前兆濃厚)</option>
+                    <option value="chance">チャンス目 直後(期待度大)</option>
+                    <option value="weak">ざわざわのみ(フェイク)</option>
+                </select>
+
+                <button type="button" style="width:100%; background:var(--military-dark); color:var(--warning); border:1px solid var(--warning); padding:15px; margin-top:15px;">💬 VIP専用オープンチャット (β)</button>
+            </div>
+        </div>
+
+        <details class="accordion">
+            <summary>📋 EV GUIDE (期待値カンペ)</summary>
+            <div class="accordion-content">
+                <table class="guide-table">
+                    <tr><th>G数目安</th><th>通常</th><th>短縮(駆/景)</th><th>景之ST後</th></tr>
+                    <tr><td>0〜20G</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td></tr>
+                    <tr><td>100G〜</td><td id="kg-100-n" class="mark-warn">△ 1周期</td><td id="kg-100-r" class="mark-warn">△ 1周期</td><td class="mark-go">〇 特攻</td></tr>
+                    <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-star">★ ツッパ</td></tr>
+                    <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-star">★ ツッパ</td></tr>
+                    <tr><td>600G〜</td><td class="mark-go">〇 特攻</td><td class="mark-star">★ 極限</td><td class="mark-star">★ ツッパ</td></tr>
+                </table>
+            </div>
+        </details>
+
+        <details class="accordion">
+            <summary>📜 BIBLE (軍師の知恵袋)</summary>
+            <div class="accordion-content" style="padding: 10px;">
+                <div class="bible-tabs">
+                    <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/短縮</button>
+                    <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">黒煙(穢れ)</button>
+                    <button class="tab-btn" onclick="openBible(event, 'tab-eyecatch-k')">ｱｲｷｬｯﾁ</button>
+                    <button class="tab-btn" onclick="openBible(event, 'tab-sensu-k')">扇子法則</button>
+                </div>
+                
+                <div id="tab-cycle-k" class="tab-content active">
+                    <table class="guide-table">
+                        <tr><th>周期</th><th>恩恵・期待度</th></tr>
+                        <tr><td>1周期(150G)</td><td>期待度33%超。</td></tr>
+                        <tr><td>2周期(300G)</td><td>期待度 約77%!</td></tr>
+                        <tr><td>4周期(596G)</td><td>短縮天井(ST濃厚)</td></tr>
+                        <tr><td>6周期(996G)</td><td>通常天井(エピボ)</td></tr>
+                    </table>
+                    <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9; margin-top:10px;">
+                        <li><b>短縮条件</b>: 設定変更、ST駆け抜け、景之ST終了後。</li>
+                    </ul>
+                </div>
+                
+                <div id="tab-smoke-k" class="tab-content">
+                    <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9;">
+                        <li><b>【蓄積】</b>: リセット時(初期MAXあり)、CZ/駿城失敗、単発、天井到達時。ハマるほど優遇。</li>
+                        <li><b>【示唆】</b>: 画面右下の吸い込みエフェクト。<b>大なら次回初当たりまでツッパ推奨！</b></li>
+                        <li><b>【解放】</b>: MAX時の次回初当たり(駿城/エピボ問わず)。7図柄入賞時の「専用煙」で確定。</li>
+                        <li><b>【恩恵】</b>: 海門回想、真・景之ST、裏・景之ST(期待3600枚超)へ直撃。<br><span style="color:var(--warning);">※1日1回は解放期待！</span></li>
+                    </ul>
+                </div>
+
+                <div id="tab-eyecatch-k" class="tab-content">
+                    <table class="guide-table">
+                        <tr><th>パターン</th><th>内容</th></tr>
+                        <tr><td>侑那/鰍/菖蒲</td><td>デフォルト</td></tr>
+                        <tr><td>無名②</td><td>期待度・中</td></tr>
+                        <tr><td style="color:var(--accent); font-weight:bold;">無名③ / 桜</td><td>期待度・高</td></tr>
+                        <tr><td>甲鉄城メンバー</td><td>高設定示唆</td></tr>
+                        <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
+                        <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
+                    </table>
+                </div>
+
+                <div id="tab-sensu-k" class="tab-content">
+                    <p style="font-size:0.8em; line-height:1.6; color:#c9d1d9; margin:0;">
+                        <b>【状態法則】</b>前兆中対応役ハズレで本前兆の期待度大幅UP。<br>
+                        <b>【法則崩れ（超重要）】</b><br>
+                        ・非前兆中 <b>白扇子＋ハズレ</b> ➔ 黒煙り示唆(強)<br>
+                        ・非前兆中 <b>青扇子＋ハズレ</b> ➔ <span style="color:var(--accent); font-weight:bold;">黒煙り示唆(極) = 解放間近!!</span>
+                    </p>
                 </div>
             </div>
         </details>
 
-        <button onclick="executeKabaneriAnalysis()" class="btn-execute">最終戦略判定 (EXECUTE)</button>
-    </div>
-
-    <div id="result-area-k"></div>
-
-    <div class="card compact-section">
-        <h3 style="font-size:0.95em; color:#a0aec0; border-bottom:1px solid var(--border);">⚙️ 投資環境 ＆ VIPコンフィグ</h3>
-        <div class="grid-2">
-            <div>
-                <label style="font-size:0.75em;">交換率</label>
-                <select id="rate" onchange="updateUI()">
-                    <option value="5.0">5.0枚 (等価)</option>
-                    <option value="5.6">5.6枚</option>
-                    <option value="6.0">6.0枚</option>
-                    <option value="other">非等価 / その他</option>
-                </select>
-            </div>
-            <div>
-                <label style="font-size:0.75em;">投資方法</label>
-                <select id="invest_type" onchange="updateUI()">
-                    <option value="medal">持ちメダル</option>
-                    <option value="cash">現金投資</option>
-                </select>
-            </div>
-        </div>
-        
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-            <label style="margin:0; font-size:0.75em;">現在時刻 (閉店欠損)</label>
-            <span id="time_val" style="color:white; font-weight:bold;">15時</span>
-        </div>
-        <input type="range" id="time_slider" min="9" max="23" value="15" oninput="document.getElementById('time_val').innerText = this.value + '時'; updateUI();">
-
-        <div id="vip-config-area" style="display:none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--warning);">
-            <label style="color:var(--warning);">💎 VIP: 差枚数スライダー (+1000枚超でボーダー優遇)</label>
-            <input type="range" id="diff_coins_k" min="-3000" max="3000" step="100" value="0" oninput="document.getElementById('diff_val_k').innerText = this.value + '枚'; updateUI();">
-            <div id="diff_val_k" style="text-align:right; font-size:0.9em; color:var(--text); font-weight:bold; margin-bottom: 10px;">0枚</div>
-            
-            <label style="color:var(--warning);">💎 VIP: ボーダー手動調整 (±100G)</label>
-            <input type="range" id="border_adj_k" min="-100" max="100" step="10" value="0" oninput="document.getElementById('adj_val_k').innerText = this.value + 'G'; updateUI();">
-            <div id="adj_val_k" style="text-align:right; font-size:0.9em; color:var(--text); font-weight:bold; margin-bottom: 10px;">0G</div>
-            
-            <label style="color:var(--warning);">🤖 VIP: AI Bro コンサルレポート</label>
-            <select id="k_ai_consult" onchange="updateUI()">
-                <option value="none">選択なし</option>
-                <option value="super">防衛区域(本前兆濃厚)</option>
-                <option value="chance">チャンス目 直後(期待度大)</option>
-                <option value="weak">ざわざわのみ(フェイク)</option>
-            </select>
-        </div>
-    </div>
-
-    <details class="accordion">
-        <summary>📋 海門 期待値カンペ</summary>
-        <div class="accordion-content">
-            <table class="guide-table">
-                <tr><th>G数目安</th><th>通常天井</th><th>短縮天井</th><th>景之ST後</th></tr>
-                <tr><td>0〜20G</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td><td class="mark-success">★ 追行</td></tr>
-                <tr><td>100G〜</td><td id="kg-100-n" class="mark-warn">△ 1周期</td><td id="kg-100-r" class="mark-warn">△ 1周期</td><td class="mark-go">〇 特攻</td></tr>
-                <tr><td>250G〜</td><td id="kg-250-n" class="mark-warn">△ 2周期</td><td id="kg-250-r" class="mark-go">〇 2周期</td><td class="mark-star">★ ツッパ</td></tr>
-                <tr><td>350G〜</td><td class="mark-ng">✕ スルー</td><td id="kg-350-r" class="mark-go">◎ 特攻</td><td class="mark-star">★ ツッパ</td></tr>
-                <tr><td>600G〜</td><td class="mark-go">〇 特攻</td><td class="mark-star">★ 極限</td><td class="mark-star">★ ツッパ</td></tr>
-            </table>
-        </div>
-    </details>
-
-    <details class="accordion">
-        <summary>📜 海門 軍師の知恵袋</summary>
-        <div class="accordion-content">
-            <div class="bible-tabs">
-                <button class="tab-btn active" onclick="openBible(event, 'tab-cycle-k')">周期/短縮</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-smoke-k')">黒煙(穢れ)</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-eyecatch-k')">ｱイｷｬｯﾁ</button>
-                <button class="tab-btn" onclick="openBible(event, 'tab-sensu-k')">扇子法則</button>
-            </div>
-            
-            <div id="tab-cycle-k" class="tab-content active">
-                <label style="color:var(--success);">▼ ST間 周期の期待度</label>
-                <table class="guide-table">
-                    <tr><th>周期</th><th>恩恵・期待度</th></tr>
-                    <tr><td>1周期(150G)</td><td>期待度33%超。</td></tr>
-                    <tr><td>2周期(300G)</td><td>期待度 約77%!</td></tr>
-                    <tr><td>4周期(596G)</td><td>短縮天井(ST濃厚)</td></tr>
-                    <tr><td>6周期(996G)</td><td>通常天井(エピボ)</td></tr>
-                </table>
-                <label style="color:var(--warning); margin-top:10px;">▼ 短縮条件</label>
-                <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9;">
-                    <li>設定変更(朝イチ)</li>
-                    <li>通常ST駆け抜け後</li>
-                    <li>景之ST終了後</li>
-                </ul>
-            </div>
-            
-            <div id="tab-smoke-k" class="tab-content">
-                <label style="color:var(--accent);">▼ 黒煙ポイント蓄積・解放の法則</label>
-                <ul style="font-size:0.8em; line-height:1.6; padding-left:20px; color:#c9d1d9;">
-                    <li><b>【蓄積契機】</b>: 有利区間移行時(初期MAXあり)、CZ失敗、駿城失敗、ST駆け抜け、天井到達。</li>
-                    <li><b>【蓄積示唆】</b>: 画面右下の吸い込みエフェクト。<b>大なら次回初当たりまでツッパ推奨！</b></li>
-                    <li><b>【解放条件】</b>: MAX到達後の「次回初当たり(駿城/エピボ問わず)」。7図柄入賞時に「専用の煙エフェクト」発生で解放確定。</li>
-                    <li><b>【解放恩恵】</b>: 海門回想、真・景之ST、または期待3600枚の<b>裏・景之ST</b>直撃！<br><span style="color:var(--warning);">※1日1回は解放が期待できる高頻度仕様！</span></li>
-                </ul>
-            </div>
-
-            <div id="tab-eyecatch-k" class="tab-content">
-                <label style="color:var(--success);">▼ アイキャッチ・終了画面 示唆</label>
-                <table class="guide-table">
-                    <tr><th>パターン</th><th>内容</th></tr>
-                    <tr><td>侑那/鰍/菖蒲</td><td>デフォルト</td></tr>
-                    <tr><td>無名②</td><td>期待度・中</td></tr>
-                    <tr><td style="color:var(--accent); font-weight:bold;">無名③ / 桜</td><td>期待度・高</td></tr>
-                    <tr><td>甲鉄城メンバー</td><td>高設定示唆</td></tr>
-                    <tr><td>無名＆菖蒲</td><td>設定6確定</td></tr>
-                    <tr><td>水着画面</td><td>5000G以降なら設定6濃厚</td></tr>
-                </table>
-            </div>
-
-            <div id="tab-sensu-k" class="tab-content">
-                <label style="color:var(--warning);">▼ 扇子演出の法則崩れ</label>
-                <p style="font-size:0.8em; line-height:1.6; color:#c9d1d9;">
-                    扇子演出はリプレイ or チャンス目対応。<br>
-                    <b>【状態法則】</b>前兆中対応役ハズレで本前兆の期待度大幅UP。<br>
-                    <b>【法則崩れ（超重要）】</b><br>
-                    ・非前兆中 <b>白扇子＋ハズレ</b> ➔ 黒煙り示唆(強)<br>
-                    ・非前兆中 <b>青扇子＋ハズレ</b> ➔ <span style="color:var(--accent); font-weight:bold;">黒煙り示唆(極) = 解放間近!!</span><br>
-                    見逃し厳禁の絶対特攻フラグです！
-                </p>
-            </div>
-        </div>
-    </details>
-
-    <details class="accordion">
-        <summary>🔍 海門 精密設定推測カウンター</summary>
-        <div class="accordion-content">
-            <label>総回転数 (G) / ST初当たり回数</label>
-            <div style="display:flex;gap:8px; margin-bottom:10px;">
-                <input type="number" id="total_rot_k" placeholder="総回転数" oninput="updateKabaneriCounter(); updateUI();">
-                <input type="number" id="at_count_k" placeholder="ST回数" oninput="updateUI();">
-            </div>
-            <div style="background:var(--military-dark); padding:12px; border-radius:4px; border: 1px solid var(--border); margin-bottom:10px; text-align:center;">
-                <span style="color:var(--warning); font-weight:bold; font-size:0.9em;">🔔 共通ベル(下段ベル)</span>
-                <div id="prob_k_bell" style="color:var(--text); font-weight:bold; margin:5px 0;">確率: ---</div>
-                <div style="display:flex; justify-content:center; align-items:center; gap:15px;">
-                    <button class="counter-btn" onclick="changeKCounter('bell', -1)">-</button>
-                    <span id="val_k_bell" style="font-size:1.4em; font-weight:bold; color:var(--text);">0</span>
-                    <button class="counter-btn plus" onclick="changeKCounter('bell', 1)">+</button>
+        <details class="accordion">
+            <summary>🔍 AI SCAN (精密設定推測)</summary>
+            <div class="accordion-content">
+                <label>総回転数 (G) / ST初当たり回数</label>
+                <div style="display:flex;gap:8px; margin-bottom:15px;">
+                    <input type="number" id="total_rot_k" placeholder="総回転数" oninput="updateKabaneriCounter(); updateUI();" style="margin-bottom:0;">
+                    <input type="number" id="at_count_k" placeholder="ST回数" oninput="updateUI();" style="margin-bottom:0;">
                 </div>
+                <div style="background:var(--panel); padding:15px; border-radius:4px; border: 1px solid var(--border); margin-bottom:15px; text-align:center;">
+                    <span style="color:var(--warning); font-weight:bold; font-size:0.9em;">🔔 共通ベル(下段ベル)</span>
+                    <div id="prob_k_bell" style="color:var(--text); font-weight:bold; margin:10px 0; font-family:var(--font-mono); font-size:1.1em;">確率: ---</div>
+                    <div style="display:flex; justify-content:center; align-items:center; gap:20px;">
+                        <button type="button" class="counter-btn" onclick="changeKCounter('bell', -1)">-</button>
+                        <span id="val_k_bell" style="font-size:1.6em; font-weight:bold; color:var(--text); font-family:var(--font-mono); min-width:40px;">0</span>
+                        <button type="button" class="counter-btn plus" onclick="changeKCounter('bell', 1)">+</button>
+                    </div>
+                </div>
+                <label>サミートロフィー</label>
+                <select id="trophy_k" onchange="updateUI()">
+                    <option value="none">示唆なし</option>
+                    <option value="gold">金以上(設定4-5確定)</option>
+                    <option value="rainbow">虹/キリン(設定6確定)</option>
+                </select>
+                <button type="button" onclick="executeKabaneriGuess()" style="background:var(--success); width:100%; color:#000; padding:15px; font-size:1.1em;">SCAN EXECUTE</button>
+                <div id="setting-result-k"></div>
             </div>
-            <select id="trophy_k" class="compact-select" onchange="updateUI();">
-                <option value="none">トロフィー示唆なし</option>
-                <option value="gold">金以上(設定4-5確定)</option>
-                <option value="rainbow">虹/キリン(設定6確定)</option>
-            </select>
-            <button onclick="executeKabaneriGuess()" style="background:var(--success); margin-top:10px; width:100%; border:none; padding:15px; color:white; font-weight:bold; border-radius:4px; letter-spacing:1px;">AI推測プロトコルを実行</button>
-            <div id="setting-result-k"></div>
-        </div>
-    </details>
+        </details>
+    </div>
 
-    <div class="legal-footer">
-        ※本ツールは期待値の算出を目的としており、投資を勧誘・保証するものではありません。
+    <div class="bottom-container">
+        <div class="legal-footer">
+            © 2026 Protocol ZERO. 本ツールは投資を勧誘・保証するものではありません。
+        </div>
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">🏠</span>HOME
+            </a>
+            <a href="#" class="nav-item active">
+                <span class="nav-icon">📡</span>RADAR
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">📊</span>LOG
+            </a>
+            <a href="index.html" class="nav-item vip-nav">
+                <span class="nav-icon">👑</span>VIP
+            </a>
+        </nav>
     </div>
 
 <script>
@@ -745,15 +802,15 @@ const _0xKabaneri = [
     "",
     "function getRatingStar(ev) {",
     "    if (ev >= 5000) {",
-    "        return '★★★★★ (Sランク)';",
+    "        return '★★★★★';",
     "    } else if (ev >= 2000) {",
-    "        return '★★★★☆ (Aランク)';",
+    "        return '★★★★☆';",
     "    } else if (ev >= 500) {",
-    "        return '★★★☆☆ (Bランク)';",
+    "        return '★★★☆☆';",
     "    } else if (ev > -500) {",
-    "        return '★★☆☆☆ (Cランク)';",
+    "        return '★★☆☆☆';",
     "    } else {",
-    "        return '★☆☆☆☆ (Dランク)';",
+    "        return '★☆☆☆☆';",
     "    }",
     "}",
     "",
@@ -984,6 +1041,8 @@ const _0xKabaneri = [
     "        wage: Math.floor(finalWage),",
     "        remainCeiling: remainCeiling,",
     "        remainCycle: remainCycle,",
+    "        inv: inv,",
+    "        rate: rate,",
     "        isTimeOver: false",
     "    };",
     "}",
@@ -1004,13 +1063,13 @@ const _0xKabaneri = [
     "    if (s.isBlackSmoke || s.isSensu) {",
     "        basicJudgeHtml = `<div class=\"alert alert-ceiling\">🔥 【絶対防衛：裏景之】<br>黒煙(大/極)を確認。期待枚数3600枚の裏景之ST濃厚！当選まで全ツッパ。</div>`;",
     "    } else if (s.isKuji) {",
-    "        basicJudgeHtml = `<div class=\"alert alert-success\" style=\"border-color:var(--success);\">🎫 【輪廻クジ】<br>ボーナス/ST濃厚。当該周期当選まで全ツッパ。</div>`;",
+    "        basicJudgeHtml = `<div class=\"alert alert-success\">🎫 【輪廻クジ】<br>ボーナス/ST濃厚。当該周期当選まで全ツッパ。</div>`;",
     "    } else if (s.isUmato) {",
-    "        basicJudgeHtml = `<div class=\"alert alert-success\" style=\"border-color:var(--success);\">🏯 【海門城背景】<br>実質上位ST以上の期待大。特攻一択。</div>`;",
+    "        basicJudgeHtml = `<div class=\"alert alert-success\">🏯 【海門城背景】<br>実質上位ST以上の期待大。特攻一択。</div>`;",
     "    } else if (s.isKage) {",
     "        basicJudgeHtml = `<div class=\"alert alert-warning\">⚠️ 【景之ループ】<br>短縮天井＆ループ濃厚状態。ヤメ厳禁。</div>`;",
     "    } else if (s.isSakura || s.isHimaku) {",
-    "        basicJudgeHtml = `<div class=\"alert alert-success\" style=\"border-color:var(--success);\">🎯 【示唆発生】<br>早めの当選期待大/天井間近。初当たりまで特攻。</div>`;",
+    "        basicJudgeHtml = `<div class=\"alert alert-success\">🎯 【示唆発生】<br>早めの当選期待大/天井間近。初当たりまで特攻。</div>`;",
     "    } else if (s.kg >= s.border) {",
     "        let ceilStr = '通常';",
     "        if (s.isShort) { ceilStr = '短縮'; }",
@@ -1024,7 +1083,12 @@ const _0xKabaneri = [
     "    }",
     "",
     "    let baseEvStr = s.ev > 0 ? `+${s.ev}` : `${s.ev}`;",
-    "    let expectHtml = `<div style=\"text-align:center; font-size:1.2em; font-weight:bold; color:var(--text); margin-top:10px;\">💰 期待値: ￥${baseEvStr} 前後</div>`;",
+    "    let expectHtml = ``;",
+    "    if (isVip) {",
+    "        expectHtml = `<div class=\"ev-display\">💰 期待値: ￥${baseEvStr} 前後</div>`;",
+    "    } else {",
+    "        expectHtml = `<div class=\"ev-display\">💰 期待値: <span style=\"background:#333; color:#333;\">【VIP】</span></div>`;",
+    "    }",
     "",
     "    res += ratingHtml + basicJudgeHtml + expectHtml;",
     "",
@@ -1045,11 +1109,11 @@ const _0xKabaneri = [
     "        if (s.wage >= 0) { colorClass = 'var(--success)'; }",
     "        let fullHtml = `<div style=\"margin-top:15px; border:1px solid var(--border); border-radius:4px; padding:15px; background:var(--military-dark);\">`;",
     "        fullHtml += `<div class=\"live-wage\" style=\"color:${colorClass};\">想定時給: ￥${s.wage}</div>`;",
-    "        fullHtml += `<div style=\"font-size:0.85em; color:#a0aec0; text-align:center; margin-bottom:15px;\">🎯 天井まで残り: <b>${s.remainCeiling}G / ${s.remainCycle}周期</b></div>`;",
+    "        fullHtml += `<div style=\"font-size:0.85em; color:#9CA3AF; text-align:center; margin-bottom:15px; font-family:var(--font-mono);\">🎯 天井まで残り: <b>${s.remainCeiling}G / ${s.remainCycle}周期</b></div>`;",
     "        ",
     "        let naviHtml = \"\";",
     "        let isSpecial = false;",
-    "        if (s.isBlackSmoke || s.isSensu || s.isKage || s.isHimaku || s.isKuji || s.isUmato) {",
+    "        if (s.isBlackSmoke || s.isSensu || s.isKage || s.isHimaku || s.isKuji || s.isUmato || s.isSakura) {",
     "            isSpecial = true;",
     "        }",
     "        ",
@@ -1069,12 +1133,10 @@ const _0xKabaneri = [
     "            naviHtml += `<div class=\"navi-rule\">① 【天井保護】当選までヤメ厳禁。</div>`;",
     "        }",
     "        ",
-    "        const inv = document.getElementById('invest_type').value;",
-    "        const rate = document.getElementById('rate').value;",
     "        if (!isSpecial && s.remainCeiling > 150) {",
     "            if (s.isShort) {",
-    "                if (inv === 'medal' || rate === '5.0') {",
-    "                    naviHtml += `<div class=\"navi-rule active\">② 【1周期フォロー】等価/持ちメダルなら150G抜けまで様子見有効。</div>`;",
+    "                if (s.inv === 'medal' || s.rate === '5.0') {",
+    "                    naviHtml += `<div class=\"navi-rule active\">② 【1周期フォロー】等価/持メダル時は150G抜けまで様子見有効。</div>`;",
     "                } else {",
     "                    naviHtml += `<div class=\"navi-rule active\">② 【即ヤメ寄り】現金投資時は1周期フォローの期待値低下。即ヤメも視野に。</div>`;",
     "                }",
@@ -1085,7 +1147,7 @@ const _0xKabaneri = [
     "            naviHtml += `<div class=\"navi-rule\">② 【動的ヤメ】ボーナス後、G数と前兆・示唆なしを確認して即ヤメ。</div>`;",
     "        }",
     "        ",
-    "        fullHtml += `<div style=\"border-top:1px solid var(--border); padding-top:10px;\"><span style=\"color:var(--warning); font-weight:bold;\">🛑 ヤメ時ナビ</span><br>${naviHtml}</div>`;",
+    "        fullHtml += `<div style=\"border-top:1px dashed var(--border); padding-top:10px;\"><span style=\"color:var(--warning); font-weight:bold;\">🛑 ヤメ時ナビ</span><br>${naviHtml}</div>`;",
     "        fullHtml += `</div>`;",
     "        res += fullHtml;",
     "    }",
@@ -1119,18 +1181,6 @@ const _0xKabaneri = [
     "",
     "function updateUI() {",
     "    updateGuideTable();",
-    "    if (isVip) {",
-    "        const stats = getKabaneriStats();",
-    "        const wageElem = document.getElementById('wage-display-k');",
-    "        if (wageElem) {",
-    "            wageElem.innerText = `想定時給: ￥${stats.wage}`;",
-    "            if (stats.wage >= 0) {",
-    "                wageElem.style.color = 'var(--success)';",
-    "            } else {",
-    "                wageElem.style.color = 'var(--danger)';",
-    "            }",
-    "        }",
-    "    }",
     "}",
     "",
     "function changeKCounter(type, val) {",
@@ -1207,7 +1257,7 @@ const _0xKabaneri = [
     "window.executeKabaneriGuess = executeKabaneriGuess;"
 ];
 
-// F12解析阻害 ＆ 動的展開
+// F12解析阻害 ＆ 動的展開プロトコル
 new Function(_0xKabaneri.join('\n'))();
 </script>
 </body>
